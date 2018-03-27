@@ -3,6 +3,19 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/poetry?useUnicode=true&characterEncoding=UTF8&useSSL=false&serverTimezone=UTC
     username: root
     password: root
+  freemarker:
+      template-loader-path: classpath:/web/
+      cache: false
+      charset: UTF-8
+      check-template-location: true
+      content-type: text/html
+      expose-request-attributes: true
+      expose-session-attributes: true
+      request-context-attribute: request
+      suffix: .ftl
+  mvc:
+    static-path-pattern: /**
+
 mybatis:
     typeAliasesPackage: org.xin.domain
     mapperLocations: classpath:mapper/*.xml

@@ -15,6 +15,10 @@
     </resultMap>
 
     <select id="findById" parameterType="int" resultMap="BaseResultMap">
-        SELECT * FROM poetry WHERE id = #{poetryId}
+        SELECT * FROM poetry WHERE id = #{id}
+    </select>
+
+    <select id="findPoetryList" resultMap="BaseResultMap">
+        SELECT * FROM poetry LIMIT 10
     </select>
 </mapper>
