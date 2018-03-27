@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xinyo.dao.PoetryDao" >
+    <resultMap id="BaseResultMap" type="org.xinyo.domain.Poetry">
+        <result column="id" property="id" />
+        <result column="author" property="author" />
+        <result column="author" property="author_sp" />
+        <result column="title" property="title" />
+        <result column="title_sp" property="title_sp" />
+        <result column="paragraphs" property="paragraphs" />
+        <result column="paragraphs_sp" property="paragraphs_sp" />
+        <result column="strains" property="strains" />
+        <result column="dynasty" property="dynasty" />
+        <result column="style" property="style" />
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultMap="BaseResultMap">
+        SELECT * FROM poetry WHERE id = #{poetryId}
+    </select>
+</mapper>
