@@ -11,4 +11,6 @@ public interface PoetryService {
     Poetry findPoetryById(Integer poetryId);
 
     List<Poetry> findPoetryList();
+
+    List<Poetry> findPoetryByKewword(String keyword);
 }

@@ -25,4 +25,9 @@ public class PoetryServiceImpl implements PoetryService {
     public List<Poetry> findPoetryList() {
         return poetryDao.findPoetryList();
     }
+
+    @Override
+    public List<Poetry> findPoetryByKewword(String keyword) {
+        return null;
+    }
 }
