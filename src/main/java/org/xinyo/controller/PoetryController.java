@@ -24,6 +24,11 @@ public class PoetryController {
     @Autowired
     private PoetryService poetryService;
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index() {
+        return "index";
+    }
+
     @RequestMapping(value = "/poetry/{id}", method = RequestMethod.GET)
     public String getPoetryById(Model model, @PathVariable Integer id) {
         Poetry poetry = poetryService.findPoetryById(id);
@@ -39,15 +44,18 @@ public class PoetryController {
 
     @RequestMapping(value = "/poetry/search", method = RequestMethod.GET)
     public String getPoetryByKeyword(Model model, @RequestParam String keyword) {
-        List<Poetry> poetryList = poetryService.findPoetryByKewword(keyword);
-        if (poetry == null) {
-            return "";
+        keyword = HanLP.convertToSimplifiedChinese(keyword);
+        List<Poetry> poetryList = poetryService.findPoetryByKeyword(keyword);
+        System.out.println(poetryList);
+        if (poetryList == null || poetryList.size() == 0) {
+            return null;
         }
-        PoetryBean poetryBean = poetry2PoetryBean(poetry);
+        List<PoetryBean> poetryBeanList = poetry2PoetryBean(poetryList);
 
-        model.addAttribute("poetryBean", poetryBean);
+        model.addAttribute("poetryBeanList", poetryBeanList);
+        model.addAttribute("searchKeyword", keyword);
 
-        return "poetryBean";
+        return "poetryBeanList";
     }
 
     private PoetryBean poetry2PoetryBean(Poetry poetry) {
@@ -55,16 +63,25 @@ public class PoetryController {
 
         // 关键词提取
         List<String> keywordList = HanLP.extractKeyword(poetryBean.getParagraphs(), 10);
-        StringBuilder sb = new StringBuilder();
-        for (String s : keywordList) {
-            sb.append(s);
-            sb.append(",");
+        if(keywordList == null || keywordList.size() == 0) {
+            poetryBean.setKeyWords("");
+        } else {
+            StringBuilder sb = new StringBuilder();
+            for (String s : keywordList) {
+                sb.append(s);
+                sb.append(",");
+            }
+            sb.deleteCharAt(sb.length() - 1);
+            poetryBean.setKeyWords(sb.toString());
         }
-        sb.deleteCharAt(sb.length() - 1);
-        poetryBean.setKeyWords(sb.toString());
 
         // 文章摘要
-        String description = poetryBean.getParagraphs().substring(0, 32).replaceAll("\n", "");
+        String description;
+        if (poetryBean.getParagraphs().length() > 32) {
+            description = poetryBean.getParagraphs().substring(0, 32).replaceAll("\n", "");
+        } else {
+            description = poetryBean.getParagraphs().replaceAll("\n", "");
+        }
         poetryBean.setDescription(description);
 
         // 文章内容
@@ -75,5 +92,20 @@ public class PoetryController {
         }
         poetryBean.setContentList(contentList);
         return poetryBean;
+    }
+
+    private List<PoetryBean> poetry2PoetryBean(List<Poetry> poetryList) {
+        List<PoetryBean> poetryBeanList = new ArrayList<>();
+        for (Poetry poetry : poetryList) {
+            poetryBeanList.add(poetry2PoetryBean(poetry));
+        }
+        return poetryBeanList;
+    }
+
+    private void emKeyword(List<PoetryBean> poetryBeanList, String keyword){
+        for (PoetryBean poetryBean : poetryBeanList) {
+
+        }
+
     }
 }

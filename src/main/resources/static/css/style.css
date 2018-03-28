@@ -26,23 +26,36 @@ body, input, textarea, button {
     border-radius: 0
 }
 
+div.clearfix {
+    clear: both;
+}
+
 h1 {
-    font-size: 1em;
-    font-weight: 500;
+    font-size: 1.1em;
+    font-weight: 600;
     color: #000;
 }
 
-div#poetry {
+div#content {
     padding: 2em;
+    max-width: 800px;
+    margin: auto;
+}
+
+div#poetry {
     letter-spacing: .1em;
-    writing-mode: vertical-rl;
-    font-size: 1.2em;
+    /*writing-mode: vertical-rl;*/
+    /*font-size: 1.2em;*/
     color: #333;
     overflow: auto;
+    padding: 1em 1.5em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 2em;
 }
 
 div#poetry-header {
-    padding-left: 1em;
+    padding-bottom: 1em;
 }
 
 div#poetry-author {
@@ -54,9 +67,14 @@ p.content-p {
 
 }
 
+div#header-wrap {
+    background-color: #eee;
+}
+
 div#header {
     height: 6em;
-    background-color: #eee;
+    max-width: 800px;
+    margin: auto;
 }
 
 div#search {
@@ -65,10 +83,33 @@ div#search {
 
 input#keyword {
     padding: .1em .5em;
-    border:1px solid #ddd;
+    border: 1px solid #ddd;
 }
+
 input#searchsubmit {
     padding: .1em .6em;
     letter-spacing: 3px;
     background: #ddd;
+}
+
+input#searchsubmit:hover {
+    cursor: pointer;
+}
+
+div#nav-bar {
+    padding: 1em;
+}
+
+div.pre-poetry, div.next-poetry {
+    width: 6em;
+    float: left;
+}
+
+div.next-poetry {
+    text-align: right;
+}
+
+div#nav-bar a {
+    display: block;
+    width: 100%;
 }

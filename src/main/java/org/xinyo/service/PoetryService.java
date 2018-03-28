@@ -12,5 +12,5 @@ public interface PoetryService {
 
     List<Poetry> findPoetryList();
 
-    List<Poetry> findPoetryByKewword(String keyword);
+    List<Poetry> findPoetryByKeyword(String keyword);
 }

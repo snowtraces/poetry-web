@@ -13,4 +13,6 @@ public interface PoetryDao {
     Poetry findById(Integer poetryId);
 
     List<Poetry> findPoetryList();
+
+    List<Poetry> findPoetryByKeyword(String keyword);
 }
