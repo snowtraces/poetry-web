@@ -36,22 +36,27 @@ h1 {
     color: #000;
 }
 
+h2 {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #000;
+}
+
 div#content {
     padding: 2em;
     max-width: 800px;
     margin: auto;
 }
 
-div#poetry {
+div.poetry-item {
     letter-spacing: .1em;
     /*writing-mode: vertical-rl;*/
     /*font-size: 1.2em;*/
     color: #333;
-    overflow: auto;
     padding: 1em 1.5em;
     border: 1px solid #ccc;
     border-radius: 8px;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 
 div#poetry-header {
@@ -100,16 +105,46 @@ div#nav-bar {
     padding: 1em;
 }
 
-div.pre-poetry, div.next-poetry {
+div.pre-item, div.next-item {
     width: 6em;
     float: left;
 }
 
-div.next-poetry {
+div.next-item {
     text-align: right;
+}
+
+div.pre-item:hover, div.next-item:hover {
+    cursor: pointer;
 }
 
 div#nav-bar a {
     display: block;
     width: 100%;
+}
+
+div.search-item {
+    margin-bottom: 1em;
+    padding: 1em 1.5em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+span.search-item-title {
+    font-weight: 600;
+}
+
+span.search-item-author {
+    font-size: .9em;
+    color: #666;
+    display: inline-block;
+    padding: 0 .3em;
+}
+
+div.search-item-content {
+    font-size: .85em;
+}
+
+span.search-keyword {
+    color: #f00;
 }

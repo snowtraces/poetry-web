@@ -7,6 +7,7 @@ import org.xinyo.domain.Poetry;
 import org.xinyo.service.PoetryService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by chengxinyong on 2018/3/27.
@@ -27,7 +28,7 @@ public class PoetryServiceImpl implements PoetryService {
     }
 
     @Override
-    public List<Poetry> findPoetryByKeyword(String keyword) {
-        return poetryDao.findPoetryByKeyword(keyword);
+    public List<Poetry> findPoetryByKeyword(Map<String, Object> params) {
+        return poetryDao.findPoetryByKeyword(params);
     }
 }

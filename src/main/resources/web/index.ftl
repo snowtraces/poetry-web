@@ -16,28 +16,18 @@
     <div id="header-wrap" class="wrap">
         <div id="header">
             <div id="search">
-                <form method="get" id="search-form" action="/poetry/search">
+                <div method="get" id="search-form">
                     <input id="keyword" type="text" name="keyword" placeholder="">
-                    <input id="searchsubmit" type="submit" value="搜索">
-                </form>
+                    <input id="searchsubmit" type="button" value="搜索">
+                </div>
             </div>
         </div>
     </div>
     <div id="content-wrap" class="wrap">
         <div id="content">
             <div id="poetry">
-                <div id="poetry-header">
-                    <div id="poetry-id" hidden></div>
-                    <div id="poetry-title"><h1></h1></div>
-                    <div id="poetry-author"></div>
-                </div>
-                <div id="poetry-content">
-                </div>
             </div>
             <div id="nav-bar">
-                <div class="pre-poetry">上一篇</div>
-                <div class="next-poetry">下一篇</div>
-                <div class="clearfix"></div>
             </div>
         </div>
 

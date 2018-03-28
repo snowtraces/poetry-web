@@ -22,7 +22,8 @@
         SELECT * FROM poetry LIMIT 10
     </select>
 
-    <select id="findPoetryByKeyword" parameterType="string" resultMap="BaseResultMap">
-        SELECT * from poetry where MATCH(author_sp,title_sp,paragraphs_sp) AGAINST (CONCAT('*',#{keyword},'*') in boolean mode)  LIMIT 10;
+    <select id="findPoetryByKeyword" parameterType="map" resultMap="BaseResultMap">
+        SELECT * from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
+         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode)  LIMIT #{page},10;
     </select>
 </mapper>
