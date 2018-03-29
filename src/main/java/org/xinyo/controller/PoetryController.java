@@ -12,7 +12,9 @@ import org.xinyo.domain.Poetry;
 import org.xinyo.domain.PoetryBean;
 import org.xinyo.service.PoetryService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.xinyo.util.PoetryUtils.poetry2PoetryBean;
 
@@ -24,47 +26,25 @@ public class PoetryController {
     @Autowired
     private PoetryService poetryService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/poetry/{id}", "/poetry/search" }, method = RequestMethod.GET)
     public String index() {
         return "index";
     }
 
-    @RequestMapping(value = "/poetry/{language}/{id}", method = RequestMethod.GET)
-    public String getPoetryById(Model model, @PathVariable Integer language, @PathVariable Integer id) {
-        Poetry poetry;
-        if (language == 0) { // 繁体
-            poetry = poetryService.findPoetryTrById(id);
-        } else { // 简体
-            poetry = poetryService.findPoetrySpById(id);
-        }
-        PoetryBean poetryBean = poetry2PoetryBean(poetry);
-        model.addAttribute("poetryBean", poetryBean);
-
-        return "poetry";
-    }
-
+//    @RequestMapping(value = "/poetry/{id}", method = RequestMethod.GET)
+//    public String getPoetryById(Model model, @PathVariable Integer id) {
+//        model.addAttribute("poetryId", id);
+//        return "poetry";
+//    }
+//
 //    @RequestMapping(value = "/poetry/search", method = RequestMethod.GET)
-//    public String getPoetryByKeyword(Model model, @RequestParam String keyword) {
-//        keyword = HanLP.convertToSimplifiedChinese(keyword);
-//        List<Poetry> poetryList = poetryService.findPoetryByKeyword(keyword);
-//        System.out.println(poetryList);
-//        if (poetryList == null || poetryList.size() == 0) {
-//            return null;
-//        }
-//        List<PoetryBean> poetryBeanList = poetry2PoetryBean(poetryList);
+//    public String getPoetryByKeyword(Model model, @RequestParam String keyword, @RequestParam Integer page) {
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("keyword", keyword);
+//        params.put("page", page);
+//        model.addAttribute("poetryParams", params);
 //
-//        model.addAttribute("poetryBeanList", poetryBeanList);
-//        model.addAttribute("searchKeyword", keyword);
-//
-//        return "poetryBeanList";
+//        return "poetryList";
 //    }
 
-
-
-    private void emKeyword(List<PoetryBean> poetryBeanList, String keyword){
-        for (PoetryBean poetryBean : poetryBeanList) {
-
-        }
-
-    }
 }

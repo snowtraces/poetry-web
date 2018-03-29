@@ -13,7 +13,8 @@
 </head>
 <body>
 <div id="wrap">
-    <input id="poetry-page-id" hidden value="${poetryId}"/>
+    <input id="poetry-search-page" hidden value="${poetryParams.page}"/>
+    <input id="poetry-search-keyword" hidden value="${poetryParams.keyword}"/>
     <div id="tr-sp"><input id="tr-sp-value" value="0" hidden ><span class='tr'>繁</span><span class='sp'>简</span></div>
     <div id="header-wrap" class="wrap">
         <div id="header">
