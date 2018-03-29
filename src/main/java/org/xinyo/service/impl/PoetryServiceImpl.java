@@ -31,4 +31,24 @@ public class PoetryServiceImpl implements PoetryService {
     public List<Poetry> findPoetryByKeyword(Map<String, Object> params) {
         return poetryDao.findPoetryByKeyword(params);
     }
+
+    @Override
+    public Poetry findPoetryTrById(Integer id) {
+        return poetryDao.findTrById(id);
+    }
+
+    @Override
+    public Poetry findPoetrySpById(Integer id) {
+        return poetryDao.findSpById(id);
+    }
+
+    @Override
+    public List<Poetry> findPoetryTrByKeyword(Map<String, Object> params) {
+        return poetryDao.findPoetryTrByKeyword(params);
+    }
+
+    @Override
+    public List<Poetry> findPoetrySpByKeyword(Map<String, Object> params) {
+        return poetryDao.findPoetrySpByKeyword(params);
+    }
 }

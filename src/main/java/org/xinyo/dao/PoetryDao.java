@@ -16,4 +16,12 @@ public interface PoetryDao {
     List<Poetry> findPoetryList();
 
     List<Poetry> findPoetryByKeyword(Map<String, Object> params);
+
+    Poetry findTrById(Integer id);
+
+    Poetry findSpById(Integer id);
+
+    List<Poetry> findPoetryTrByKeyword(Map<String, Object> params);
+
+    List<Poetry> findPoetrySpByKeyword(Map<String, Object> params);
 }

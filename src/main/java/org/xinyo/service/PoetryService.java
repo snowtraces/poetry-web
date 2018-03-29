@@ -15,5 +15,11 @@ public interface PoetryService {
 
     List<Poetry> findPoetryByKeyword(Map<String, Object> params);
 
+    Poetry findPoetryTrById(Integer id);
 
+    Poetry findPoetrySpById(Integer id);
+
+    List<Poetry> findPoetryTrByKeyword(Map<String, Object> params);
+
+    List<Poetry> findPoetrySpByKeyword(Map<String, Object> params);
 }

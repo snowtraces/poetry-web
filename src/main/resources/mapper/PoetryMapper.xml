@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="org.xinyo.domain.Poetry">
         <result column="id" property="id" />
         <result column="author" property="author" />
-        <result column="author" property="author_sp" />
+        <result column="author_sp" property="author_sp" />
         <result column="title" property="title" />
         <result column="title_sp" property="title_sp" />
         <result column="paragraphs" property="paragraphs" />
@@ -18,12 +18,30 @@
         SELECT * FROM poetry WHERE id = #{id}
     </select>
 
+    <select id="findTrById" parameterType="int" resultMap="BaseResultMap">
+        SELECT id, author, title, paragraphs  FROM poetry WHERE id = #{id}
+    </select>
+
+    <select id="findSpById" parameterType="int" resultMap="BaseResultMap">
+        SELECT id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs FROM poetry WHERE id = #{id}
+    </select>
+
     <select id="findPoetryList" resultMap="BaseResultMap">
         SELECT * FROM poetry LIMIT 10
     </select>
 
     <select id="findPoetryByKeyword" parameterType="map" resultMap="BaseResultMap">
         SELECT * from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
+         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode)  LIMIT #{page},10;
+    </select>
+
+    <select id="findPoetrySpByKeyword" parameterType="map" resultMap="BaseResultMap">
+        SELECT id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
+         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode)  LIMIT #{page},10;
+    </select>
+
+    <select id="findPoetryTrByKeyword" parameterType="map" resultMap="BaseResultMap">
+        SELECT id, author, title, paragraphs from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
          AGAINST (CONCAT('*',#{keyword},'*') in boolean mode)  LIMIT #{page},10;
     </select>
 </mapper>

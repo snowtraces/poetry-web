@@ -6,6 +6,30 @@
     box-sizing: border-box;
 }
 
+/* fallback */
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(material.woff2) format('woff2');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
 html {
     font-size: 16px;
 }
@@ -28,6 +52,33 @@ body, input, textarea, button {
 
 div.clearfix {
     clear: both;
+}
+
+div#wrap {
+    position: relative;
+}
+
+div#tr-sp {
+    line-height: 1;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #ccc;
+    color: #fff;
+}
+
+div#tr-sp:hover {
+    cursor: pointer;
+}
+
+div#tr-sp span {
+    display: inline-block;
+    line-height: 1;
+    padding: .3em;
+}
+
+div#tr-sp .tr {
+    /*background: #2bc;*/
 }
 
 h1 {
@@ -57,6 +108,7 @@ div.poetry-item {
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-bottom: 1em;
+    position: relative;
 }
 
 div#poetry-header {
@@ -142,9 +194,36 @@ span.search-item-author {
 }
 
 div.search-item-content {
-    font-size: .85em;
+    font-size: .8em;
+    color: #666;
 }
 
 span.search-keyword {
     color: #f00;
+}
+
+.tool-bar {
+    font-family: Consolas, Monaco, monospace;
+    font-size: .85em;
+    line-height: 1.6;
+    vertical-align: middle;
+    position: absolute;
+    right: .5em;
+    top: .5em;
+    z-index: 2;
+}
+
+.copy-poetry {
+    display: inline-block;
+    opacity: .3;
+    transition: .5s;
+}
+
+.copy-poetry:hover {
+    opacity: .6;
+    cursor: pointer;
+}
+
+.copy-poetry:active {
+    opacity: .95;
 }

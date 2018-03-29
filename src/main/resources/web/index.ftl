@@ -13,6 +13,7 @@
 </head>
 <body>
 <div id="wrap">
+    <div id="tr-sp"><input id="tr-sp-value" value="0" hidden ><span class='tr'>繁</span><span class='sp'>简</span></div>
     <div id="header-wrap" class="wrap">
         <div id="header">
             <div id="search">
