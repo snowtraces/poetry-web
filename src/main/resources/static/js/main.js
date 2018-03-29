@@ -82,6 +82,7 @@ $(function () {
       data: "language=" + language,
       success: function (data) {
         buildPoetryPage(data)
+        history.pushState({}, "", "/poetry/" + language + "/" + id);
       }
     })
   }
@@ -124,7 +125,6 @@ $(function () {
 // 上一篇
   $(document).on("click", ".pre-poetry", function () {
     let currentId = parseInt($("#poetry-id").val());
-    console.info(currentId);
     if (currentId <= 1) {
       getPoetryById(1);
     } else {
@@ -193,25 +193,37 @@ $(function () {
     let thisCopied = $(this);
     thisCopied.empty();
     thisCopied.html("<i class='material-icons'>done</i>");
-    setTimeout(function() {
+    setTimeout(function () {
       thisCopied.empty();
       thisCopied.html("<i class='material-icons'>content_copy</i>");
     }, 1000)
 
   })
 
+  window.addEventListener('popstate', function(event) {
+    let location = document.location + '';
+    let re = /\/poetry\/(\d+)\/(\d+)$/i;
+    let found = location.match(re);
+    console.log(found[1] + "/" + found[2]);
+
+
+
+    console.log('location: ' + document.location);
+  });
+
   function initAll() {
     // 初始化语言
     let _language = getCookie("language");
-    if(_language == null) {
+    if (_language == null) {
       _language = 1;
     } else {
       _language = parseInt(_language)
     }
     switchLanguage(_language);
 
-    // 初始随机加载
-    getPoetryById(randomId);
+    // 初始加载
+    let id = parseInt($("#poetry-page-id").val());
+    getPoetryById(id ? id : randomId);
   }
 
   initAll();

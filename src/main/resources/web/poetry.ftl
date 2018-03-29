@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title>${poetryBean.title}</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <meta name="keywords" content="${poetryBean.keyWords}">
-    <meta name="description" content="${poetryBean.description}">
-
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
 
     <title></title>
     <link rel="stylesheet" href="/css/style.css" type='text/css' media='all'/>
@@ -14,14 +12,29 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
-<div id="poetry-header">
-    <div id="poetry-title">${poetryBean.title}</div>
-    <div id="poetry-author">${poetryBean.author}</div>
-</div>
-<div id="poetry-content">
+<div id="wrap">
+    <input id="poetry-page-id" hidden value="${poetryBean.id}"/>
+    <div id="tr-sp"><input id="tr-sp-value" value="0" hidden ><span class='tr'>繁</span><span class='sp'>简</span></div>
+    <div id="header-wrap" class="wrap">
+        <div id="header">
+            <div id="search">
+                <div method="get" id="search-form">
+                    <input id="keyword" type="text" name="keyword" placeholder="">
+                    <input id="searchsubmit" type="button" value="搜索">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content-wrap" class="wrap">
+        <div id="content">
+            <div id="poetry">
+            </div>
+            <div id="nav-bar">
+            </div>
+        </div>
 
+    </div>
+    <div id="footer"></div>
 </div>
-
 </body>
-
 </html>

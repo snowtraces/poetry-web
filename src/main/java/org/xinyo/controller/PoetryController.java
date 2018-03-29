@@ -29,17 +29,18 @@ public class PoetryController {
         return "index";
     }
 
-    @RequestMapping(value = "/poetry/{id}", method = RequestMethod.GET)
-    public String getPoetryById(Model model, @PathVariable Integer id) {
-        Poetry poetry = poetryService.findPoetryById(id);
-        if (poetry == null) {
-            return "";
+    @RequestMapping(value = "/poetry/{language}/{id}", method = RequestMethod.GET)
+    public String getPoetryById(Model model, @PathVariable Integer language, @PathVariable Integer id) {
+        Poetry poetry;
+        if (language == 0) { // 繁体
+            poetry = poetryService.findPoetryTrById(id);
+        } else { // 简体
+            poetry = poetryService.findPoetrySpById(id);
         }
         PoetryBean poetryBean = poetry2PoetryBean(poetry);
-
         model.addAttribute("poetryBean", poetryBean);
 
-        return "poetryBean";
+        return "poetry";
     }
 
 //    @RequestMapping(value = "/poetry/search", method = RequestMethod.GET)
