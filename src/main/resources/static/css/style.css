@@ -198,7 +198,7 @@ div.search-item-content {
     color: #666;
 }
 
-span.search-keyword {
+.search-item em {
     color: #f00;
 }
 
@@ -226,4 +226,10 @@ span.search-keyword {
 
 .copy-poetry:active {
     opacity: .95;
+}
+
+div.title-bar {
+    padding-bottom: 1em;
+    font-size: .8em;
+    color: #aaa;
 }

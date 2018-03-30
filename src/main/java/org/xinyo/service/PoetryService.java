@@ -22,4 +22,6 @@ public interface PoetryService {
     List<Poetry> findPoetryTrByKeyword(Map<String, Object> params);
 
     List<Poetry> findPoetrySpByKeyword(Map<String, Object> params);
+
+    long countTotalPoetryByKeyword(Map<String, Object> params);
 }

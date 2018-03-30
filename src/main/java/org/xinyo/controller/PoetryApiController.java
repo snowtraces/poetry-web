@@ -8,6 +8,7 @@ import org.xinyo.domain.Poetry;
 import org.xinyo.domain.PoetryBean;
 import org.xinyo.service.PoetryService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,17 +47,20 @@ public class PoetryApiController {
         Map<String, Object> params = new HashMap<>();
         params.put("keyword", keyword);
         params.put("page", (page - 1) * 10);
-        List<Poetry> poetryList;
 
-        if (language == 0) { // 繁体
-            poetryList = poetryService.findPoetryTrByKeyword(params);
-        } else { // 简体
-            poetryList = poetryService.findPoetrySpByKeyword(params);
-        }
+        long total = poetryService.countTotalPoetryByKeyword(params);
+        List<Poetry> poetryList = new ArrayList<>();
+        if(total > 0L){
+            if (language == 0) { // 繁体
+                poetryList = poetryService.findPoetryTrByKeyword(params);
+            } else { // 简体
+                poetryList = poetryService.findPoetrySpByKeyword(params);
+            }
 
-        System.out.println(poetryList);
-        if (poetryList == null || poetryList.size() == 0) {
-            return null;
+            System.out.println(poetryList);
+            if (poetryList == null || poetryList.size() == 0) {
+                return null;
+            }
         }
 
         List<PoetryBean> poetryBeanList = poetry2PoetryBean(poetryList);
@@ -64,6 +68,7 @@ public class PoetryApiController {
         resultMap.put("poetryBeanList", poetryBeanList);
         resultMap.put("keyword", language==0?HanLP.convertToTraditionalChinese(keyword):keyword);
         resultMap.put("page", page);
+        resultMap.put("total", total);
 
         return resultMap;
     }

@@ -37,11 +37,16 @@
 
     <select id="findPoetrySpByKeyword" parameterType="map" resultMap="BaseResultMap">
         SELECT id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
-         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode)  LIMIT #{page},10;
+         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT #{page},10;
     </select>
 
     <select id="findPoetryTrByKeyword" parameterType="map" resultMap="BaseResultMap">
         SELECT id, author, title, paragraphs from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
-         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode)  LIMIT #{page},10;
+         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT #{page},10;
+    </select>
+
+    <select id="countTotalPoetryByKeyword" parameterType="map" resultType="long">
+        SELECT count(*) from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
+         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode);
     </select>
 </mapper>

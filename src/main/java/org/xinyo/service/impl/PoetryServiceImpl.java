@@ -51,4 +51,9 @@ public class PoetryServiceImpl implements PoetryService {
     public List<Poetry> findPoetrySpByKeyword(Map<String, Object> params) {
         return poetryDao.findPoetrySpByKeyword(params);
     }
+
+    @Override
+    public long countTotalPoetryByKeyword(Map<String, Object> params) {
+        return poetryDao.countTotalPoetryByKeyword(params);
+    }
 }
