@@ -1,15 +1,15 @@
 $(function () {
 
-  var maxId = 332875;
-  var randomId = Math.floor(Math.random() * maxId);
-  var language = 1; // 默认简体
+  let maxId = 332875;
+  let randomId = Math.floor(Math.random() * maxId);
+  let language = 1; // 默认简体
 
 //写cookies
   function setCookie(name, value) {
-    var Days = 30;
-    var exp = new Date();
+    let Days = 30;
+    let exp = new Date();
     exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-    document.cookie = name + "=" + encodeURI(value) + ";expires=" + exp.toGMTString();
+    document.cookie = name + "=" + encodeURI(value) + ";expires=" + exp.toGMTString() + ";path=/";
   }
 
 //读取cookies
@@ -86,10 +86,11 @@ $(function () {
     $.each(resultMap.poetryBeanList, function (index, poetry) {
       let content = "";
       let re = new RegExp(keyword, "g");
-      let item = "<div class='search-item'><span class='search-item-title'>" + poetry.title.replace(re, "<em>" + keyword + "</em>") +
-        "</span><span class='search-item-author'>[" + poetry.author.replace(re, "<em>" + keyword + "</em>") +
-        "]</span><div class='search-item-content'>" + getAbstract(poetry.contentList, keyword) +
-        "</div></div>";
+      let item = "<div class='search-item'>" +
+        "<span class='search-item-title'><a href='/poetry/" + poetry.id +"' title='" + poetry.title + "'>" + poetry.title.replace(re, "<em>" + keyword + "</em>") + "</a></span>" +
+        "<span class='search-item-author'>[" + poetry.author.replace(re, "<em>" + keyword + "</em>") + "]</span>" +
+        "<div class='search-item-content'>" + getAbstract(poetry.contentList, keyword) + "</div>" +
+        "</div>";
       $("#poetry").append(item);
     })
 
@@ -174,7 +175,7 @@ $(function () {
     } else {
       getPoetryById(currentId + 1);
     }
-  })
+  });
 
 // 上一篇
   $(document).on("click", ".pre-poetry", function () {
@@ -184,14 +185,14 @@ $(function () {
     } else {
       getPoetryById(currentId - 1);
     }
-  })
+  });
 
 // 下一页
   $(document).on("click", ".next-page", function () {
     let page = parseInt($("#current-page").val());
     let keyword = $("#current-keyword").val();
     getPoetryByKeyword(keyword, page + 1);
-  })
+  });
 
 
 // 上一页
@@ -203,24 +204,24 @@ $(function () {
     } else {
       getPoetryByKeyword(keyword, page - 1);
     }
-  })
+  });
 
 
 // 搜索
   $(document).on("click", "#searchsubmit", function () {
     getPoetryByKeyword($("#keyword").val(), 1);
-  })
+  });
   $(document).on("keyup", "#keyword", function (e) {
     let keycode = 'which' in e ? e.which : e.keyCode;
     if (keycode == "13") { //回车
       getPoetryByKeyword($(this).val(), 1);
     }
-  })
+  });
 
 // 繁简切换
   $(document).on("click", "#tr-sp", function () {
     switchLanguage(language ^ 1);
-  })
+  });
 
 // 复制
   $(document).on("click", ".copy-poetry", function () {

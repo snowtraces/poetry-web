@@ -1,13 +1,17 @@
 package org.xinyo.controller;
 
+import com.google.gson.reflect.TypeToken;
 import com.hankcs.hanlp.HanLP;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.xinyo.domain.Poetry;
 import org.xinyo.domain.PoetryBean;
+import org.xinyo.domain.SearchResult;
 import org.xinyo.service.PoetryService;
+import org.xinyo.service.SearchResultService;
+import org.xinyo.util.JsonUtil;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,8 +24,12 @@ import static org.xinyo.util.PoetryUtils.poetry2PoetryBean;
  */
 @RestController
 public class PoetryApiController {
+
     @Autowired
     private PoetryService poetryService;
+
+    @Autowired
+    private SearchResultService searchResultService;
 
     @RequestMapping(value = "/api/poetry/{id}", method = RequestMethod.GET)
     public Poetry getPoetryById(@PathVariable Integer id, @RequestParam Integer language) {
@@ -44,29 +52,65 @@ public class PoetryApiController {
         }
 
         keyword = HanLP.convertToSimplifiedChinese(keyword);
+        List<Poetry> poetryList = new ArrayList<>();
+        long total = 0L;
         Map<String, Object> params = new HashMap<>();
         params.put("keyword", keyword);
         params.put("page", (page - 1) * 10);
 
-        long total = poetryService.countTotalPoetryByKeyword(params);
-        List<Poetry> poetryList = new ArrayList<>();
-        if(total > 0L){
-            if (language == 0) { // 繁体
-                poetryList = poetryService.findPoetryTrByKeyword(params);
-            } else { // 简体
-                poetryList = poetryService.findPoetrySpByKeyword(params);
+        // 1.读结果表
+        SearchResult searchResult = searchResultService.findByKeyword(keyword);
+
+        // 2.根据结果查询
+        if (searchResult == null) {
+            // 2.1 重新查询poetry表
+            total = poetryService.countTotalPoetryByKeyword(params);
+
+            if (total > 0L) {
+                if (language == 0) { // 繁体
+                    poetryList = poetryService.findPoetryTrByKeyword(params);
+                } else { // 简体
+                    poetryList = poetryService.findPoetrySpByKeyword(params);
+                }
+            }
+            if (total == 0L || poetryList == null || poetryList.size() == 0) {
+                return null;
             }
 
-            System.out.println(poetryList);
-            if (poetryList == null || poetryList.size() == 0) {
-                return null;
+            SearchResult newResult = new SearchResult();
+            newResult.setKeyword(keyword);
+            newResult.setTotal((int) total);
+            newResult.setTop100Id(JsonUtil.toJson(poetryService.findTop100IdByKeyword(keyword)));
+            searchResultService.add(newResult);
+        } else {
+            // 2.2 根据searchResult表进行查询
+            total = searchResult.getTotal();
+
+            if (page <= 10) {
+                // 只需取索引查询
+                String top100Id = searchResult.getTop100Id();
+                List<String> list = JsonUtil.jsonToList(top100Id, new TypeToken<ArrayList<String>>() {}.getType());
+                List<String> idList = list.subList((page - 1) * 10, page * 10);
+
+                if (language == 0) { // 繁体
+                    poetryList = poetryService.findTrByIds(idList);
+                } else { // 简体
+                    poetryList = poetryService.findSpByIds(idList);
+                }
+            } else {
+                // 重新查询
+                if (language == 0) { // 繁体
+                    poetryList = poetryService.findPoetryTrByKeyword(params);
+                } else { // 简体
+                    poetryList = poetryService.findPoetrySpByKeyword(params);
+                }
             }
         }
 
         List<PoetryBean> poetryBeanList = poetry2PoetryBean(poetryList);
 
         resultMap.put("poetryBeanList", poetryBeanList);
-        resultMap.put("keyword", language==0?HanLP.convertToTraditionalChinese(keyword):keyword);
+        resultMap.put("keyword", language == 0 ? HanLP.convertToTraditionalChinese(keyword) : keyword);
         resultMap.put("page", page);
         resultMap.put("total", total);
 

@@ -26,4 +26,10 @@ public interface PoetryDao {
     List<Poetry> findPoetrySpByKeyword(Map<String, Object> params);
 
     long countTotalPoetryByKeyword(Map<String, Object> params);
+
+    List<Integer> findTop100IdByKeyword(String keyword);
+
+    List<Poetry> findTrByIds(List<String> idList);
+
+    List<Poetry> findSpByIds(List<String> idList);
 }

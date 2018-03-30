@@ -3,6 +3,7 @@
     padding: 0;
     border: 0;
     outline: 0;
+    text-decoration: none;
     box-sizing: border-box;
 }
 
@@ -183,7 +184,16 @@ div.search-item {
 }
 
 span.search-item-title {
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 1.125em;
+}
+
+span.search-item-title a {
+    color: #1a0dab;
+}
+
+span.search-item-title a:visited {
+    color: #609;;
 }
 
 span.search-item-author {
@@ -194,8 +204,8 @@ span.search-item-author {
 }
 
 div.search-item-content {
-    font-size: .8em;
-    color: #666;
+    font-size: .75em;
+    color: #555;
 }
 
 .search-item em {

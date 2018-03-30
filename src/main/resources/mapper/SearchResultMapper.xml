@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xinyo.dao.SearchResultDao" >
+    <resultMap id="BaseResultMap" type="org.xinyo.domain.SearchResult">
+        <result column="id" property="id" />
+        <result column="keyword" property="keyword" />
+        <result column="total" property="total" />
+        <result column="top100Id" property="top100Id" />
+    </resultMap>
+
+    <select id="findByKeyword" parameterType="string" resultMap="BaseResultMap">
+        SELECT * FROM search_result WHERE keyword = #{keyword}
+    </select>
+
+    <insert id="insert" parameterType="org.xinyo.domain.SearchResult" >
+        INSERT INTO search_result (keyword, total, top100Id) VALUES (#{keyword}, #{total}, #{top100Id})
+    </insert>
+
+</mapper>

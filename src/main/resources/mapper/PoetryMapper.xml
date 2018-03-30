@@ -45,6 +45,25 @@
          AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT #{page},10;
     </select>
 
+    <select id="findTop100IdByKeyword" parameterType="map" resultType="int">
+        SELECT id from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
+         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT 100;
+    </select>
+
+    <select id="findSpByIds" parameterType="list" resultMap="BaseResultMap">
+        SELECT id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs from poetry where id IN
+        <foreach  collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findTrByIds" parameterType="list" resultMap="BaseResultMap">
+        SELECT id, author, title, paragraphs as paragraphs from poetry where id IN
+        <foreach  collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <select id="countTotalPoetryByKeyword" parameterType="map" resultType="long">
         SELECT count(*) from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
          AGAINST (CONCAT('*',#{keyword},'*') in boolean mode);
