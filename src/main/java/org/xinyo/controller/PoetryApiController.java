@@ -77,11 +77,10 @@ public class PoetryApiController {
                 return null;
             }
 
-            SearchResult newResult = new SearchResult();
-            newResult.setKeyword(keyword);
-            newResult.setTotal((int) total);
-            newResult.setTop100Id(JsonUtil.toJson(poetryService.findTop100IdByKeyword(keyword)));
-            searchResultService.add(newResult);
+            long finalTotal = total;
+            String finalKeyword = keyword;
+            new Thread(() -> addNewSearchResult(finalKeyword, (int) finalTotal)).start();
+
         } else {
             // 2.2 根据searchResult表进行查询
             total = searchResult.getTotal();
@@ -115,6 +114,14 @@ public class PoetryApiController {
         resultMap.put("total", total);
 
         return resultMap;
+    }
+
+    private void addNewSearchResult(String keyword, int total) {
+        SearchResult newResult = new SearchResult();
+        newResult.setKeyword(keyword);
+        newResult.setTotal(total);
+        newResult.setTop100Id(JsonUtil.toJson(poetryService.findTop100IdByKeyword(keyword)));
+        searchResultService.add(newResult);
     }
 
 
