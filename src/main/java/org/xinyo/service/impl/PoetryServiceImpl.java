@@ -53,7 +53,7 @@ public class PoetryServiceImpl implements PoetryService {
     }
 
     @Override
-    public long countTotalPoetryByKeyword(Map<String, Object> params) {
+    public int countTotalPoetryByKeyword(Map<String, Object> params) {
         return poetryDao.countTotalPoetryByKeyword(params);
     }
 

@@ -192,6 +192,10 @@ span.search-item-title a {
     color: #1a0dab;
 }
 
+span.search-item-title a:hover {
+    text-decoration: underline;
+}
+
 span.search-item-title a:visited {
     color: #609;;
 }

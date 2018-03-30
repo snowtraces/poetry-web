@@ -79,6 +79,7 @@ $(function () {
     $("meta[name=keywords]").attr("content", keyword);
     $("meta[name=description]").attr("content", keyword + " - 搜索结果");
     $("title").html(keyword + " - 搜索结果");
+    $("#keyword").val(keyword);
     $(".title-bar").remove();
     $("#content").prepend("<div class='title-bar'>获得约 " + toThousands(total) + " 条结果（第" + page + "页）</div>")
 
@@ -221,6 +222,7 @@ $(function () {
 // 繁简切换
   $(document).on("click", "#tr-sp", function () {
     switchLanguage(language ^ 1);
+    loadByUrl();
   });
 
 // 复制
@@ -259,7 +261,7 @@ $(function () {
       thisCopied.html("<i class='material-icons'>content_copy</i>");
     }, 1000)
 
-  })
+  });
 
   window.addEventListener('popstate', function (event) {
     loadByUrl();
@@ -280,4 +282,4 @@ $(function () {
   }
 
   initAll();
-})
+});

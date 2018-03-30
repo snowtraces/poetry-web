@@ -53,7 +53,7 @@ public class PoetryApiController {
 
         keyword = HanLP.convertToSimplifiedChinese(keyword);
         List<Poetry> poetryList = new ArrayList<>();
-        long total = 0L;
+        int total = 0;
         Map<String, Object> params = new HashMap<>();
         params.put("keyword", keyword);
         params.put("page", (page - 1) * 10);
@@ -84,12 +84,13 @@ public class PoetryApiController {
         } else {
             // 2.2 根据searchResult表进行查询
             total = searchResult.getTotal();
+            if(page > (int)Math.ceil(total/10d)) return null;
 
             if (page <= 10) {
                 // 只需取索引查询
                 String top100Id = searchResult.getTop100Id();
                 List<String> list = JsonUtil.jsonToList(top100Id, new TypeToken<ArrayList<String>>() {}.getType());
-                List<String> idList = list.subList((page - 1) * 10, page * 10);
+                List<String> idList = list.subList((page - 1) * 10, Math.min(page * 10,total));
 
                 if (language == 0) { // 繁体
                     poetryList = poetryService.findTrByIds(idList);
