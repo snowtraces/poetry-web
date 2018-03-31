@@ -5,7 +5,13 @@ import java.util.List;
 /**
  * Created by CHENG on 2018/3/27.
  */
-public class PoetryBean extends Poetry{
+public class PoetryBean {
+    private Integer id;
+    private String title;
+    private String author;
+    private String dynasty;
+    private Integer style;
+    private Integer authorId;
     private List<String> contentList;
     private String keyWords;
     private String description;
@@ -17,14 +23,58 @@ public class PoetryBean extends Poetry{
         super();
         this.setId(poetry.getId());
         this.setAuthor(poetry.getAuthor());
-        this.setAuthor_sp(poetry.getAuthor_sp());
         this.setTitle(poetry.getTitle());
-        this.setTitle_sp(poetry.getTitle_sp());
-        this.setParagraphs(poetry.getParagraphs());
-        this.setParagraphs_sp(poetry.getParagraphs_sp());
-        this.setStrains(poetry.getStrains());
         this.setDynasty(poetry.getDynasty());
         this.setStyle(poetry.getStyle());
+        this.setAuthorId(poetry.getAuthorId());
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getDynasty() {
+        return dynasty;
+    }
+
+    public void setDynasty(String dynasty) {
+        this.dynasty = dynasty;
+    }
+
+    public Integer getStyle() {
+        return style;
+    }
+
+    public void setStyle(Integer style) {
+        this.style = style;
+    }
+
+    public Integer getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
     }
 
     public List<String> getContentList() {

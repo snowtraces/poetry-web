@@ -17,7 +17,7 @@ public class PoetryUtils {
         PoetryBean poetryBean = new PoetryBean(poetry);
 
         // 关键词提取
-        List<String> keywordList = HanLP.extractKeyword(poetryBean.getParagraphs(), 10);
+        List<String> keywordList = HanLP.extractKeyword(poetry.getParagraphs(), 10);
         if(keywordList == null || keywordList.size() == 0) {
             poetryBean.setKeyWords("");
         } else {
@@ -32,17 +32,17 @@ public class PoetryUtils {
 
         // 文章摘要
         String description;
-        if (poetryBean.getParagraphs().length() > 32) {
-            description = poetryBean.getParagraphs().substring(0, 32).replaceAll("\n", "");
+        if (poetry.getParagraphs().length() > 32) {
+            description = poetry.getParagraphs().substring(0, 32).replaceAll("\n", "");
         } else {
-            description = poetryBean.getParagraphs().replaceAll("\n", "");
+            description = poetry.getParagraphs().replaceAll("\n", "");
         }
         poetryBean.setDescription(description);
 
         // 文章内容
         List<String> contentList = new ArrayList<>();
-        if (poetryBean.getParagraphs() != null) {
-            String[] split = poetryBean.getParagraphs().split("\n");
+        if (poetry.getParagraphs() != null) {
+            String[] split = poetry.getParagraphs().split("\n");
             contentList = Arrays.asList(split);
         }
         poetryBean.setContentList(contentList);

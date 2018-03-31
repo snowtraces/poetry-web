@@ -17,10 +17,6 @@ public interface PoetryDao {
 
     List<Poetry> findPoetryByKeyword(Map<String, Object> params);
 
-    Poetry findTrById(Integer id);
-
-    Poetry findSpById(Integer id);
-
     List<Poetry> findPoetryTrByKeyword(Map<String, Object> params);
 
     List<Poetry> findPoetrySpByKeyword(Map<String, Object> params);
@@ -32,4 +28,8 @@ public interface PoetryDao {
     List<Poetry> findTrByIds(List<String> idList);
 
     List<Poetry> findSpByIds(List<String> idList);
+
+    Poetry findByIdAndLanguage(Map<String, Object> params);
+
+    List<Poetry> findByKeywordAndLanguage(Map<String, Object> params);
 }

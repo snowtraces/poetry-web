@@ -4,14 +4,15 @@ import com.google.gson.reflect.TypeToken;
 import com.hankcs.hanlp.HanLP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.xinyo.domain.Author;
 import org.xinyo.domain.Poetry;
 import org.xinyo.domain.PoetryBean;
 import org.xinyo.domain.SearchResult;
+import org.xinyo.service.AuthorService;
 import org.xinyo.service.PoetryService;
 import org.xinyo.service.SearchResultService;
 import org.xinyo.util.JsonUtil;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,18 +30,29 @@ public class PoetryApiController {
     private PoetryService poetryService;
 
     @Autowired
+    private AuthorService authorService;
+
+    @Autowired
     private SearchResultService searchResultService;
 
     @RequestMapping(value = "/api/poetry/{id}", method = RequestMethod.GET)
-    public Poetry getPoetryById(@PathVariable Integer id, @RequestParam Integer language) {
-        Poetry poetry;
-        if (language == 0) { // 繁体
-            poetry = poetryService.findPoetryTrById(id);
-        } else { // 简体
-            poetry = poetryService.findPoetrySpById(id);
-        }
+    public Map<String, Object> getPoetryById(@PathVariable Integer id, @RequestParam Integer language) {
+        Map<String, Object> resultMap = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("language", language);
+
+        Poetry poetry = poetryService.findByIdAndLanguage(params);
         PoetryBean poetryBean = poetry2PoetryBean(poetry);
-        return poetryBean;
+
+        if(poetry != null && poetry.getAuthorId() != null ){
+            params.put("id", poetry.getAuthorId());
+            Author author = authorService.findByIdAndLanguage(params);
+            resultMap.put("author", author);
+        }
+
+        resultMap.put("poetry", poetryBean);
+        return resultMap;
     }
 
     @RequestMapping(value = "/api/poetry/search", method = RequestMethod.GET)
@@ -52,11 +64,12 @@ public class PoetryApiController {
         }
 
         keyword = HanLP.convertToSimplifiedChinese(keyword);
-        List<Poetry> poetryList = new ArrayList<>();
+        List<Poetry> poetryList;
         int total = 0;
         Map<String, Object> params = new HashMap<>();
         params.put("keyword", keyword);
         params.put("page", (page - 1) * 10);
+        params.put("language", language);
 
         // 1.读结果表
         SearchResult searchResult = searchResultService.findByKeyword(keyword);
@@ -67,13 +80,8 @@ public class PoetryApiController {
             total = poetryService.countTotalPoetryByKeyword(params);
 
             if (total > 0L) {
-                if (language == 0) { // 繁体
-                    poetryList = poetryService.findPoetryTrByKeyword(params);
-                } else { // 简体
-                    poetryList = poetryService.findPoetrySpByKeyword(params);
-                }
-            }
-            if (total == 0L || poetryList == null || poetryList.size() == 0) {
+                poetryList = poetryService.findByKeywordAndLanguage(params);
+            } else {
                 return null;
             }
 
@@ -84,13 +92,14 @@ public class PoetryApiController {
         } else {
             // 2.2 根据searchResult表进行查询
             total = searchResult.getTotal();
-            if(page > (int)Math.ceil(total/10d)) return null;
+            if (page > (int) Math.ceil(total / 10d)) return null;
 
             if (page <= 10) {
                 // 只需取索引查询
                 String top100Id = searchResult.getTop100Id();
-                List<String> list = JsonUtil.jsonToList(top100Id, new TypeToken<ArrayList<String>>() {}.getType());
-                List<String> idList = list.subList((page - 1) * 10, Math.min(page * 10,total));
+                List<String> list = JsonUtil.jsonToList(top100Id, new TypeToken<ArrayList<String>>() {
+                }.getType());
+                List<String> idList = list.subList((page - 1) * 10, Math.min(page * 10, total));
 
                 if (language == 0) { // 繁体
                     poetryList = poetryService.findTrByIds(idList);
@@ -99,11 +108,7 @@ public class PoetryApiController {
                 }
             } else {
                 // 重新查询
-                if (language == 0) { // 繁体
-                    poetryList = poetryService.findPoetryTrByKeyword(params);
-                } else { // 简体
-                    poetryList = poetryService.findPoetrySpByKeyword(params);
-                }
+                poetryList = poetryService.findByKeywordAndLanguage(params);
             }
         }
 

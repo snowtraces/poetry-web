@@ -33,26 +33,6 @@ public class PoetryServiceImpl implements PoetryService {
     }
 
     @Override
-    public Poetry findPoetryTrById(Integer id) {
-        return poetryDao.findTrById(id);
-    }
-
-    @Override
-    public Poetry findPoetrySpById(Integer id) {
-        return poetryDao.findSpById(id);
-    }
-
-    @Override
-    public List<Poetry> findPoetryTrByKeyword(Map<String, Object> params) {
-        return poetryDao.findPoetryTrByKeyword(params);
-    }
-
-    @Override
-    public List<Poetry> findPoetrySpByKeyword(Map<String, Object> params) {
-        return poetryDao.findPoetrySpByKeyword(params);
-    }
-
-    @Override
     public int countTotalPoetryByKeyword(Map<String, Object> params) {
         return poetryDao.countTotalPoetryByKeyword(params);
     }
@@ -69,5 +49,15 @@ public class PoetryServiceImpl implements PoetryService {
     @Override
     public List<Poetry> findSpByIds(List<String> idList) {
         return poetryDao.findSpByIds(idList);
+    }
+
+    @Override
+    public Poetry findByIdAndLanguage(Map<String, Object> params) {
+        return poetryDao.findByIdAndLanguage(params);
+    }
+
+    @Override
+    public List<Poetry> findByKeywordAndLanguage(Map<String, Object> params) {
+        return poetryDao.findByKeywordAndLanguage(params);
     }
 }

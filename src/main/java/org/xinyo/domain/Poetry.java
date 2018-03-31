@@ -6,14 +6,20 @@ package org.xinyo.domain;
 public class Poetry {
     private Integer id;
     private String title;
-    private String title_sp;
     private String author;
-    private String author_sp;
     private String paragraphs;
-    private String paragraphs_sp;
     private String strains;
     private String dynasty;
     private Integer style;
+    private Integer authorId;
+
+    public Integer getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
+    }
 
     public Integer getId() {
         return id;
@@ -31,14 +37,6 @@ public class Poetry {
         this.title = title;
     }
 
-    public String getTitle_sp() {
-        return title_sp;
-    }
-
-    public void setTitle_sp(String title_sp) {
-        this.title_sp = title_sp;
-    }
-
     public String getAuthor() {
         return author;
     }
@@ -47,28 +45,12 @@ public class Poetry {
         this.author = author;
     }
 
-    public String getAuthor_sp() {
-        return author_sp;
-    }
-
-    public void setAuthor_sp(String author_sp) {
-        this.author_sp = author_sp;
-    }
-
     public String getParagraphs() {
         return paragraphs;
     }
 
     public void setParagraphs(String paragraphs) {
         this.paragraphs = paragraphs;
-    }
-
-    public String getParagraphs_sp() {
-        return paragraphs_sp;
-    }
-
-    public void setParagraphs_sp(String paragraphs_sp) {
-        this.paragraphs_sp = paragraphs_sp;
     }
 
     public String getStrains() {
@@ -100,11 +82,8 @@ public class Poetry {
         return "Poetry{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", title_sp='" + title_sp + '\'' +
                 ", author='" + author + '\'' +
-                ", author_sp='" + author_sp + '\'' +
                 ", paragraphs='" + paragraphs + '\'' +
-                ", paragraphs_sp='" + paragraphs_sp + '\'' +
                 ", strains='" + strains + '\'' +
                 ", dynasty='" + dynasty + '\'' +
                 ", style=" + style +

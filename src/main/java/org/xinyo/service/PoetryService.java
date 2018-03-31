@@ -9,19 +9,11 @@ import java.util.Map;
  * Created by chengxinyong on 2018/3/27.
  */
 public interface PoetryService {
-    Poetry findPoetryById(Integer poetryId);
+    Poetry findPoetryById(Integer id);
 
     List<Poetry> findPoetryList();
 
     List<Poetry> findPoetryByKeyword(Map<String, Object> params);
-
-    Poetry findPoetryTrById(Integer id);
-
-    Poetry findPoetrySpById(Integer id);
-
-    List<Poetry> findPoetryTrByKeyword(Map<String, Object> params);
-
-    List<Poetry> findPoetrySpByKeyword(Map<String, Object> params);
 
     int countTotalPoetryByKeyword(Map<String, Object> params);
 
@@ -30,4 +22,8 @@ public interface PoetryService {
     List<Poetry> findTrByIds(List<String> idList);
 
     List<Poetry> findSpByIds(List<String> idList);
+
+    Poetry findByIdAndLanguage(Map<String, Object> params);
+
+    List<Poetry> findByKeywordAndLanguage(Map<String, Object> params);
 }

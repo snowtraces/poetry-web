@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xinyo.dao.AuthorDao" >
+    <resultMap id="BaseResultMap" type="org.xinyo.domain.Author">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="name_sp" property="name_sp" />
+        <result column="desc" property="desc" />
+        <result column="desc_sp" property="desc_sp" />
+    </resultMap>
+
+    <select id="findByIdAndLanguage" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <if test='language == "0"'>
+            id, `name`, `desc`
+        </if>
+        <if test='language == "1"'>
+            id, name_sp as `name`, desc_sp as `desc`
+        </if>
+        FROM author WHERE id = #{id}
+    </select>
+
+</mapper>

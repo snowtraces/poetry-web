@@ -4,26 +4,27 @@
     <resultMap id="BaseResultMap" type="org.xinyo.domain.Poetry">
         <result column="id" property="id" />
         <result column="author" property="author" />
-        <result column="author_sp" property="author_sp" />
         <result column="title" property="title" />
-        <result column="title_sp" property="title_sp" />
         <result column="paragraphs" property="paragraphs" />
-        <result column="paragraphs_sp" property="paragraphs_sp" />
         <result column="strains" property="strains" />
         <result column="dynasty" property="dynasty" />
         <result column="style" property="style" />
+        <result column="author_id" property="authorId" />
     </resultMap>
 
     <select id="findById" parameterType="int" resultMap="BaseResultMap">
         SELECT * FROM poetry WHERE id = #{id}
     </select>
 
-    <select id="findTrById" parameterType="int" resultMap="BaseResultMap">
-        SELECT id, author, title, paragraphs  FROM poetry WHERE id = #{id}
-    </select>
-
-    <select id="findSpById" parameterType="int" resultMap="BaseResultMap">
-        SELECT id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs FROM poetry WHERE id = #{id}
+    <select id="findByIdAndLanguage" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <if test='language == "0"'>
+            id, author, title, paragraphs, author_id
+        </if>
+        <if test='language == "1"'>
+            id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs, author_id
+        </if>
+        FROM poetry WHERE id = #{id}
     </select>
 
     <select id="findPoetryList" resultMap="BaseResultMap">
@@ -32,22 +33,24 @@
 
     <select id="findPoetryByKeyword" parameterType="map" resultMap="BaseResultMap">
         SELECT * from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
-         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode)  LIMIT #{page},10;
+        AGAINST (CONCAT('*',#{keyword},'*') in boolean mode)  LIMIT #{page},10;
     </select>
 
-    <select id="findPoetrySpByKeyword" parameterType="map" resultMap="BaseResultMap">
-        SELECT id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
-         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT #{page},10;
-    </select>
-
-    <select id="findPoetryTrByKeyword" parameterType="map" resultMap="BaseResultMap">
-        SELECT id, author, title, paragraphs from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
-         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT #{page},10;
+    <select id="findByKeywordAndLanguage" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <if test='language == "0"'>
+            id, author, title, paragraphs
+        </if>
+        <if test='language == "1"'>
+            id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs
+        </if>
+         from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
+        AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT #{page},10;
     </select>
 
     <select id="findTop100IdByKeyword" parameterType="map" resultType="int">
         SELECT id from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
-         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT 100;
+        AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT 100;
     </select>
 
     <select id="findSpByIds" parameterType="list" resultMap="BaseResultMap">
@@ -64,8 +67,8 @@
         </foreach>
     </select>
 
-    <select id="countTotalPoetryByKeyword" parameterType="map" resultType="long">
+    <select id="countTotalPoetryByKeyword" parameterType="map" resultType="int">
         SELECT count(*) from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
-         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode);
+        AGAINST (CONCAT('*',#{keyword},'*') in boolean mode);
     </select>
 </mapper>
