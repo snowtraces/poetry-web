@@ -1,5 +1,7 @@
 package org.xinyo.domain;
 
+import org.xinyo.util.JsonUtil;
+
 import java.util.List;
 
 /**
@@ -13,20 +15,20 @@ public class PoetryBean {
     private Integer style;
     private Integer authorId;
     private List<String> contentList;
-    private String keyWords;
     private String description;
+    private List keywords;
 
     public PoetryBean(){
 
     }
     public PoetryBean(Poetry poetry){
-        super();
-        this.setId(poetry.getId());
-        this.setAuthor(poetry.getAuthor());
-        this.setTitle(poetry.getTitle());
-        this.setDynasty(poetry.getDynasty());
-        this.setStyle(poetry.getStyle());
-        this.setAuthorId(poetry.getAuthorId());
+        this.id = poetry.getId();
+        this.author = poetry.getAuthor();
+        this.authorId = poetry.getAuthorId();
+        this.title = poetry.getTitle();
+        this.dynasty = poetry.getDynasty();
+        this.style = poetry.getStyle();
+        this.keywords = JsonUtil.jsonToList(poetry.getKeywords());
     }
 
     public Integer getId() {
@@ -85,14 +87,6 @@ public class PoetryBean {
         this.contentList = contentList;
     }
 
-    public String getKeyWords() {
-        return keyWords;
-    }
-
-    public void setKeyWords(String keyWords) {
-        this.keyWords = keyWords;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -101,12 +95,11 @@ public class PoetryBean {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "PoetryBean{" +
-                "contentList=" + contentList +
-                ", keyWords='" + keyWords + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+    public List getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List keywords) {
+        this.keywords = keywords;
     }
 }

@@ -19,4 +19,9 @@ public class JsonUtil {
         return gson.fromJson(json, type);
     }
 
+    public static List jsonToList(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, List.class);
+    }
+
 }

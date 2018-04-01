@@ -28,4 +28,6 @@ public interface PoetryService {
     List<Poetry> findByKeywordAndLanguage(Map<String, Object> params);
 
     void updateKeywordsById(Map<String, Object> params);
+
+    void updateParagrahsSpById(Map<String, Object> i);
 }

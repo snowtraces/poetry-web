@@ -20,4 +20,9 @@ public class AuthorServiceImpl implements AuthorService {
     public Author findByIdAndLanguage(Map<String, Object> params) {
         return authorDao.findByIdAndLanguage(params);
     }
+
+    @Override
+    public void updateDescSpById(Map<String, Object> params) {
+        authorDao.updateDescSpById(params);
+    }
 }

@@ -9,4 +9,6 @@ import java.util.Map;
  */
 public interface AuthorService {
     Author findByIdAndLanguage(Map<String, Object> params);
+
+    void updateDescSpById(Map<String, Object> params);
 }

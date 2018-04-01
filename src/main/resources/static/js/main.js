@@ -52,7 +52,9 @@ $(function () {
     function buildPoetryPage(data) {
         let poetry = data.poetry;
         let author = data.author;
-        $("meta[name=keywords]").attr("content", poetry.keyWords);
+        let keywords = poetry.keywords;
+
+        $("meta[name=keywords]").attr("content", keywords);
         $("meta[name=description]").attr("content", poetry.description);
         $("title").html(poetry.title);
 
@@ -66,14 +68,26 @@ $(function () {
         })
         poetryContent += "</div>";
 
-        let authorDetail = "<span class='author-name'><a href='/poetry/search?keyword=" + author.name +"&page=1'>" + author.name + "</a></span>" +
-            "<span class='author-dynasty'>" +
-            ((author.dynasty == "tang") ? "唐" : (author.dynasty == "song") ? "宋" : "") + "</span>" +
-            "<span class='author-desc'>" + author.desc + "</span> ";
+        let authorDetail = "";
+        if (author) {
+            authorDetail = "<span class='author-name'><a href='/poetry/search?keyword=" + author.name + "&page=1'>" + author.name + "</a></span>" +
+                "<span class='author-dynasty'>" +
+                ((author.dynasty == "tang") ? "唐" : (author.dynasty == "song") ? "宋" : "") + "</span>" +
+                "<span class='author-desc'>" + author.desc + "</span> ";
+        }
+
+        let poetryKeywords = "<div class='poetry-keywords'>";
+        $.each(keywords, function (index, value) {
+            poetryKeywords += "<span><a href='/poetry/search?keyword=" + value + "&page=1'>" + value + "</a></span>";
+        })
+        poetryKeywords += "</div>"
 
         $("#poetry").empty();
         $("#poetry").append("<div class='poetry-item poetry-single'>" + poetryId + poetryHeader + poetryContent + "</div>");
-        $("#poetry").append("<div class='author-detail'>" + authorDetail + "</div>")
+        if(author) $("#poetry").append("<div class='author-detail'>" + authorDetail + "</div>");
+
+        $("#sidebar").empty();
+        $("#sidebar").append(poetryKeywords);
 
         $("#nav-bar").html("<div class='pre-poetry pre-item'>上一篇</div><div class='next-poetry next-item'>下一篇</div><div class='clearfix'></div> ")
 
@@ -90,7 +104,7 @@ $(function () {
         $("title").html(keyword + " - 搜索结果");
         $("#keyword").val(keyword);
         $(".title-bar").remove();
-        $("#content").prepend("<div class='title-bar'>获得约 " + toThousands(total) + " 条结果（第" + page + "页）</div>")
+        $("#content-wrap").prepend("<div class='title-bar'>获得约 " + toThousands(total) + " 条结果（第" + page + "页）</div>")
 
         $("#poetry").empty();
         $.each(resultMap.poetryBeanList, function (index, poetry) {
@@ -102,7 +116,9 @@ $(function () {
                 "<div class='search-item-content'>" + getAbstract(poetry.contentList, keyword) + "</div>" +
                 "</div>";
             $("#poetry").append(item);
-        })
+        });
+
+        $("#sidebar").empty();
 
         $("#nav-bar").html("<input id='current-page' hidden value='" + page + "'>" +
             "<input id='current-keyword' hidden value='" + keyword + "'>" +
@@ -150,11 +166,11 @@ $(function () {
         setCookie("language", targetValue);
         language = targetValue;
         if (targetValue == 1) { // 简
-            $("#tr-sp .sp").css({top:".1em",right:".1em"});
-            $("#tr-sp .tr").css({top:"1.4em",right:"1.4em"});
+            $("#tr-sp .sp").css({top: ".1em", right: ".1em"});
+            $("#tr-sp .tr").css({top: "1.4em", right: "1.4em"});
         } else { // 繁
-            $("#tr-sp .tr").css({top:".1em",right:".1em"});
-            $("#tr-sp .sp").css({top:"1.4em",right:"1.4em"});
+            $("#tr-sp .tr").css({top: ".1em", right: ".1em"});
+            $("#tr-sp .sp").css({top: "1.4em", right: "1.4em"});
         }
     }
 

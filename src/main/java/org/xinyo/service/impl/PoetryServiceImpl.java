@@ -65,4 +65,9 @@ public class PoetryServiceImpl implements PoetryService {
     public void updateKeywordsById(Map<String, Object> params) {
         poetryDao.updateKeywordsById(params);
     }
+
+    @Override
+    public void updateParagrahsSpById(Map<String, Object> params) {
+        poetryDao.updateParagrahsSpById(params);
+    }
 }

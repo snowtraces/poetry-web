@@ -28,6 +28,7 @@
         <div id="content">
             <div id="poetry">
             </div>
+            <div id="sidebar"></div>
             <div id="nav-bar">
             </div>
         </div>

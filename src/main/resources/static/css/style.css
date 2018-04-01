@@ -61,14 +61,16 @@ div#wrap {
 
 div#tr-sp {
     line-height: 1;
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     color: #eee;
+    z-index: 999;
+    opacity: .7;
 }
 
 .bg-change {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     border: 1.2em solid;
@@ -89,7 +91,7 @@ div#tr-sp span {
     line-height: 1;
     font-size: .8em;
     padding: .25em;
-    position: absolute;
+    position: fixed;
     pointer-events: none;
 }
 
@@ -116,14 +118,35 @@ h2 {
 }
 
 div#content {
-    padding: 2em;
-    max-width: 800px;
-    /*margin: auto;*/
-    margin-left: 118px;
+    margin-left: 150px;
+    margin-top: 1.5em;
+    position: relative;
+    max-width: 900px;
+}
+
+div#sidebar {
+    width: 280px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+}
+
+div.poetry-keywords {
+    padding: 1em;
+    font-size: .875em;
+    display: flow-root;
+}
+
+div.poetry-keywords span {
+    display: inline-block;
+    padding: .3em .75em;
 }
 
 div#poetry {
     border: 1px solid #ccc;
+    margin-right: 300px;
 }
 
 div.poetry-item {
@@ -154,13 +177,23 @@ span.author-name {
     color: #1a0dab;
 }
 
-span.author-name:hover {
+span.author-name,
+span.search-item-title a,
+div.poetry-keywords a {
+    color: #1a0dab;
+}
+
+span.author-name:hover,
+span.search-item-title a:hover,
+div.poetry-keywords a:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-span.author-name:visited {
-    color: #609;
+span.author-name:visited,
+span.search-item-title a:visited,
+div.poetry-keywords a:visited {
+    color: #609;;
 }
 
 span.author-dynasty {
@@ -254,18 +287,6 @@ span.search-item-title {
     font-size: 1.125em;
 }
 
-span.search-item-title a {
-    color: #1a0dab;
-}
-
-span.search-item-title a:hover {
-    text-decoration: underline;
-}
-
-span.search-item-title a:visited {
-    color: #609;;
-}
-
 span.search-item-author {
     font-size: .9em;
     color: #666;
@@ -309,12 +330,13 @@ div.search-item-content {
 }
 
 div.title-bar {
-    padding-bottom: 1em;
+    padding-top: 1em;
     font-size: .8em;
     color: #aaa;
+    margin-left: 150px;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 600px) {
     div#content, div#header {
         margin: auto;
     }
@@ -325,13 +347,22 @@ div.title-bar {
 
     div#poetry {
         border: none;
+        margin: 0;
     }
 
-    div.title-bar{
-        padding:1.25em 1.875em 0;
+    div.title-bar {
+        padding: 1.25em 1.875em 0;
     }
-    div.search-item{
+
+    div.search-item {
+        border: none;
+        padding: 1em 1.5em 0;
+    }
+
+    div#sidebar {
+        width: 100%;
+        position: relative;
         border:none;
-        padding:1em 1.5em 0;
     }
 }
+

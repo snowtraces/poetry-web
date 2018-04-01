@@ -16,20 +16,6 @@ public class PoetryUtils {
     public static PoetryBean poetry2PoetryBean(Poetry poetry) {
         PoetryBean poetryBean = new PoetryBean(poetry);
 
-        // 关键词提取
-        List<String> keywordList = HanLP.extractKeyword(poetry.getParagraphs(), 10);
-        if(keywordList == null || keywordList.size() == 0) {
-            poetryBean.setKeyWords("");
-        } else {
-            StringBuilder sb = new StringBuilder();
-            for (String s : keywordList) {
-                sb.append(s);
-                sb.append(",");
-            }
-            sb.deleteCharAt(sb.length() - 1);
-            poetryBean.setKeyWords(sb.toString());
-        }
-
         // 文章摘要
         String description;
         if (poetry.getParagraphs().length() > 32) {

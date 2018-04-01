@@ -20,10 +20,10 @@
     <select id="findByIdAndLanguage" parameterType="map" resultMap="BaseResultMap">
         SELECT
         <if test='language == "0"'>
-            id, author, title, paragraphs, author_id
+            id, author, title, paragraphs, author_id, keywords
         </if>
         <if test='language == "1"'>
-            id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs, author_id
+            id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs, author_id, keywords
         </if>
         FROM poetry WHERE id = #{id}
     </select>
@@ -75,5 +75,8 @@
 
     <update id="updateKeywordsById" parameterType="map" >
         update poetry set keywords = #{keywords} where id = #{id}
+    </update>
+    <update id="updateParagrahsSpById" parameterType="map" >
+        update poetry set author_sp = #{title} where id = #{id}
     </update>
 </mapper>

@@ -45,12 +45,14 @@ public class PoetryApiController {
         Poetry poetry = poetryService.findByIdAndLanguage(params);
         PoetryBean poetryBean = poetry2PoetryBean(poetry);
 
-        if(poetry != null && poetry.getAuthorId() != null ){
+        if (poetry != null && poetry.getAuthorId() != null) {
             params.put("id", poetry.getAuthorId());
             Author author = authorService.findByIdAndLanguage(params);
             resultMap.put("author", author);
         }
 
+//        createKeywords(id);
+//        new Thread(() -> replaceWenHao()).start();
         resultMap.put("poetry", poetryBean);
         return resultMap;
     }
@@ -130,32 +132,68 @@ public class PoetryApiController {
         searchResultService.add(newResult);
     }
 
-    private void createKeywords(int start, int end){
+    private void createKeywords(int id) {
         Map<String, Object> params = new HashMap<>();
         params.put("language", 1);
-        for(int i = start; i <=  end; i ++){
-            params.put("id",i);
+        for (int i = id; i <= id; i++) {
+            params.put("id", i);
             Poetry poetry = poetryService.findByIdAndLanguage(params);
             String s = poetry.getTitle() + ", " + poetry.getParagraphs();
             List<String> strings = HanLP.extractKeyword(s, 32);
             List<String> list = new ArrayList<>();
             for (String string : strings) {
-                if(string.length() == 2){
+                if (string.length() == 2) {
                     list.add(string);
                 }
             }
 
             String json = JsonUtil.toJson(list);
 
-            params.put("keywords",json);
+            params.put("keywords", json);
             poetryService.updateKeywordsById(params);
-
-
             System.err.println(i);
-
         }
 
     }
 
+    private void replaceWenHao() {
 
+        // 1. 查询简体结果
+        for (int i : wenhaoId) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", i);
+            params.put("language", 1);
+
+//            Poetry sp = poetryService.findByIdAndLanguage(params);
+            Author sp = authorService.findByIdAndLanguage(params);
+
+            params.put("language", 0);
+            Author tr = authorService.findByIdAndLanguage(params);
+
+            String spStr = sp.getDesc();
+            String trStr = tr.getDesc();
+
+            String spStrResult = getReplaced(spStr,trStr);
+
+
+            params.put("title", spStrResult);
+            System.out.println(i + ": " + spStrResult);
+            authorService.updateDescSpById(params);
+        }
+
+    }
+
+    private String getReplaced(String source, String base){
+        int wenhaoIndex = source.indexOf("????", 0);
+        if(wenhaoIndex != -1){
+            String targetStr = base.substring(wenhaoIndex, wenhaoIndex + 1);
+            String spStrResult = source.replaceFirst("[?]{4}",targetStr);
+            return getReplaced(spStrResult, base);
+        } else {
+            return source;
+        }
+    }
+
+
+    private static int[] wenhaoId = new int[]{112,113,138,260,373,1215,1259,1404,1405,1411,1417,1421,1611,2322,2794,2808,2820,2886,3112,3189,3389,3789,4020,4267,4482,4894,5191,5237,5238,5643,5684,5858,5932,7149,7173,7297,7519,7665,7704,8101,8217,8218,8219,8225,8330,8358,8414,8579,8658,8759,9015,9167,9909,9963,10059,10313,10579,10588,10591,10665,11110,11135,11263,11275};
 }

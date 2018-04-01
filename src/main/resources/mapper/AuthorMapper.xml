@@ -19,4 +19,8 @@
         FROM author WHERE id = #{id}
     </select>
 
+    <update id="updateDescSpById" parameterType="map" >
+        update author set desc_sp = #{title} where id = #{id}
+    </update>
+
 </mapper>

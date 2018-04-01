@@ -11,4 +11,6 @@ import java.util.Map;
 @Repository
 public interface AuthorDao {
     Author findByIdAndLanguage(Map<String, Object> params);
+
+    void updateDescSpById(Map<String, Object> params);
 }
