@@ -10,6 +10,7 @@
         <result column="dynasty" property="dynasty" />
         <result column="style" property="style" />
         <result column="author_id" property="authorId" />
+        <result column="keywords" property="keywords" />
     </resultMap>
 
     <select id="findById" parameterType="int" resultMap="BaseResultMap">
@@ -32,7 +33,7 @@
     </select>
 
     <select id="findPoetryByKeyword" parameterType="map" resultMap="BaseResultMap">
-        SELECT * from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
+        SELECT * from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords)
         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode)  LIMIT #{page},10;
     </select>
 
@@ -44,12 +45,12 @@
         <if test='language == "1"'>
             id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs
         </if>
-         from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
+         from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords)
         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT #{page},10;
     </select>
 
     <select id="findTop100IdByKeyword" parameterType="map" resultType="int">
-        SELECT id from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
+        SELECT id from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords)
         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT 100;
     </select>
 
@@ -68,7 +69,11 @@
     </select>
 
     <select id="countTotalPoetryByKeyword" parameterType="map" resultType="int">
-        SELECT count(*) from poetry where MATCH(author_sp,title_sp,paragraphs_sp)
+        SELECT count(*) from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords)
         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode);
     </select>
+
+    <update id="updateKeywordsById" parameterType="map" >
+        update poetry set keywords = #{keywords} where id = #{id}
+    </update>
 </mapper>

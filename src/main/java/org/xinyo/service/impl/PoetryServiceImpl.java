@@ -60,4 +60,9 @@ public class PoetryServiceImpl implements PoetryService {
     public List<Poetry> findByKeywordAndLanguage(Map<String, Object> params) {
         return poetryDao.findByKeywordAndLanguage(params);
     }
+
+    @Override
+    public void updateKeywordsById(Map<String, Object> params) {
+        poetryDao.updateKeywordsById(params);
+    }
 }

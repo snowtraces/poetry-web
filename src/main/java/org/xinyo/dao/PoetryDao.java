@@ -32,4 +32,6 @@ public interface PoetryDao {
     Poetry findByIdAndLanguage(Map<String, Object> params);
 
     List<Poetry> findByKeywordAndLanguage(Map<String, Object> params);
+
+    int updateKeywordsById(Map<String, Object> params);
 }

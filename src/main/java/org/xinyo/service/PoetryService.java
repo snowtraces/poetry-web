@@ -26,4 +26,6 @@ public interface PoetryService {
     Poetry findByIdAndLanguage(Map<String, Object> params);
 
     List<Poetry> findByKeywordAndLanguage(Map<String, Object> params);
+
+    void updateKeywordsById(Map<String, Object> params);
 }

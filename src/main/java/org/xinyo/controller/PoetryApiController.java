@@ -130,5 +130,32 @@ public class PoetryApiController {
         searchResultService.add(newResult);
     }
 
+    private void createKeywords(int start, int end){
+        Map<String, Object> params = new HashMap<>();
+        params.put("language", 1);
+        for(int i = start; i <=  end; i ++){
+            params.put("id",i);
+            Poetry poetry = poetryService.findByIdAndLanguage(params);
+            String s = poetry.getTitle() + ", " + poetry.getParagraphs();
+            List<String> strings = HanLP.extractKeyword(s, 32);
+            List<String> list = new ArrayList<>();
+            for (String string : strings) {
+                if(string.length() == 2){
+                    list.add(string);
+                }
+            }
+
+            String json = JsonUtil.toJson(list);
+
+            params.put("keywords",json);
+            poetryService.updateKeywordsById(params);
+
+
+            System.err.println(i);
+
+        }
+
+    }
+
 
 }

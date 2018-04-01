@@ -12,6 +12,8 @@ public class Poetry {
     private String dynasty;
     private Integer style;
     private Integer authorId;
+    private String keywords;
+
 
     public Integer getAuthorId() {
         return authorId;
@@ -77,6 +79,14 @@ public class Poetry {
         this.style = style;
     }
 
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
+
     @Override
     public String toString() {
         return "Poetry{" +
@@ -87,6 +97,8 @@ public class Poetry {
                 ", strains='" + strains + '\'' +
                 ", dynasty='" + dynasty + '\'' +
                 ", style=" + style +
+                ", authorId=" + authorId +
+                ", keywords='" + keywords + '\'' +
                 '}';
     }
 }
