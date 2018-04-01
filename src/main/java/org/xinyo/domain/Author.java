@@ -7,6 +7,7 @@ public class Author {
     private Integer id;
     private String name;
     private String desc;
+    private String dynasty;
 
     public Integer getId() {
         return id;
@@ -32,4 +33,11 @@ public class Author {
         this.desc = desc;
     }
 
+    public String getDynasty() {
+        return dynasty;
+    }
+
+    public void setDynasty(String dynasty) {
+        this.dynasty = dynasty;
+    }
 }

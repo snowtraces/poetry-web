@@ -60,14 +60,16 @@ $(function () {
         let poetryHeader = "<div id='poetry-header'><div id='poetry-title'><h2>" + poetry.title +
             "</h2></div> <div id='poetry-author'>" + poetry.author + "</div></div>";
         let poetryContent = "<div id='poetry-content'>";
+        let pStyle = poetry.contentList.length > 8 ? "inline-block" : "block";
         $.each(poetry.contentList, function (index, value) {
-            poetryContent += "<p class='content-p'>" + value + "</p>";
+            poetryContent += "<p class='content-p' style='display: " + pStyle + "'>" + value + "</p>";
         })
         poetryContent += "</div>";
 
-        let authorDetail = "<span class='author-name'></span>" +
-            "<span class='author-dynasty'></span>" +
-            "<span class='author-desc'></span> ";
+        let authorDetail = "<span class='author-name'><a href='/poetry/search?keyword=" + author.name +"&page=1'>" + author.name + "</a></span>" +
+            "<span class='author-dynasty'>" +
+            ((author.dynasty == "tang") ? "唐" : (author.dynasty == "song") ? "宋" : "") + "</span>" +
+            "<span class='author-desc'>" + author.desc + "</span> ";
 
         $("#poetry").empty();
         $("#poetry").append("<div class='poetry-item poetry-single'>" + poetryId + poetryHeader + poetryContent + "</div>");
@@ -94,7 +96,7 @@ $(function () {
         $.each(resultMap.poetryBeanList, function (index, poetry) {
             let content = "";
             let re = new RegExp(keyword, "g");
-            let item = "<div class='search-item'>" +
+            let item = "<div class='poetry-item search-item'>" +
                 "<span class='search-item-title'><a href='/poetry/" + poetry.id + "' title='" + poetry.title + "'>" + poetry.title.replace(re, "<em>" + keyword + "</em>") + "</a></span>" +
                 "<span class='search-item-author'>[" + poetry.author.replace(re, "<em>" + keyword + "</em>") + "]</span>" +
                 "<div class='search-item-content'>" + getAbstract(poetry.contentList, keyword) + "</div>" +
@@ -148,11 +150,11 @@ $(function () {
         setCookie("language", targetValue);
         language = targetValue;
         if (targetValue == 1) { // 简
-            $("#tr-sp .sp").css("background", "#2bc");
-            $("#tr-sp .tr").css("background", "#ccc");
+            $("#tr-sp .sp").css({top:".1em",right:".1em"});
+            $("#tr-sp .tr").css({top:"1.4em",right:"1.4em"});
         } else { // 繁
-            $("#tr-sp .tr").css("background", "#2bc");
-            $("#tr-sp .sp").css("background", "#ccc");
+            $("#tr-sp .tr").css({top:".1em",right:".1em"});
+            $("#tr-sp .sp").css({top:"1.4em",right:"1.4em"});
         }
     }
 

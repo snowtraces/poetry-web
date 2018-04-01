@@ -64,8 +64,20 @@ div#tr-sp {
     position: absolute;
     right: 0;
     top: 0;
-    background: #ccc;
-    color: #fff;
+    color: #eee;
+}
+
+.bg-change {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 1.2em solid;
+    border-color: #2bc #2bc #eee #eee;
+    transition: .5s;
+}
+
+.bg-change:hover {
+    border-color: #2bc #2bc #ccc #ccc;
 }
 
 div#tr-sp:hover {
@@ -75,11 +87,20 @@ div#tr-sp:hover {
 div#tr-sp span {
     display: inline-block;
     line-height: 1;
-    padding: .3em;
+    font-size: .8em;
+    padding: .25em;
+    position: absolute;
+    pointer-events: none;
+}
+
+div#tr-sp .sp {
+    top: 0;
+    right: 0;
 }
 
 div#tr-sp .tr {
-    /*background: #2bc;*/
+    top: 1.5em;
+    right: 1.5em;
 }
 
 h1 {
@@ -97,7 +118,12 @@ h2 {
 div#content {
     padding: 2em;
     max-width: 800px;
-    margin: auto;
+    /*margin: auto;*/
+    margin-left: 118px;
+}
+
+div#poetry {
+    border: 1px solid #ccc;
 }
 
 div.poetry-item {
@@ -106,10 +132,51 @@ div.poetry-item {
     /*font-size: 1.2em;*/
     color: #333;
     padding: 1em 1.5em;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 1em;
     position: relative;
+}
+
+div.poetry-single {
+    border-bottom: none;
+}
+
+div.author-detail {
+    color: #333;
+    padding: 1em 1.5em;
+    border-top: none;
+    background: #f9f9f9;
+    line-height: 1.3;
+    position: relative;
+}
+
+span.author-name {
+    font-weight: 500;
+    font-size: 1.125em;
+    color: #1a0dab;
+}
+
+span.author-name:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+span.author-name:visited {
+    color: #609;
+}
+
+span.author-dynasty {
+    display: inline-block;
+    font-size: .75em;
+    line-height: 1;
+    padding: .1em;
+    background: #2bc;
+    margin: 0 .5em 0 .3em;
+    border-radius: 50%;
+    color: #fff;
+}
+
+span.author-desc {
+    font-size: .8em;
+    line-height: 1;
 }
 
 div#poetry-header {
@@ -132,7 +199,8 @@ div#header-wrap {
 div#header {
     height: 6em;
     max-width: 800px;
-    margin: auto;
+    /*margin: auto;*/
+    margin-left: 118px;
 }
 
 div#search {
@@ -177,10 +245,8 @@ div#nav-bar a {
 }
 
 div.search-item {
-    margin-bottom: 1em;
-    padding: 1em 1.5em;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: -1px;
 }
 
 span.search-item-title {
@@ -246,4 +312,26 @@ div.title-bar {
     padding-bottom: 1em;
     font-size: .8em;
     color: #aaa;
+}
+
+@media screen and (max-width: 720px) {
+    div#content, div#header {
+        margin: auto;
+    }
+
+    div#content {
+        padding: 0;
+    }
+
+    div#poetry {
+        border: none;
+    }
+
+    div.title-bar{
+        padding:1.25em 1.875em 0;
+    }
+    div.search-item{
+        border:none;
+        padding:1em 1.5em 0;
+    }
 }

@@ -4,18 +4,17 @@
     <resultMap id="BaseResultMap" type="org.xinyo.domain.Author">
         <result column="id" property="id" />
         <result column="name" property="name" />
-        <result column="name_sp" property="name_sp" />
         <result column="desc" property="desc" />
-        <result column="desc_sp" property="desc_sp" />
+        <result column="dynasty" property="dynasty" />
     </resultMap>
 
     <select id="findByIdAndLanguage" parameterType="map" resultMap="BaseResultMap">
         SELECT
         <if test='language == "0"'>
-            id, `name`, `desc`
+            id, `name`, `desc`, dynasty
         </if>
         <if test='language == "1"'>
-            id, name_sp as `name`, desc_sp as `desc`
+            id, name_sp as `name`, desc_sp as `desc`, dynasty
         </if>
         FROM author WHERE id = #{id}
     </select>
