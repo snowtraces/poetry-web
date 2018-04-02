@@ -351,6 +351,17 @@ span.author-desc-more:hover{
     cursor: pointer;
 }
 
+div.item-msg-box{
+    position: absolute;
+    width:100%;
+    padding: .5em 1em;
+    left: 0;
+    top: -3em;
+    opacity:.75;
+    background: #f00;
+    color: #fff;
+}
+
 @media screen and (max-width: 800px) {
     div#content, div.title-bar {
         margin-left: 2em;
@@ -362,8 +373,14 @@ span.author-desc-more:hover{
 }
 
 @media screen and (max-width: 600px) {
-    div#content, div#header,div#nav-bar {
+    div#content, div#header {
         margin: auto;
+    }
+    div#nav-bar{
+        margin:0;
+        position: fixed;
+        bottom:0;
+        width:100%;
     }
 
     div#content {
@@ -388,6 +405,7 @@ span.author-desc-more:hover{
         width: 100%;
         position: relative;
         border:none;
+        margin-bottom: 3.85em;
     }
     div.title-bar{
         margin:0;
