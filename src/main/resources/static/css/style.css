@@ -74,7 +74,7 @@ div#tr-sp {
     top: 0;
     right: 0;
     border: 1.2em solid;
-    border-color: #2bc #2bc #eee #eee;
+    border-color: #2bc #2bc transparent transparent;
     transition: .5s;
 }
 
@@ -363,6 +363,9 @@ div.title-bar {
         width: 100%;
         position: relative;
         border:none;
+    }
+    div.title-bar{
+        margin:0;
     }
 }
 

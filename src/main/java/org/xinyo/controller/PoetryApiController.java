@@ -12,6 +12,7 @@ import org.xinyo.service.AuthorService;
 import org.xinyo.service.PoetryService;
 import org.xinyo.service.SearchResultService;
 import org.xinyo.util.JsonUtil;
+import org.xinyo.util.UnicodeUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class PoetryApiController {
             page = 1;
         }
 
-        keyword = HanLP.convertToSimplifiedChinese(keyword);
+        keyword = UnicodeUtils.transBaseUnicode(keyword);
         List<Poetry> poetryList;
         int total = 0;
         Map<String, Object> params = new HashMap<>();
