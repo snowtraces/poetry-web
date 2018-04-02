@@ -209,7 +209,6 @@ span.author-dynasty {
 
 span.author-desc {
     font-size: .8em;
-    line-height: 1;
 }
 
 div#poetry-header {
@@ -334,6 +333,26 @@ div.title-bar {
     font-size: .8em;
     color: #aaa;
     margin-left: 150px;
+}
+
+span.author-desc-more{
+    display: inline-block;
+    padding:.2em;
+    color:#2bc;
+    font-weight:600;
+}
+span.author-desc-more:hover{
+    cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+    div#content, div.title-bar {
+        margin-left: 2em;
+    }
+    div#header {
+        margin-left: 0;
+    }
+
 }
 
 @media screen and (max-width: 600px) {
