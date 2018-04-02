@@ -177,11 +177,11 @@ $(function () {
     setCookie("language", targetValue);
     language = targetValue;
     if (targetValue == 1) { // 简
-      $("#tr-sp .sp").css({top: ".1em", right: ".1em"});
-      $("#tr-sp .tr").css({top: "1.4em", right: "1.4em"});
+      $("#tr-sp .sp").css({top: ".1em", right: ".1em", color:"#fff"});
+      $("#tr-sp .tr").css({top: "1.4em", right: "1.4em", color:""});
     } else { // 繁
-      $("#tr-sp .tr").css({top: ".1em", right: ".1em"});
-      $("#tr-sp .sp").css({top: "1.4em", right: "1.4em"});
+      $("#tr-sp .tr").css({top: ".1em", right: ".1em", color:"#fff"});
+      $("#tr-sp .sp").css({top: "1.4em", right: "1.4em", color:""});
     }
   }
 
@@ -205,7 +205,7 @@ $(function () {
   }
 
 // 下一篇
-  $(document).on("click", ".next-poetry", function () {
+  $(document).on("click touchend", ".next-poetry", function () {
     let currentId = parseInt($("#poetry-id").val());
     if (currentId >= maxId) {
       getPoetryById(maxId);
@@ -215,7 +215,7 @@ $(function () {
   });
 
 // 上一篇
-  $(document).on("click", ".pre-poetry", function () {
+  $(document).on("click touchend", ".pre-poetry", function () {
     let currentId = parseInt($("#poetry-id").val());
     if (currentId <= 1) {
       getPoetryById(1);
@@ -225,7 +225,7 @@ $(function () {
   });
 
 // 下一页
-  $(document).on("click", ".next-page", function () {
+  $(document).on("click touchend", ".next-page", function () {
     let page = parseInt($("#current-page").val());
     let keyword = $("#current-keyword").val();
     getPoetryByKeyword(keyword, page + 1);
@@ -233,7 +233,7 @@ $(function () {
 
 
 // 上一页
-  $(document).on("click", ".pre-page", function () {
+  $(document).on("click touchend", ".pre-page", function () {
     let page = parseInt($("#current-page").val());
     let keyword = $("#current-keyword").val();
     if (page == 1) {
@@ -245,7 +245,7 @@ $(function () {
 
 
 // 搜索
-  $(document).on("click", "#searchsubmit", function () {
+  $(document).on("click touchend", "#searchsubmit", function () {
     getPoetryByKeyword($("#keyword").val(), 1);
   });
   $(document).on("keyup", "#keyword", function (e) {
@@ -262,7 +262,7 @@ $(function () {
   });
 
 // 复制
-  $(document).on("click", ".copy-poetry", function () {
+  $(document).on("click touchend", ".copy-poetry", function () {
     //初始化
     $("textarea").remove("#targetId");
 

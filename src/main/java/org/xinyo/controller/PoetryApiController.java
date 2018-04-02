@@ -11,7 +11,7 @@ import org.xinyo.domain.SearchResult;
 import org.xinyo.service.AuthorService;
 import org.xinyo.service.PoetryService;
 import org.xinyo.service.SearchResultService;
-import org.xinyo.util.JsonUtil;
+import org.xinyo.util.JsonUtils;
 import org.xinyo.util.UnicodeUtils;
 
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ public class PoetryApiController {
             if (page <= 10) {
                 // 只需取索引查询
                 String top100Id = searchResult.getTop100Id();
-                List<String> list = JsonUtil.jsonToList(top100Id, new TypeToken<ArrayList<String>>() {
+                List<String> list = JsonUtils.jsonToList(top100Id, new TypeToken<ArrayList<String>>() {
                 }.getType());
                 List<String> idList = list.subList((page - 1) * 10, Math.min(page * 10, total));
 
@@ -129,7 +129,7 @@ public class PoetryApiController {
         SearchResult newResult = new SearchResult();
         newResult.setKeyword(keyword);
         newResult.setTotal(total);
-        newResult.setTop100Id(JsonUtil.toJson(poetryService.findTop100IdByKeyword(keyword)));
+        newResult.setTop100Id(JsonUtils.toJson(poetryService.findTop100IdByKeyword(keyword)));
         searchResultService.add(newResult);
     }
 
@@ -148,7 +148,7 @@ public class PoetryApiController {
                 }
             }
 
-            String json = JsonUtil.toJson(list);
+            String json = JsonUtils.toJson(list);
 
             params.put("keywords", json);
             poetryService.updateKeywordsById(params);

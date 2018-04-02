@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by chengxinyong on 2018/3/30.
  */
-public class JsonUtil {
+public class JsonUtils {
     public static String toJson(Object object) {
         Gson gson = new Gson();
         return gson.toJson(object);

@@ -80,7 +80,6 @@ public class UnicodeUtils {
                 index++;
             }
         }
-        System.err.println(sb);
         return sb.toString();
     }
 

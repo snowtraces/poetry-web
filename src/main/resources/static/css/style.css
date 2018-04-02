@@ -64,9 +64,12 @@ div#tr-sp {
     position: fixed;
     right: 0;
     top: 0;
-    color: #eee;
+    color: transparent;
     z-index: 999;
     opacity: .7;
+}
+div#tr-sp:hover{
+    color: #fff;
 }
 
 .bg-change {
@@ -255,16 +258,19 @@ input#searchsubmit:hover {
 }
 
 div#nav-bar {
-    padding: 1em;
+    margin-top: 1em;
+    margin-right: 300px;
+    display: flex;
 }
 
 div.pre-item, div.next-item {
-    width: 6em;
-    float: left;
+    width: 50%;
+    text-align: center;
+    padding: 1em;
+    background: #ddd;
 }
 
 div.next-item {
-    text-align: right;
 }
 
 div.pre-item:hover, div.next-item:hover {
@@ -356,7 +362,7 @@ span.author-desc-more:hover{
 }
 
 @media screen and (max-width: 600px) {
-    div#content, div#header {
+    div#content, div#header,div#nav-bar {
         margin: auto;
     }
 

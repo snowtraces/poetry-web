@@ -1,6 +1,6 @@
 package org.xinyo.domain;
 
-import org.xinyo.util.JsonUtil;
+import org.xinyo.util.JsonUtils;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class PoetryBean {
         this.title = poetry.getTitle();
         this.dynasty = poetry.getDynasty();
         this.style = poetry.getStyle();
-        this.keywords = JsonUtil.jsonToList(poetry.getKeywords());
+        this.keywords = JsonUtils.jsonToList(poetry.getKeywords());
     }
 
     public Integer getId() {
