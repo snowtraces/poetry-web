@@ -17,11 +17,13 @@ public class PoetryUtils {
         PoetryBean poetryBean = new PoetryBean(poetry);
 
         // 文章摘要
-        String description;
-        if (poetry.getParagraphs().length() > 32) {
-            description = poetry.getParagraphs().substring(0, 32).replaceAll("\n", "");
-        } else {
-            description = poetry.getParagraphs().replaceAll("\n", "");
+        String description = "";
+        if (poetry.getParagraphs() != null) {
+            if (poetry.getParagraphs().length() > 32) {
+                description = poetry.getParagraphs().substring(0, 32).replaceAll("\n", "");
+            } else {
+                description = poetry.getParagraphs().replaceAll("\n", "");
+            }
         }
         poetryBean.setDescription(description);
 

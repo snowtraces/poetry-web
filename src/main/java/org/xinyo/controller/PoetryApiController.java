@@ -44,9 +44,13 @@ public class PoetryApiController {
         params.put("language", language);
 
         Poetry poetry = poetryService.findByIdAndLanguage(params);
-        PoetryBean poetryBean = poetry2PoetryBean(poetry);
 
-        if (poetry != null && poetry.getAuthorId() != null) {
+        if(poetry == null){
+            poetry = new Poetry(id);
+        }
+
+        PoetryBean poetryBean = poetry2PoetryBean(poetry);
+        if (poetry.getAuthorId() != null) {
             params.put("id", poetry.getAuthorId());
             Author author = authorService.findByIdAndLanguage(params);
             resultMap.put("author", author);

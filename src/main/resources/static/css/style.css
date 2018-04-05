@@ -68,7 +68,8 @@ div#tr-sp {
     z-index: 999;
     opacity: .7;
 }
-div#tr-sp:hover{
+
+div#tr-sp:hover {
     color: #fff;
 }
 
@@ -124,7 +125,7 @@ div#content {
     margin-left: 150px;
     margin-top: 1.5em;
     position: relative;
-    max-width: 900px;
+    width: 900px;
 }
 
 div#sidebar {
@@ -232,25 +233,40 @@ div#header-wrap {
 }
 
 div#header {
-    height: 6em;
-    max-width: 800px;
-    /*margin: auto;*/
-    margin-left: 118px;
+}
+
+div#title {
+    float: left;
+    font-size: 1.5em;
+    width: 150px;
+    padding: 1em .85em;
 }
 
 div#search {
-    padding: 2em;
+    float: left;
+    padding: 2em 0;
+    width: 600px;
+    position: relative;
+}
+
+div#search-form{
+    position: relative;
 }
 
 input#keyword {
-    padding: .1em .5em;
+    width:100%;
+    padding: .2em 5em .2em .5em;
     border: 1px solid #ddd;
 }
 
 input#searchsubmit {
-    padding: .1em .6em;
+    padding: 0 .5em;
     letter-spacing: 3px;
-    background: #ddd;
+    background: #fff;
+    position: absolute;
+    top:.2em;
+    right: .1em;
+    color: #2bc;
 }
 
 input#searchsubmit:hover {
@@ -341,33 +357,44 @@ div.title-bar {
     margin-left: 150px;
 }
 
-span.author-desc-more{
+span.author-desc-more {
     display: inline-block;
-    padding:.2em;
-    color:#2bc;
-    font-weight:600;
+    padding: .2em;
+    color: #2bc;
+    font-weight: 600;
 }
-span.author-desc-more:hover{
+
+span.author-desc-more:hover {
     cursor: pointer;
 }
 
-div.item-msg-box{
+div.item-msg-box {
     position: absolute;
-    width:100%;
+    width: 100%;
     padding: .5em 1em;
     left: 0;
     top: -3em;
-    opacity:.75;
+    opacity: .5;
     background: #f00;
     color: #fff;
 }
 
 @media screen and (max-width: 800px) {
-    div#content, div.title-bar {
+    div#content {
         margin-left: 2em;
     }
+
+    div.title-bar {
+        margin-left: 2.25em;
+    }
+
     div#header {
         margin-left: 0;
+        width:932px;
+    }
+
+    div#search {
+        width: 482px;
     }
 
 }
@@ -375,12 +402,14 @@ div.item-msg-box{
 @media screen and (max-width: 600px) {
     div#content, div#header {
         margin: auto;
-    }
-    div#nav-bar{
-        margin:0;
-        position: fixed;
-        bottom:0;
         width:100%;
+    }
+
+    div#nav-bar {
+        margin: 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
     }
 
     div#content {
@@ -404,11 +433,21 @@ div.item-msg-box{
     div#sidebar {
         width: 100%;
         position: relative;
-        border:none;
+        border: none;
         margin-bottom: 3.85em;
     }
-    div.title-bar{
-        margin:0;
+
+    div.title-bar {
+        margin: 0;
+    }
+
+    div#search{
+        width:100%;
+        padding: 1em 1.5em;
+    }
+    div#title {
+        width: 100%;
+        padding:1em 1.333em 0;
     }
 }
 

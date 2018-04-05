@@ -14,6 +14,13 @@ public class Poetry {
     private Integer authorId;
     private String keywords;
 
+    public Poetry(){
+
+    }
+
+    public Poetry(Integer id) {
+        this.id = id;
+    }
 
     public Integer getAuthorId() {
         return authorId;
