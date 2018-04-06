@@ -36,4 +36,10 @@ public interface PoetryDao {
     int updateKeywordsById(Map<String, Object> params);
 
     void updateParagrahsSpById(Map<String, Object> params);
+
+    int countTotalPoetryByAuthor(Map<String, Object> params);
+
+    List<Poetry> findByAuthorAndLanguage(Map<String, Object> params);
+
+    List<Integer> findTop100IdByAuthor(String replace);
 }

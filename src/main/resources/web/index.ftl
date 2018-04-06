@@ -16,7 +16,7 @@
     <div id="tr-sp"><div class="bg-change"></div><span class='tr'>繁</span><span class='sp'>简</span></div>
     <div id="header-wrap" class="wrap">
         <div id="header">
-            <div id="title"><h1><a class="/">诗词歌赋</a></h1></div>
+            <div id="title"><h1><a href="/">诗词歌赋</a></h1></div>
             <div id="search">
                 <div method="get" id="search-form">
                     <input id="keyword" type="text" name="keyword" placeholder="">

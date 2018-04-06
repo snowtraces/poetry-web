@@ -6,6 +6,7 @@ import org.xinyo.dao.PoetryDao;
 import org.xinyo.domain.Poetry;
 import org.xinyo.service.PoetryService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,11 +35,21 @@ public class PoetryServiceImpl implements PoetryService {
 
     @Override
     public int countTotalPoetryByKeyword(Map<String, Object> params) {
+        String keyword = (String) params.get("keyword");
+        if(keyword != null && keyword.startsWith("author:")){
+            Map<String, Object> newParams = copyMap(params);
+            newParams.put("keyword", keyword.replace("author:",""));
+            System.err.println(params);
+            return poetryDao.countTotalPoetryByAuthor(newParams);
+        }
         return poetryDao.countTotalPoetryByKeyword(params);
     }
 
     @Override
     public List<Integer> findTop100IdByKeyword(String keyword) {
+        if(keyword != null && keyword.startsWith("author:")){
+            return poetryDao.findTop100IdByAuthor(keyword.replace("author:",""));
+        }
         return poetryDao.findTop100IdByKeyword(keyword);
     }
 
@@ -58,6 +69,12 @@ public class PoetryServiceImpl implements PoetryService {
 
     @Override
     public List<Poetry> findByKeywordAndLanguage(Map<String, Object> params) {
+        String keyword = (String) params.get("keyword");
+        if(keyword != null && keyword.startsWith("author:")){
+            Map<String, Object> newParams = copyMap(params);
+            newParams.put("keyword", keyword.replace("author:",""));
+            return poetryDao.findByAuthorAndLanguage(newParams);
+        }
         return poetryDao.findByKeywordAndLanguage(params);
     }
 
@@ -69,5 +86,13 @@ public class PoetryServiceImpl implements PoetryService {
     @Override
     public void updateParagrahsSpById(Map<String, Object> params) {
         poetryDao.updateParagrahsSpById(params);
+    }
+
+    public Map<String,Object> copyMap(Map<String, Object> map){
+        Map<String, Object>  resultMap = new HashMap<>();
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            resultMap.put(entry.getKey(),entry.getValue());
+        }
+        return resultMap;
     }
 }

@@ -82,7 +82,7 @@ $(function () {
 
         let authorDetail = "";
         if (author) {
-            authorDetail = "<span class='author-name'><a href='/poetry/search?keyword=" + author.name + "&page=1'>" + author.name + "</a></span>" +
+            authorDetail = "<span class='author-name'><a href='/poetry/search?keyword=author:" + author.name + "&page=1'>" + author.name + "</a></span>" +
                 "<span class='author-dynasty'>" +
                 ((author.dynasty == "tang") ? "唐" : (author.dynasty == "song") ? "宋" : "") + "</span>" +
                 "<span class='author-desc'>" + getAuthorAbstract(author.desc, 128) + "</span>" +
@@ -128,6 +128,7 @@ $(function () {
         $("#poetry").empty();
         $.each(resultMap.poetryBeanList, function (index, poetry) {
             let content = "";
+            keyword = keyword.replace("author:","");
             let re = new RegExp(keyword, "g");
             let item = "<div class='poetry-item search-item'>" +
                 "<span class='search-item-title'><a href='/poetry/" + poetry.id + "' title='" + poetry.title + "'>" + poetry.title.replace(re, "<em>" + keyword + "</em>") + "</a></span>" +

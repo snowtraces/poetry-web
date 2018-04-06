@@ -77,6 +77,7 @@ public class PoetryApiController {
         params.put("keyword", keyword);
         params.put("page", (page - 1) * 10);
         params.put("language", language);
+        System.err.println(params);
 
         // 1.读结果表
         SearchResult searchResult = searchResultService.findByKeyword(keyword);
