@@ -139,15 +139,28 @@ div#sidebar {
     border: 1px solid #ddd;
 }
 
-div.poetry-keywords {
+div.poetry-meta {
     padding: 1em;
     font-size: .875em;
     display: flow-root;
 }
 
-div.poetry-keywords span {
+span.poetry-keywords {
     display: inline-block;
     padding: .3em .75em;
+}
+
+span.poetry-tags{
+    display: inline-block;
+    padding: 0 .75em;
+    background: #2bc;
+    margin: .4em;
+    border-radius: 5px;
+    font-size: .9375em;
+}
+
+span.poetry-tags a{
+    color: #fff;
 }
 
 div#poetry {

@@ -13,6 +13,7 @@ public class Poetry {
     private Integer style;
     private Integer authorId;
     private String keywords;
+    private String tags;
 
     public Poetry(){
 
@@ -92,6 +93,14 @@ public class Poetry {
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     @Override

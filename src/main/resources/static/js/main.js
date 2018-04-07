@@ -65,6 +65,7 @@ $(function () {
         let poetry = data.poetry;
         let author = data.author;
         let keywords = poetry.keywords;
+        let tags = poetry.tags;
 
         $("meta[name=keywords]").attr("content", keywords);
         $("meta[name=description]").attr("content", poetry.description);
@@ -74,7 +75,7 @@ $(function () {
         let poetryHeader = "<div id='poetry-header'><div id='poetry-title'><h2>" + poetry.title +
             "</h2></div> <div id='poetry-author'>" + poetry.author + "</div></div>";
         let poetryContent = "<div id='poetry-content'>";
-        let pStyle = poetry.contentList.length > 12 ? "inline-block" : "block";
+        let pStyle = poetry.contentList.length > 24 ? "inline-block" : "block";
         $.each(poetry.contentList, function (index, value) {
             poetryContent += "<p class='content-p' style='display: " + pStyle + "'>" + value + "</p>";
         })
@@ -91,18 +92,22 @@ $(function () {
                 "<textarea class='author-desc-full' hidden>" + author.desc + "</textarea> ";
         }
 
-        let poetryKeywords = "<div class='poetry-keywords'>";
-        $.each(keywords, function (index, value) {
-            poetryKeywords += "<span><a href='/poetry/search?keyword=" + value + "&page=1'>" + value + "</a></span>";
+        let poetryMeta = "<div class='poetry-meta'>";
+        $.each(tags, function (index, value) {
+            poetryMeta += "<span class='poetry-tags'><a href='/poetry/search?keyword=tag:" + value + "&page=1'>" + value + "</a></span>";
         })
-        poetryKeywords += "</div>"
+        $.each(keywords, function (index, value) {
+            poetryMeta += "<span class='poetry-keywords'><a href='/poetry/search?keyword=" + value + "&page=1'>" + value + "</a></span>";
+        })
+        poetryMeta += "</div>";
+
 
         $("#poetry").empty();
         $("#poetry").append("<div class='poetry-item poetry-single'>" + poetryId + poetryHeader + poetryContent + "</div>");
         if (author) $("#poetry").append("<div class='author-detail'>" + authorDetail + "</div>");
 
         $("#sidebar").empty();
-        $("#sidebar").append(poetryKeywords);
+        $("#sidebar").append(poetryMeta);
 
         $("#nav-bar").html("<div class='pre-poetry pre-item'>上一篇</div><div class='next-poetry next-item'>下一篇</div><div class='clearfix'></div> ")
 

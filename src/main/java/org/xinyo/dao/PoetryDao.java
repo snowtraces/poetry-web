@@ -42,4 +42,10 @@ public interface PoetryDao {
     List<Poetry> findByAuthorAndLanguage(Map<String, Object> params);
 
     List<Integer> findTop100IdByAuthor(String replace);
+
+    int countTotalPoetryByTag(Map<String, Object> newParams);
+
+    List<Poetry> findByTagAndLanguage(Map<String, Object> newParams);
+
+    List<Integer> findTop100IdByTag(String replace);
 }

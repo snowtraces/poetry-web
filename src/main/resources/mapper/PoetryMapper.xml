@@ -11,6 +11,7 @@
         <result column="style" property="style" />
         <result column="author_id" property="authorId" />
         <result column="keywords" property="keywords" />
+        <result column="tags" property="tags" />
     </resultMap>
 
     <select id="findById" parameterType="int" resultMap="BaseResultMap">
@@ -20,10 +21,10 @@
     <select id="findByIdAndLanguage" parameterType="map" resultMap="BaseResultMap">
         SELECT
         <if test='language == "0"'>
-            id, author, title, paragraphs, author_id, keywords
+            id, author, title, paragraphs, author_id, keywords, tags
         </if>
         <if test='language == "1"'>
-            id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs, author_id, keywords
+            id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs, author_id, keywords, tags
         </if>
         FROM poetry WHERE id = #{id}
     </select>
@@ -48,6 +49,17 @@
          from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords,tags)
         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT #{page},10;
     </select>
+    <select id="findByTagAndLanguage" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <if test='language == "0"'>
+            id, author, title, paragraphs
+        </if>
+        <if test='language == "1"'>
+            id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs
+        </if>
+         from poetry where MATCH(tags)
+        AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT #{page},10;
+    </select>
     <select id="findByAuthorAndLanguage" parameterType="map" resultMap="BaseResultMap">
         SELECT
         <if test='language == "0"'>
@@ -61,6 +73,10 @@
 
     <select id="findTop100IdByKeyword" parameterType="map" resultType="int">
         SELECT id from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords,tags)
+        AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT 100;
+    </select>
+    <select id="findTop100IdByTag" parameterType="map" resultType="int">
+        SELECT id from poetry where MATCH(tags)
         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT 100;
     </select>
     <select id="findTop100IdByAuthor" parameterType="map" resultType="int">
@@ -83,6 +99,10 @@
 
     <select id="countTotalPoetryByKeyword" parameterType="map" resultType="int">
         SELECT count(*) from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords,tags)
+        AGAINST (CONCAT('*',#{keyword},'*') in boolean mode);
+    </select>
+    <select id="countTotalPoetryByTag" parameterType="map" resultType="int">
+        SELECT count(*) from poetry where MATCH(tags)
         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode);
     </select>
     <select id="countTotalPoetryByAuthor" parameterType="map" resultType="int">

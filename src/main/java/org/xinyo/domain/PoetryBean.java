@@ -17,6 +17,7 @@ public class PoetryBean {
     private List<String> contentList;
     private String description;
     private List keywords;
+    private List tags;
 
     public PoetryBean(){
 
@@ -29,6 +30,7 @@ public class PoetryBean {
         this.dynasty = poetry.getDynasty();
         this.style = poetry.getStyle();
         this.keywords = JsonUtils.jsonToList(poetry.getKeywords());
+        this.tags = JsonUtils.jsonToList(poetry.getTags());
     }
 
     public Integer getId() {
@@ -101,5 +103,13 @@ public class PoetryBean {
 
     public void setKeywords(List keywords) {
         this.keywords = keywords;
+    }
+
+    public List getTags() {
+        return tags;
+    }
+
+    public void setTags(List tags) {
+        this.tags = tags;
     }
 }

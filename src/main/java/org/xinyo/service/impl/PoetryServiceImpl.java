@@ -36,19 +36,29 @@ public class PoetryServiceImpl implements PoetryService {
     @Override
     public int countTotalPoetryByKeyword(Map<String, Object> params) {
         String keyword = (String) params.get("keyword");
-        if(keyword != null && keyword.startsWith("author:")){
-            Map<String, Object> newParams = copyMap(params);
-            newParams.put("keyword", keyword.replace("author:",""));
-            System.err.println(params);
-            return poetryDao.countTotalPoetryByAuthor(newParams);
+        if(keyword != null){
+            if(keyword.startsWith("author:")){
+                Map<String, Object> newParams = copyMap(params);
+                newParams.put("keyword", keyword.replace("author:",""));
+                return poetryDao.countTotalPoetryByAuthor(newParams);
+            } else if (keyword.startsWith("tag:")) {
+                Map<String, Object> newParams = copyMap(params);
+                newParams.put("keyword", keyword.replace("tag:",""));
+                return poetryDao.countTotalPoetryByTag(newParams);
+            }
         }
         return poetryDao.countTotalPoetryByKeyword(params);
     }
 
     @Override
     public List<Integer> findTop100IdByKeyword(String keyword) {
-        if(keyword != null && keyword.startsWith("author:")){
-            return poetryDao.findTop100IdByAuthor(keyword.replace("author:",""));
+        if(keyword != null){
+            if(keyword.startsWith("author:")){
+                return poetryDao.findTop100IdByAuthor(keyword.replace("author:",""));
+            } else if (keyword.startsWith("tag:")) {
+                return poetryDao.findTop100IdByTag(keyword.replace("tag:",""));
+            }
+
         }
         return poetryDao.findTop100IdByKeyword(keyword);
     }
@@ -70,10 +80,17 @@ public class PoetryServiceImpl implements PoetryService {
     @Override
     public List<Poetry> findByKeywordAndLanguage(Map<String, Object> params) {
         String keyword = (String) params.get("keyword");
-        if(keyword != null && keyword.startsWith("author:")){
-            Map<String, Object> newParams = copyMap(params);
-            newParams.put("keyword", keyword.replace("author:",""));
-            return poetryDao.findByAuthorAndLanguage(newParams);
+        if (keyword != null) {
+            if(keyword.startsWith("author:")){
+                Map<String, Object> newParams = copyMap(params);
+                newParams.put("keyword", keyword.replace("author:",""));
+                return poetryDao.findByAuthorAndLanguage(newParams);
+            } else if (keyword.startsWith("tag:")) {
+                Map<String, Object> newParams = copyMap(params);
+                newParams.put("keyword", keyword.replace("tag:",""));
+                return poetryDao.findByTagAndLanguage(newParams);
+            }
+
         }
         return poetryDao.findByKeywordAndLanguage(params);
     }
