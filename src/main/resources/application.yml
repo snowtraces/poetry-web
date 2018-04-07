@@ -3,6 +3,10 @@ spring:
     url: jdbc:mysql://localhost/poetry?useUnicode=true&characterEncoding=UTF8&character_set_server=UTF8MB4&useSSL=false&serverTimezone=UTC
     username: root
     password: 123
+    max-active: 20
+    max-idle: 8
+    min-idle: 8
+    initial-size: 10
   freemarker:
       template-loader-path: classpath:/web/
       cache: false

@@ -112,7 +112,9 @@ div#tr-sp .tr {
 h1 {
     font-size: 1.1em;
     font-weight: 600;
-    color: #000;
+}
+h1 a{
+    color: #2bc;
 }
 
 h2 {
@@ -255,14 +257,14 @@ div#search-form{
 
 input#keyword {
     width:100%;
-    padding: .2em 5em .2em .5em;
-    border: 1px solid #ddd;
+    padding: .35em 5em .35em .75em;
+    box-shadow:0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
 }
 
 input#searchsubmit {
-    padding: 0 .5em;
+    padding: .2em .5em;
     letter-spacing: 3px;
-    background: #fff;
+    background: transparent;
     position: absolute;
     top:.2em;
     right: .1em;
@@ -443,11 +445,11 @@ div.item-msg-box {
 
     div#search{
         width:100%;
-        padding: 1em 1.5em;
+        padding: .5em 1.5em 1em;
     }
     div#title {
         width: 100%;
-        padding:1em 1.333em 0;
+        padding:.5em 1em 0;
     }
 }
 

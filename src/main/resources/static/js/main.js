@@ -74,7 +74,7 @@ $(function () {
         let poetryHeader = "<div id='poetry-header'><div id='poetry-title'><h2>" + poetry.title +
             "</h2></div> <div id='poetry-author'>" + poetry.author + "</div></div>";
         let poetryContent = "<div id='poetry-content'>";
-        let pStyle = poetry.contentList.length > 8 ? "inline-block" : "block";
+        let pStyle = poetry.contentList.length > 12 ? "inline-block" : "block";
         $.each(poetry.contentList, function (index, value) {
             poetryContent += "<p class='content-p' style='display: " + pStyle + "'>" + value + "</p>";
         })

@@ -33,7 +33,7 @@
     </select>
 
     <select id="findPoetryByKeyword" parameterType="map" resultMap="BaseResultMap">
-        SELECT * from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords)
+        SELECT * from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords,tags)
         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode)  LIMIT #{page},10;
     </select>
 
@@ -45,7 +45,7 @@
         <if test='language == "1"'>
             id, author_sp as author, title_sp as title, paragraphs_sp as paragraphs
         </if>
-         from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords)
+         from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords,tags)
         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT #{page},10;
     </select>
     <select id="findByAuthorAndLanguage" parameterType="map" resultMap="BaseResultMap">
@@ -60,7 +60,7 @@
     </select>
 
     <select id="findTop100IdByKeyword" parameterType="map" resultType="int">
-        SELECT id from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords)
+        SELECT id from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords,tags)
         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode) ORDER BY id LIMIT 100;
     </select>
     <select id="findTop100IdByAuthor" parameterType="map" resultType="int">
@@ -82,7 +82,7 @@
     </select>
 
     <select id="countTotalPoetryByKeyword" parameterType="map" resultType="int">
-        SELECT count(*) from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords)
+        SELECT count(*) from poetry where MATCH(author_sp,title_sp,paragraphs_sp,keywords,tags)
         AGAINST (CONCAT('*',#{keyword},'*') in boolean mode);
     </select>
     <select id="countTotalPoetryByAuthor" parameterType="map" resultType="int">
