@@ -21,8 +21,8 @@ ft_min_word_len=2
 查询采用了boolean模糊匹配，效率虽然比直接模糊查询快，但有时也会很慢。将查询结果前100条id放入表中，每次查询先查结果表。
 
 ## 数据源
-唐宋诗词来源于：https://github.com/chinese-poetry/chinese-poetry
-本项目对应数据库下载：[http://xinyo.org/]files/poetry-sql.zip
++ 唐宋诗词来源于：https://github.com/chinese-poetry/chinese-poetry
++ 本项目对应数据库下载：[http://xinyo.org/]files/poetry-sql.zip
 
 ## 展示
 https://shicigefu.net/
