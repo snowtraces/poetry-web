@@ -22,6 +22,7 @@ ft_min_word_len=2
 
 ## 数据源
 唐宋诗词来源于：https://github.com/chinese-poetry/chinese-poetry
+本项目对应数据库下载：[http://xinyo.org/]files/poetry-sql.zip
 
 ## 展示
 https://shicigefu.net/
