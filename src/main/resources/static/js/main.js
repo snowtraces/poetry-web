@@ -69,7 +69,7 @@ $(function () {
 
         $("meta[name=keywords]").attr("content", keywords);
         $("meta[name=description]").attr("content", poetry.description);
-        $("title").html(poetry.title);
+        $("title").html(poetry.title + " - " + poetry.author);
 
         let poetryId = "<input id='poetry-id' hidden value='" + poetry.id + "'/>";
         let poetryHeader = "<div id='poetry-header'><div id='poetry-title'><h2>" + poetry.title +
@@ -351,7 +351,7 @@ $(function () {
         switchLanguage(_language);
 
         // 初始加载
-        loadByUrl();
+        // loadByUrl();
     }
 
     initAll();
