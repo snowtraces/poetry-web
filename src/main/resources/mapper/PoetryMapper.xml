@@ -112,6 +112,9 @@
     <update id="updateKeywordsById" parameterType="map" >
         update poetry set keywords = #{keywords} where id = #{id}
     </update>
+    <update id="updateTagsById" parameterType="map" >
+        update poetry set tags = #{tags} where id = #{id}
+    </update>
     <update id="updateParagrahsSpById" parameterType="map" >
         update poetry set author_sp = #{title} where id = #{id}
     </update>

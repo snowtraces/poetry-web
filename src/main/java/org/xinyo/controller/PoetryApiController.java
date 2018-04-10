@@ -45,7 +45,7 @@ public class PoetryApiController {
 
         Poetry poetry = poetryService.findByIdAndLanguage(params);
 
-        if(poetry == null){
+        if (poetry == null) {
             poetry = new Poetry(id);
         }
 
@@ -58,6 +58,8 @@ public class PoetryApiController {
 
 //        createKeywords(id);
 //        new Thread(() -> replaceWenHao()).start();
+//        new Thread(() -> createTags(id)).start();
+
         resultMap.put("poetry", poetryBean);
         return resultMap;
     }
@@ -129,6 +131,12 @@ public class PoetryApiController {
         return resultMap;
     }
 
+    /**
+     * 缓存搜索结果
+     *
+     * @param keyword
+     * @param total
+     */
     private void addNewSearchResult(String keyword, int total) {
         SearchResult newResult = new SearchResult();
         newResult.setKeyword(keyword);
@@ -137,6 +145,58 @@ public class PoetryApiController {
         searchResultService.add(newResult);
     }
 
+    /**
+     * 自动生成标签
+     */
+    private void createTags(int id) {
+        Map<String, Object> params = new HashMap<>();
+        String yuefuName = "(郊庙歌辞|燕射歌辞|鼓吹曲辞|横吹曲辞|相和歌辞|清商曲辞|舞曲歌辞|琴曲歌辞|杂曲歌辞|近代曲辞|杂歌谣辞|新乐府辞)";
+        params.put("language", 1);
+        for (int i = 1; i <= 332875; i++) {
+            params.put("id", i);
+            Poetry poetry = poetryService.findByIdAndLanguage(params);
+            if(poetry == null) continue;
+            String title = poetry.getTitle();
+            String tags = poetry.getTags();
+            List tagList;
+            if(tags == null || tags.equals("")) {
+                tagList = new ArrayList();
+            } else {
+                tagList = JsonUtils.jsonToList(tags);
+            }
+
+            if (title.matches(yuefuName + ".*")) {
+                // 匹配到乐府标题
+                String tagName = title.replaceAll(yuefuName + ".*", "$1");
+
+                boolean flag = false;
+                if (!tagList.contains(tagName)) {
+                    tagList.add(0, tagName);
+                    flag = true;
+                }
+                if (!tagList.contains("乐府")) {
+                    tagList.add(0, "乐府");
+                    flag = true;
+                }
+
+                if (flag) {
+                    params.put("tags", JsonUtils.toJson(tagList));
+                    int result = poetryService.updateTagsById(params);
+                    if (result > 0) {
+                        System.err.println(params);
+                    }
+                }
+            }else {
+                System.out.println("...");
+            }
+        }
+    }
+
+    /**
+     * 自动生成关键词
+     *
+     * @param id
+     */
     private void createKeywords(int id) {
         Map<String, Object> params = new HashMap<>();
         params.put("language", 1);
@@ -161,6 +221,9 @@ public class PoetryApiController {
 
     }
 
+    /**
+     * 字符集不支持，乱码4个问好替换
+     */
     private void replaceWenHao() {
 
         // 1. 查询简体结果
@@ -178,7 +241,7 @@ public class PoetryApiController {
             String spStr = sp.getDesc();
             String trStr = tr.getDesc();
 
-            String spStrResult = getReplaced(spStr,trStr);
+            String spStrResult = getReplaced(spStr, trStr);
 
 
             params.put("title", spStrResult);
@@ -188,11 +251,11 @@ public class PoetryApiController {
 
     }
 
-    private String getReplaced(String source, String base){
+    private String getReplaced(String source, String base) {
         int wenhaoIndex = source.indexOf("????", 0);
-        if(wenhaoIndex != -1){
+        if (wenhaoIndex != -1) {
             String targetStr = base.substring(wenhaoIndex, wenhaoIndex + 1);
-            String spStrResult = source.replaceFirst("[?]{4}",targetStr);
+            String spStrResult = source.replaceFirst("[?]{4}", targetStr);
             return getReplaced(spStrResult, base);
         } else {
             return source;
@@ -200,5 +263,7 @@ public class PoetryApiController {
     }
 
 
-    private static int[] wenhaoId = new int[]{112,113,138,260,373,1215,1259,1404,1405,1411,1417,1421,1611,2322,2794,2808,2820,2886,3112,3189,3389,3789,4020,4267,4482,4894,5191,5237,5238,5643,5684,5858,5932,7149,7173,7297,7519,7665,7704,8101,8217,8218,8219,8225,8330,8358,8414,8579,8658,8759,9015,9167,9909,9963,10059,10313,10579,10588,10591,10665,11110,11135,11263,11275};
+    private static int[] wenhaoId = new int[]{};
+
+
 }

@@ -30,4 +30,6 @@ public interface PoetryService {
     void updateKeywordsById(Map<String, Object> params);
 
     void updateParagrahsSpById(Map<String, Object> i);
+
+    int updateTagsById(Map<String, Object> params);
 }

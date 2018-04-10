@@ -105,6 +105,11 @@ public class PoetryServiceImpl implements PoetryService {
         poetryDao.updateParagrahsSpById(params);
     }
 
+    @Override
+    public int updateTagsById(Map<String, Object> params) {
+        return poetryDao.updateTagsById(params);
+    }
+
     public Map<String,Object> copyMap(Map<String, Object> map){
         Map<String, Object>  resultMap = new HashMap<>();
         for (Map.Entry<String, Object> entry : map.entrySet()) {
