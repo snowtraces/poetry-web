@@ -4,7 +4,7 @@
 ## 技术构成
 + 基于java，框架spring-boot + springMVC + Mybatis
 + 数据库为Mysql
-+ web模板采用freeMarker，实际未使用，前端页面通过ajax加载
++ web模板采用freeMarker，非页面通过ajax加载
 
 ## 查询实现
 ### 1. mysql全文索引

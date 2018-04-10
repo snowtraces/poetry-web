@@ -351,7 +351,7 @@ $(function () {
         switchLanguage(_language);
 
         // 初始加载
-        // loadByUrl();
+        loadByUrl();
     }
 
     initAll();
