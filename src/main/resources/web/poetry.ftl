@@ -73,8 +73,8 @@
                           hidden=""><#if author.desc?length gt 128>${author.desc?substring(0,128)}</#if><span
                         class="more author-desc-more">...</span></textarea>
                 <textarea class="author-desc-full" hidden="">${author.desc}</textarea>
-            </div>
             </#if>
+            </div>
             </div>
             <div id="sidebar">
                 <div class="poetry-meta">
