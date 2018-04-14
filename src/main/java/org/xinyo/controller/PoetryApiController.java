@@ -68,82 +68,25 @@ public class PoetryApiController {
     public Map getPoetryByKeyword(@RequestParam String keyword, @RequestParam Integer page, @RequestParam Integer language) {
         Map<String, Object> resultMap = new HashMap<>();
 
-        if (page == null) {
-            page = 1;
-        }
-
+        page = page == null?1:page;
         keyword = UnicodeUtils.transBaseUnicode(keyword);
-        List<Poetry> poetryList;
-        int total = 0;
         Map<String, Object> params = new HashMap<>();
         params.put("keyword", keyword);
-        params.put("page", (page - 1) * 10);
+        params.put("page", page);
         params.put("language", language);
 
-        // 1.读结果表
-        SearchResult searchResult = searchResultService.findByKeyword(keyword);
+        Map<String, Object> map = searchResultService.searchByKeyword(params);
 
-        // 2.根据结果查询
-        if (searchResult == null) {
-            // 2.1 重新查询poetry表
-            total = poetryService.countTotalPoetryByKeyword(params);
-
-            if (total > 0L) {
-                poetryList = poetryService.findByKeywordAndLanguage(params);
-            } else {
-                return null;
-            }
-
-            long finalTotal = total;
-            String finalKeyword = keyword;
-            new Thread(() -> addNewSearchResult(finalKeyword, (int) finalTotal)).start();
-
-        } else {
-            // 2.2 根据searchResult表进行查询
-            total = searchResult.getTotal();
-            if (page > (int) Math.ceil(total / 10d)) return null;
-
-            if (page <= 10) {
-                // 只需取索引查询
-                String top100Id = searchResult.getTop100Id();
-                List<String> list = JsonUtils.jsonToList(top100Id, new TypeToken<ArrayList<String>>() {
-                }.getType());
-                List<String> idList = list.subList((page - 1) * 10, Math.min(page * 10, total));
-
-                if (language == 0) { // 繁体
-                    poetryList = poetryService.findTrByIds(idList);
-                } else { // 简体
-                    poetryList = poetryService.findSpByIds(idList);
-                }
-            } else {
-                // 重新查询
-                poetryList = poetryService.findByKeywordAndLanguage(params);
-            }
-        }
-
-        List<PoetryBean> poetryBeanList = poetry2PoetryBean(poetryList);
+        List<PoetryBean> poetryBeanList = poetry2PoetryBean((List<Poetry>) map.get("data"));
 
         resultMap.put("poetryBeanList", poetryBeanList);
         resultMap.put("keyword", language == 0 ? HanLP.convertToTraditionalChinese(keyword) : keyword);
         resultMap.put("page", page);
-        resultMap.put("total", total);
+        resultMap.put("total", map.get("total"));
 
         return resultMap;
     }
 
-    /**
-     * 缓存搜索结果
-     *
-     * @param keyword
-     * @param total
-     */
-    private void addNewSearchResult(String keyword, int total) {
-        SearchResult newResult = new SearchResult();
-        newResult.setKeyword(keyword);
-        newResult.setTotal(total);
-        newResult.setTop100Id(JsonUtils.toJson(poetryService.findTop100IdByKeyword(keyword)));
-        searchResultService.add(newResult);
-    }
 
     /**
      * 自动生成标签

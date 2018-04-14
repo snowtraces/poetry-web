@@ -14,13 +14,16 @@ import java.util.List;
 public class PoetryUtils {
 
     public static PoetryBean poetry2PoetryBean(Poetry poetry) {
+        if (poetry == null) {
+            return null;
+        }
         PoetryBean poetryBean = new PoetryBean(poetry);
 
         // 文章摘要
         String description = "";
         if (poetry.getParagraphs() != null) {
-            if (poetry.getParagraphs().length() > 32) {
-                description = poetry.getParagraphs().substring(0, 32).replaceAll("\n", "");
+            if (poetry.getParagraphs().length() > 64) {
+                description = poetry.getParagraphs().substring(0, 64).replaceAll("\n", "") + "...";
             } else {
                 description = poetry.getParagraphs().replaceAll("\n", "");
             }
@@ -39,6 +42,9 @@ public class PoetryUtils {
 
 
     public static List<PoetryBean> poetry2PoetryBean(List<Poetry> poetryList) {
+        if (poetryList == null) {
+            return null;
+        }
         List<PoetryBean> poetryBeanList = new ArrayList<>();
         for (Poetry poetry : poetryList) {
             poetryBeanList.add(poetry2PoetryBean(poetry));

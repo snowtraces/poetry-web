@@ -199,6 +199,10 @@ $(function () {
 
     function loadByUrl() {
         let location = document.location + '';
+        if(location.startsWith("http://")){
+            document.location.href="https" + location.substring(4);
+        }
+        console.log(location)
         let re = /\/poetry\/(\d+)$/i;
         let found = location.match(re);
         if (found) {
