@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="google-site-verification" content="r1AIM4LL5RLVLCN5cU80A7Ya7DMcfpWYENJWcH1lzCU">
-    <meta name="keywords" content="<#list poetry.keywords as keyword>${keyword}, </#list>">
+    <meta name="keywords" content="<#if (poetry.tags)??><#list poetry.tags as tag>${tag}, </#list></#if><#if (poetry.keywords)??><#list poetry.keywords as keyword>${keyword}, </#list></#if>">
     <meta name="description" content="${poetry.description}">
 
     <title>${poetry.title} - ${poetry.author}</title>
@@ -41,7 +41,7 @@
         <div id="content">
             <div id="poetry">
                 <div class="poetry-item poetry-single">
-                    <input id="poetry-id" hidden="" value="${poetry.id}">
+                    <input id="poetry-id" hidden="" value="${poetry.id?c}">
                     <div id="poetry-header">
                         <div id="poetry-title">
                             <h2>${poetry.title}</h2>
@@ -59,22 +59,22 @@
               </span>
                     </div>
                 </div>
-            <div class="author-detail">
-            <#if (author)??>
-                <span class="author-name"><a
-                        href="/poetry/search?keyword=author:${author.name}&amp;page=1">${author.name}</a></span><span
-                    class="author-dynasty"><#if author.dynasty == "tang">唐<#elseif author.dynasty == "song">
-                宋</#if></span><span
-                    class="author-desc"><#if author.desc?length gt 128>${author.desc?substring(0,128)}</#if><span
-                    class="more author-desc-more">...</span>
+                <div class="author-detail">
+                <#if (author)??>
+                    <span class="author-name"><a
+                            href="/poetry/search?keyword=author:${author.name}&amp;page=1">${author.name}</a></span><span
+                        class="author-dynasty"><#if author.dynasty == "tang">唐<#elseif author.dynasty == "song">
+                    宋</#if></span><span
+                        class="author-desc"><#if author.desc?length gt 128>${author.desc?substring(0,128)}<span
+                        class="more author-desc-more">...</span><#else>${author.desc}</#if>
             </span>
-                <input id="author-switch" name="author-switch" value="0" hidden="">
-                <textarea class="author-desc-abstract"
-                          hidden=""><#if author.desc?length gt 128>${author.desc?substring(0,128)}</#if><span
-                        class="more author-desc-more">...</span></textarea>
-                <textarea class="author-desc-full" hidden="">${author.desc}</textarea>
-            </#if>
-            </div>
+                    <input id="author-switch" name="author-switch" value="0" hidden="">
+                    <textarea class="author-desc-abstract"
+                              hidden=""><#if author.desc?length gt 128>${author.desc?substring(0,128)}<span
+                            class="more author-desc-more">...</span><#else>${author.desc}</#if></textarea>
+                    <textarea class="author-desc-full" hidden="">${author.desc}</textarea>
+                </#if>
+                </div>
             </div>
             <div id="sidebar">
                 <div class="poetry-meta">
