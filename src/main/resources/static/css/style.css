@@ -166,15 +166,23 @@ span.poetry-tags a{
 div#poetry {
     border: 1px solid #ccc;
     margin-right: 300px;
+    position: relative;
 }
 
 div.poetry-item {
     letter-spacing: .1em;
     /*writing-mode: vertical-rl;*/
     /*font-size: 1.2em;*/
-    color: #333;
     padding: 1em 1.5em;
-    position: relative;
+
+}
+div.index-item, div.poetry-single{
+    font-size: 1.3em;
+    font-family:KaiTi;
+    width:auto;
+    margin:0 auto;
+    max-width: 100%;
+    overflow: auto;
 }
 
 div.poetry-single {

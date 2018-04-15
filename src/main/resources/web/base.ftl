@@ -4,8 +4,8 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta name="google-site-verification" content="r1AIM4LL5RLVLCN5cU80A7Ya7DMcfpWYENJWcH1lzCU" />
-    <meta name="keywords" content="诗词歌赋,唐诗,宋词">
-    <meta name="description" content="诗词歌赋">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
 
     <title></title>
     <link rel="stylesheet" href="/css/style.css" type='text/css' media='all'/>
@@ -29,20 +29,7 @@
     </div>
     <div id="content-wrap" class="wrap">
         <div id="content">
-            <div id="poetry" class="poetry-index">
-                <div class="poetry-item index-item">
-                    <div id="poetry-header">
-                        <div id="poetry-title">
-                            <h2>${poetry.title}</h2>
-                        </div>
-                        <div id="poetry-author">${poetry.author}</div>
-                    </div>
-                    <div id="poetry-content">
-                    <#list poetry.contentList as content>
-                        <p class="content-p" style="display: block">${content}</p>
-                    </#list>
-                    </div>
-                </div>
+            <div id="poetry">
             </div>
             <div id="sidebar"></div>
             <div id="nav-bar">

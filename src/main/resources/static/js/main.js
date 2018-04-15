@@ -75,9 +75,9 @@ $(function () {
         let poetryHeader = "<div id='poetry-header'><div id='poetry-title'><h2>" + poetry.title +
             "</h2></div> <div id='poetry-author'>" + poetry.author + "</div></div>";
         let poetryContent = "<div id='poetry-content'>";
-        let pStyle = poetry.contentList.length > 24 ? "inline-block" : "block";
+        // let pStyle = poetry.contentList.length > 24 ? "inline-block" : "block";
         $.each(poetry.contentList, function (index, value) {
-            poetryContent += "<p class='content-p' style='display: " + pStyle + "'>" + value + "</p>";
+            poetryContent += "<p class='content-p'>" + value + "</p>";
         })
         poetryContent += "</div>";
 
@@ -217,7 +217,8 @@ $(function () {
             return;
         }
 
-        getPoetryById(randomId);
+        let currentId = parseInt($("#poetry-id").val());
+        getPoetryById(currentId);
     }
 
     function itemMsg(_this, msg) {

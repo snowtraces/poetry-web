@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.xinyo.dao.AuthorDao" >
     <resultMap id="BaseResultMap" type="org.xinyo.domain.Author">
-        <result column="id" property="id" />
+        <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="desc" property="desc" />
         <result column="dynasty" property="dynasty" />
