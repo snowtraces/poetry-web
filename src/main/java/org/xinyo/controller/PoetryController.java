@@ -68,7 +68,8 @@ public class PoetryController {
     }
 //
     @RequestMapping(value = "/poetry/search", method = RequestMethod.GET)
-    public String getPoetryByKeyword(Model model, @RequestParam String keyword, @RequestParam Integer page,
+    public String getPoetryByKeyword(Model model, @RequestParam String keyword,
+                                     @RequestParam(name = "page", defaultValue = "1") Integer page,
                                      @CookieValue(name = "language", defaultValue = "1") Integer language) {
 
         page = page == null?1:page;

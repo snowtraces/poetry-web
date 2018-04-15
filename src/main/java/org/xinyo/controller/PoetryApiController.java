@@ -65,7 +65,9 @@ public class PoetryApiController {
     }
 
     @RequestMapping(value = "/api/poetry/search", method = RequestMethod.GET)
-    public Map getPoetryByKeyword(@RequestParam String keyword, @RequestParam Integer page, @RequestParam Integer language) {
+    public Map getPoetryByKeyword(@RequestParam String keyword,
+                                  @RequestParam(name = "page", defaultValue = "1") Integer page,
+                                  @RequestParam(name = "language", defaultValue = "1") Integer language) {
         Map<String, Object> resultMap = new HashMap<>();
 
         page = page == null?1:page;
