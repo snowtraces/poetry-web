@@ -4,9 +4,9 @@ $(function () {
     let randomId = Math.floor(Math.random() * maxId);
     let language = 1; // 默认简体
 
-    let currentPage = 1;
-    let totalPage = 1;
-    let currentKeyword = "";
+    let currentPage =parseInt($("#current-page").val());
+    let totalPage = parseInt($("#total-page").val());
+    let currentKeyword = $("#keyword").val();
 
 //写cookies
     function setCookie(name, value) {

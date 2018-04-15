@@ -428,6 +428,8 @@ div.item-msg-box {
         width:100%;
     }
 
+
+
     div#nav-bar {
         margin: 0;
         position: fixed;
@@ -471,6 +473,11 @@ div.item-msg-box {
     div#title {
         width: 100%;
         padding:.5em 1em 0;
+    }
+
+    div.index-item, div.poetry-single{
+        font-size: 1em;
+        font-family: arial, sans-serif;
     }
 }
 
