@@ -145,7 +145,7 @@ public class PoetryApiController {
     private void createKeywords(int id) {
         Map<String, Object> params = new HashMap<>();
         params.put("language", 1);
-        for (int i = id; i <= id; i++) {
+        for (int i = 332876; i <= 333180; i++) {
             params.put("id", i);
             Poetry poetry = poetryService.findByIdAndLanguage(params);
             String s = poetry.getTitle() + ", " + poetry.getParagraphs();

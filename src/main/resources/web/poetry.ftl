@@ -59,8 +59,8 @@
               </span>
                     </div>
                 </div>
-                <div class="author-detail">
                 <#if (author)??>
+                <div class="author-detail">
                     <span class="author-name"><a
                             href="/poetry/search?keyword=author:${author.name}&amp;page=1">${author.name}</a></span><span
                         class="author-dynasty"><#if author.dynasty == "tang">唐<#elseif author.dynasty == "song">
@@ -73,14 +73,14 @@
                               hidden=""><#if author.desc?length gt 128>${author.desc?substring(0,128)}<span
                             class="more author-desc-more">...</span><#else>${author.desc}</#if></textarea>
                     <textarea class="author-desc-full" hidden="">${author.desc}</textarea>
-                </#if>
                 </div>
+                </#if>
             </div>
             <div id="sidebar">
                 <div class="poetry-meta">
                 <#if (poetry.tags)??>
                     <#list poetry.tags as tag><span class="poetry-tags"><a
-                            href="/poetry/search?keyword=${tag}&amp;page=1">${tag}</a></span></#list>
+                            href="/poetry/search?keyword=tag:${tag}&amp;page=1">${tag}</a></span></#list>
                 </#if>
                 <#if (poetry.keywords)??>
                     <#list poetry.keywords as keyword><span class="poetry-keywords"><a
