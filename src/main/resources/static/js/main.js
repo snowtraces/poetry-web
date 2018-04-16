@@ -43,10 +43,10 @@ $(function () {
             } else if (index <= maxLength) { // 初次匹配在maxLength之内
                 return textContent.substr(0, maxLength).replace(re, "<em>" + keyword + "</em>") + "...";
             } else { // // 初次匹配在maxLength之外
-                if (textContent.length > (index + 100)) {
-                    return "..." + textContent.substr(index - 20, maxLength).replace(re, "<em>" + keyword + "</em>") + "...";
+                if (textContent.length > (index + 120)) {
+                    return "..." + textContent.substr(index - 24, maxLength).replace(re, "<em>" + keyword + "</em>") + "...";
                 } else {
-                    return "..." + textContent.substr(index - 20).replace(re, "<em>" + keyword + "</em>");
+                    return "..." + textContent.substr(index - 24).replace(re, "<em>" + keyword + "</em>");
                 }
             }
         }

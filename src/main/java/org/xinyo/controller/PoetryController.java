@@ -97,10 +97,10 @@ public class PoetryController {
                 } else if (index <= maxLength) { // 初次匹配在maxLength之内
                     desc = contentStr.substring(0, maxLength) + "...";
                 } else { // // 初次匹配在maxLength之外
-                    if (contentStr.length() > (index + 100)) {
-                        desc = "..." + contentStr.substring(index - 20, index + maxLength - 20) + "...";
+                    if (contentStr.length() > (index + 120)) {
+                        desc = "..." + contentStr.substring(index - 24, index + maxLength - 24) + "...";
                     } else {
-                        desc = "..." + contentStr.substring(index - 20);
+                        desc = "..." + contentStr.substring(index - 24);
                     }
                 }
             }
