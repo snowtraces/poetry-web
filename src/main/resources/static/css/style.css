@@ -113,7 +113,8 @@ h1 {
     font-size: 1.1em;
     font-weight: 600;
 }
-h1 a{
+
+h1 a {
     color: #2bc;
 }
 
@@ -150,7 +151,7 @@ span.poetry-keywords {
     padding: .3em .75em;
 }
 
-span.poetry-tags{
+span.poetry-tags {
     display: inline-block;
     padding: 0 .75em;
     background: #2bc;
@@ -159,7 +160,7 @@ span.poetry-tags{
     font-size: .9375em;
 }
 
-span.poetry-tags a{
+span.poetry-tags a {
     color: #fff;
 }
 
@@ -176,11 +177,12 @@ div.poetry-item {
     padding: 1em 1.5em;
 
 }
-div.index-item, div.poetry-single{
+
+div.index-item, div.poetry-single {
     font-size: 1.3em;
-    font-family:KaiTi;
-    width:auto;
-    margin:0 auto;
+    font-family: KaiTi;
+    width: auto;
+    margin: 0 auto;
     max-width: 100%;
     overflow: auto;
 }
@@ -272,14 +274,14 @@ div#search {
     position: relative;
 }
 
-div#search-form{
+div#search-form {
     position: relative;
 }
 
 input#keyword {
-    width:100%;
+    width: 100%;
     padding: .35em 5em .35em .75em;
-    box-shadow:0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
 input#searchsubmit {
@@ -287,7 +289,7 @@ input#searchsubmit {
     letter-spacing: 3px;
     background: transparent;
     position: absolute;
-    top:.2em;
+    top: .2em;
     right: .1em;
     color: #2bc;
 }
@@ -402,6 +404,31 @@ div.item-msg-box {
     color: #fff;
 }
 
+#login-form {
+    width: 360px;
+    margin: 36px auto;
+}
+
+div.login-input {
+    padding: .5em;
+}
+
+div.login-input input {
+    line-height: 1;
+    padding: .5em;
+    background: #eee;
+    width: 100%;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+div.input-submit input{
+    color: #fff;
+    background: #2bc;
+    padding:.6em;
+    letter-spacing: .5em;
+}
+
 @media screen and (max-width: 800px) {
     div#content {
         margin-left: 2em;
@@ -413,7 +440,7 @@ div.item-msg-box {
 
     div#header {
         margin-left: 0;
-        width:932px;
+        width: 932px;
     }
 
     div#search {
@@ -425,10 +452,8 @@ div.item-msg-box {
 @media screen and (max-width: 600px) {
     div#content, div#header {
         margin: auto;
-        width:100%;
+        width: 100%;
     }
-
-
 
     div#nav-bar {
         margin: 0;
@@ -466,16 +491,17 @@ div.item-msg-box {
         margin: 0;
     }
 
-    div#search{
-        width:100%;
+    div#search {
+        width: 100%;
         padding: .5em 1.5em 1em;
     }
+
     div#title {
         width: 100%;
-        padding:.5em 1em 0;
+        padding: .5em 1em 0;
     }
 
-    div.index-item, div.poetry-single{
+    div.index-item, div.poetry-single {
         font-size: 1em;
         font-family: arial, sans-serif;
     }

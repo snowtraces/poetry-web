@@ -284,6 +284,14 @@ $(function () {
         }
     });
 
+      // 登录
+    $(document).on("click touchend", "#login-submit-btn", function () {
+      $.ajax({
+        url: "/api/user/login"
+      })
+    })
+
+
 // 繁简切换
     $(document).on("click", "#tr-sp", function () {
         switchLanguage(language ^ 1);
