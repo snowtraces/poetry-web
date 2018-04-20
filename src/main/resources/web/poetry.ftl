@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
+<#include "template/head.ftl" >
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">

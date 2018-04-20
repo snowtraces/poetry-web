@@ -425,8 +425,12 @@ div.login-input input {
 div.input-submit input{
     color: #fff;
     background: #2bc;
-    padding:.6em;
+    padding:.8em;
     letter-spacing: .5em;
+}
+
+div.input-submit:hover {
+    cursor: pointer;
 }
 
 @media screen and (max-width: 800px) {
