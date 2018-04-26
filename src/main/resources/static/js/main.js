@@ -348,6 +348,20 @@ $(function () {
 
     });
 
+    // 登录-注册切换
+    $(document).on("click touchend", "#login-switch", function () {
+        $(this).addClass("on-active");
+        $("#register-switch").removeClass("on-active");
+        $("#login-form").addClass("on-show");
+        $("#register-form").removeClass("on-show");
+    })
+    $(document).on("click touchend", "#register-switch", function () {
+        $(this).addClass("on-active");
+        $("#login-switch").removeClass("on-active");
+        $("#login-form").removeClass("on-show");
+        $("#register-form").addClass("on-show");
+    })
+
 
     window.addEventListener('popstate', function (event) {
         loadByUrl();

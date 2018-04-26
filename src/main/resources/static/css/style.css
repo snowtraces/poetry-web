@@ -404,9 +404,40 @@ div.item-msg-box {
     color: #fff;
 }
 
-#login-form {
+#login-register-switch{
+    display: flex;
+    margin: .5em .5em 1.5em;
+    border: #ddd 1px solid;
+}
+
+#login-register-switch div{
+    width:50%;
+    text-align: center;
+    background: #eee;
+    color: #ccc;
+    padding: .5em;
+    letter-spacing: .5em;
+}
+#login-register-switch div:hover{
+    cursor: pointer;
+}
+
+
+#login-register-switch div.on-active{
+    background: #fff;
+    color: inherit;
+}
+
+#user-form {
     width: 360px;
     margin: 36px auto;
+}
+
+#user-form form{
+    display: none;
+}
+#user-form form.on-show{
+    display: block;
 }
 
 div.login-input {
