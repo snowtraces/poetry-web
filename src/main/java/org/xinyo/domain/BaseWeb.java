@@ -3,10 +3,11 @@ package org.xinyo.domain;
 /**
  * Created by chengxinyong on 2018/4/20.
  */
-public class baseWeb {
+public class BaseWeb {
     private String keywords;
     private String description;
     private String title;
+    private Integer language;
 
     public String getKeywords() {
         return keywords;
@@ -30,5 +31,13 @@ public class baseWeb {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Integer getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Integer language) {
+        this.language = language;
     }
 }
