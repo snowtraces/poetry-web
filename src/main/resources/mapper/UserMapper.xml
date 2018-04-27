@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xinyo.dao.UserDao" >
+    <resultMap id="BaseResultMap" type="org.xinyo.domain.User">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="group" property="group" />
+    </resultMap>
+
+    <select id="selectByUsername" parameterType="string" resultType="org.xinyo.domain.User">
+        SELECT * FROM `user` WHERE username = #{username} LIMIT 1;
+    </select>
+
+    <select id="selectByEmail" parameterType="string" resultType="org.xinyo.domain.User">
+        SELECT * FROM `user` WHERE email = #{email} LIMIT 1;
+    </select>
+
+    <insert id="insert" parameterType="org.xinyo.domain.User">
+        INSERT INTO `user` (username, email, password, `group`) VALUES (#{username}, #{email}, #{password}, #{group});
+    </insert>
+
+</mapper>

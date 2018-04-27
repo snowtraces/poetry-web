@@ -19,17 +19,6 @@ public class PoetryUtils {
         }
         PoetryBean poetryBean = new PoetryBean(poetry);
 
-        // 文章摘要
-        String description = "";
-        if (poetry.getParagraphs() != null) {
-            if (poetry.getParagraphs().length() > 64) {
-                description = poetry.getParagraphs().substring(0, 64).replaceAll("\n", "") + "...";
-            } else {
-                description = poetry.getParagraphs().replaceAll("\n", "");
-            }
-        }
-        poetryBean.setDescription(description);
-
         // 文章内容
         List<String> contentList = new ArrayList<>();
         if (poetry.getParagraphs() != null) {
