@@ -362,6 +362,34 @@ $(function () {
         $("#register-form").addClass("on-show");
     })
 
+    $(document).on("focus", ".login-input input", function () {
+        $(this).siblings(".input-err").remove();
+    })
+    // 点击注册
+    $(document).on("click touchend", "#register-submit-btn", function () {
+        let param = $( "form#register-form" ).serialize();
+        $.ajax({
+        url: "/api/user/register",
+        method: "POST",
+        dataType: "json",
+        data: param,
+        success: function (data) {
+          $(".input-err").remove();
+          let code = data.code;
+          let tag = data.tag;
+          let msg = data.msg;
+          if(code == -1){ // 注册失败
+            if(tag != "global"){
+              $("#register-form .input-" + tag).append("<div class=input-err>" + msg + "</div>");
+            }
+          }
+        }
+        })
+
+
+    })
+
+
 
     window.addEventListener('popstate', function (event) {
         loadByUrl();

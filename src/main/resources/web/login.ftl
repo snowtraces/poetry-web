@@ -34,16 +34,16 @@
             <div id="poetry">
                 <div id="user-form">
                     <div id="login-register-switch"><div id="login-switch" class="on-active">登录</div><div id="register-switch">注册</div></div>
-                    <form action="/api/user/login" id="login-form" class="on-show">
-                        <div class="login-input input-user"><input name="username" placeholder="用户名"/></div>
+                    <form id="login-form" class="on-show">
+                        <div class="login-input input-username"><input name="username" placeholder="用户名"/></div>
                         <div class="login-input input-email"><input type="email" name="email" placeholder="邮件地址"/></div>
                         <div class="login-input input-password"><input type="password" name="password" placeholder="密码"/></div>
                         <div class="login-input input-submit"><input  type="button" id="login-submit-btn" name="login-submit-btn" value="登录"/></div>
                     </form>
-                    <form action="/api/user/register" id="register-form">
-                        <div class="login-input input-user"><input name="username" placeholder="用户名"/></div>
+                    <form id="register-form">
+                        <div class="login-input input-username"><input name="username" placeholder="用户名"/></div>
                         <div class="login-input input-email"><input type="email" name="email" placeholder="邮件地址"/></div>
-                        <div class="login-input input-password"><input type="password"  ame="password" placeholder="密码"/></div>
+                        <div class="login-input input-password"><input type="password"  name="password" placeholder="密码"/></div>
                         <div class="login-input input-submit"><input  type="button" id="register-submit-btn" name="login-submit-btn" value="注册"/></div>
                     </form>
                 </div>

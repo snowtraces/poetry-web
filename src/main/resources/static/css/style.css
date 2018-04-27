@@ -442,6 +442,16 @@ div.item-msg-box {
 
 div.login-input {
     padding: .5em;
+    position: relative;
+}
+
+div.input-err{
+    position: absolute;
+    font-size: 14px;
+    right: 1.25em;
+    top: .85em;
+    color: #f00;
+    pointer-events: none;
 }
 
 div.login-input input {
