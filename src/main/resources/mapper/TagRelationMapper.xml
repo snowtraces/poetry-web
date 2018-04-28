@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xinyo.dao.TagRelationDao">
+    <resultMap id="BaseResultMap" type="org.xinyo.domain.TagRelation">
+        <id column="id" property="id"/>
+        <result column="tagA" property="tagA"/>
+        <result column="tagB" property="tagB"/>
+        <result column="connection" property="connection"/>
+    </resultMap>
+
+    <select id="selectByTag" parameterType="org.xinyo.domain.TagRelation" resultType="org.xinyo.domain.TagRelation" >
+        SELECT * FROM tag_relation WHERE tagA = #{tagA} AND tagB = #{tagB}
+    </select>
+
+    <insert id="insert" parameterType="org.xinyo.domain.TagRelation">
+        INSERT INTO tag_relation (tagA, tagB, `connection`) VALUES (#{tagA}, #{tagB}, #{connection});
+    </insert>
+
+    <update id="updateConnection" parameterType="org.xinyo.domain.TagRelation">
+        UPDATE tag_relation SET `connection` = #{connection} WHERE id = #{id}
+    </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into tag_relation (tagA, tagB, `connection`)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.tagA}, #{item.tagB}, #{item.connection})
+        </foreach>
+    </insert>
+
+</mapper>
