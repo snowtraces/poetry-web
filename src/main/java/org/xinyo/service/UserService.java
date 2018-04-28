@@ -11,4 +11,6 @@ public interface UserService {
     boolean checkEmailExist(String email);
 
     int addUser(User user);
+
+    User validateUser(User userParam);
 }

@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.xinyo.WebSecurityConfig;
 import org.xinyo.domain.User;
 import org.xinyo.service.UserService;
 import org.xinyo.util.WebUtils;
 
+import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,11 +26,40 @@ public class UserApiController {
     private UserService userService;
 
     @RequestMapping(value = {"/api/user/login"}, method = RequestMethod.POST)
-    public Map<String, Object> userLogin() {
-
+    public Map<String, Object> userLogin(@RequestParam(name = "username", defaultValue = "") String username,
+                                         @RequestParam(name = "email", defaultValue = "") String email,
+                                         @RequestParam(name = "password", defaultValue = "") String password,
+                                         HttpSession session) {
         Map<String, Object> resultMap = new HashMap<>();
 
-        return resultMap;
+        // 参数验证
+        if (StringUtils.isEmpty(username) && StringUtils.isEmpty(email)) {
+            return buildResult(resultMap, "global", "-1", "用户名和邮箱不能同时为空");
+        }
+        if (StringUtils.isEmpty(password)) {
+            return buildResult(resultMap, "password", "-1", "不能为空");
+        }
+
+        // 验证账号
+        try {
+            password = WebUtils.getMD5(WebUtils.getMD5(password) + "@poetry!_*");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        User userParam = new User();
+        userParam.setUsername(StringUtils.isEmpty(username)?null:username);
+        userParam.setPassword(StringUtils.isEmpty(password)?null:password);
+        User user = userService.validateUser(userParam);
+
+        if (user == null) {
+            return buildResult(resultMap, "global", "-1", "账户或密码错误");
+        }
+
+        // 写入session
+        session.setAttribute(WebSecurityConfig.SESSION_KEY, user.getUsername());
+
+        return buildResult(resultMap, "global", "0", "登录成功");
     }
 
     @RequestMapping(value = {"/api/user/register"}, method = RequestMethod.POST)
@@ -50,7 +81,7 @@ public class UserApiController {
         user.setEmail(email);
         user.setGroup(1);
         try {
-            user.setPassword(WebUtils.getMD5(WebUtils.getMD5(username) + "@poetry!_*"));
+            user.setPassword(WebUtils.getMD5(WebUtils.getMD5(password) + "@poetry!_*"));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -76,7 +107,7 @@ public class UserApiController {
      */
     private Map<String, Object> registerCheckParam(String username, String email, String password, Map<String, Object> resultMap) {
         if (StringUtils.isEmpty(username)) {
-            return buildResult(resultMap, "username", "-1", "用户名不能为空");
+            return buildResult(resultMap, "username", "-1", "不能为空");
         } else {
             if (username.length() < 2) {
                 return buildResult(resultMap, "username", "-1", "用户名长度过短");
@@ -87,7 +118,7 @@ public class UserApiController {
             }
         }
         if (StringUtils.isEmpty(email)) {
-            return buildResult(resultMap, "email", "-1", "邮箱不能为空");
+            return buildResult(resultMap, "email", "-1", "不能为空");
         } else {
             boolean isExist = userService.checkEmailExist(email);
             if (isExist) {
@@ -100,7 +131,7 @@ public class UserApiController {
             }
         }
         if (StringUtils.isEmpty(password)) {
-            return buildResult(resultMap, "password", "-1", "密码不能为空");
+            return buildResult(resultMap, "password", "-1", "不能为空");
         } else {
             if (password.length() < 5) {
                 return buildResult(resultMap, "password", "-1", "密码长度不能小于5");

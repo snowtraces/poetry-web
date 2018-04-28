@@ -43,6 +43,10 @@ body, input, textarea, button, em, pre, pre:before, code:before {
     -webkit-text-size-adjust: none
 }
 
+input[type=button]{
+    cursor: pointer;
+}
+
 body, input, textarea, button {
     color: #212121;
     line-height: 1.85;
@@ -431,6 +435,7 @@ div.item-msg-box {
 #user-form {
     width: 360px;
     margin: 36px auto;
+    position: relative;
 }
 
 #user-form form{
@@ -438,6 +443,12 @@ div.item-msg-box {
 }
 #user-form form.on-show{
     display: block;
+}
+
+div.global-msg{
+    position: relative !important;
+    text-align: center;
+    color: #2bc;
 }
 
 div.login-input {
