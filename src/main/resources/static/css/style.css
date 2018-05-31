@@ -149,6 +149,33 @@ div.poetry-meta {
     font-size: .875em;
     display: flow-root;
 }
+div.relation-tag{
+    padding: 1em;
+    font-size: .875em;
+}
+
+div.relation-tag-item{
+    display: flex;
+    margin-bottom: 1em;
+}
+
+.relation-tag-item .item-box {
+    display: flex;
+    width:100%;
+    color: #fff;
+}
+
+a.percent-show{
+    display: block;
+    color: #fff;
+    background: #2bc;
+    padding:0 .5em;
+    border-radius: 5px;
+}
+a.percent-show:hover{
+    box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08) ;
+}
+
 
 span.poetry-keywords {
     display: inline-block;

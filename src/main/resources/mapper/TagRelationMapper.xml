@@ -12,6 +12,13 @@
         SELECT * FROM tag_relation WHERE tagA = #{tagA} AND tagB = #{tagB}
     </select>
 
+    <select id="selectByKeyword" parameterType="string" resultType="org.xinyo.domain.TagRelation" >
+        SELECT * from (
+            (SELECT tagA,tagB,`connection` FROM tag_relation WHERE tagA = #{keyword} ORDER BY `connection` DESC LIMIT 10) UNION ALL
+            (SELECT tagA,tagB,`connection` FROM tag_relation WHERE tagB = #{keyword} ORDER BY `connection` DESC LIMIT 10)
+        ) a ORDER BY a.connection DESC LIMIT 10;
+    </select>
+
     <insert id="insert" parameterType="org.xinyo.domain.TagRelation">
         INSERT INTO tag_relation (tagA, tagB, `connection`) VALUES (#{tagA}, #{tagB}, #{connection});
     </insert>

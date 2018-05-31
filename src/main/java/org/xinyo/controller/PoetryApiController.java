@@ -92,6 +92,9 @@ public class PoetryApiController {
         resultMap.put("keyword", language == 0 ? HanLP.convertToTraditionalChinese(keyword) : keyword);
         resultMap.put("page", page);
         resultMap.put("total", map.get("total"));
+        if (map.get("relationTag") != null) {
+            resultMap.put("relationTag",map.get("relationTag"));
+        }
 
         return resultMap;
     }

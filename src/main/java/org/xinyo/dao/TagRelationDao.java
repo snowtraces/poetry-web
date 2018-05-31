@@ -19,4 +19,6 @@ public interface TagRelationDao {
     int updateConnection(TagRelation tagRelation);
 
     int batchInsert(List<TagRelation> list);
+
+    List<TagRelation> selectByKeyword(String keyword);
 }

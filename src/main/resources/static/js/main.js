@@ -118,6 +118,7 @@ $(function () {
         let keyword = resultMap.keyword;
         let page = resultMap.page;
         let total = resultMap.total;
+        let relationTag = resultMap.relationTag;
 
         currentKeyword = keyword;
         currentPage = page;
@@ -144,6 +145,17 @@ $(function () {
         });
 
         $("#sidebar").empty();
+        if(relationTag) {
+          let relationtag_dom = "<div class=\"relation-tag\">";
+          for (let prop in relationTag) {
+            relationtag_dom = relationtag_dom +
+                "<div class=\"relation-tag-item\"><div class=\"item-box\"><a class=\"percent-show\" style=\"width:" +
+                relationTag[prop] + "%;background: rgb(34, 187, 204," + relationTag[prop]/100 +
+                ")\" href=\"/poetry/search?keyword=" + prop +"&amp;page=1\">" + prop + "</a></div></div>"
+          }
+          relationtag_dom = relationtag_dom + "</div>";
+          $("#sidebar").append(relationtag_dom);
+        }
 
         $("#nav-bar").html("<div class='pre-page pre-item'>上一页</div><div class='next-page next-item'>下一页</div>" +
             "<div class='clearfix'></div> ")

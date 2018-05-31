@@ -141,6 +141,9 @@ public class PoetryController {
         model.addAttribute("totalPage", (total % 10) == 0 ? ~~(total / 10) : ~~(total / 10 + 1));
         model.addAttribute("total", total);
 
+        if (map.get("relationTag") != null) {
+            model.addAttribute("relationTag",map.get("relationTag"));
+        }
         return "poetryList";
     }
 
