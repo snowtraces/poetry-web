@@ -17,10 +17,6 @@ public interface PoetryDao {
 
     List<Poetry> findPoetryByKeyword(Map<String, Object> params);
 
-    List<Poetry> findPoetryTrByKeyword(Map<String, Object> params);
-
-    List<Poetry> findPoetrySpByKeyword(Map<String, Object> params);
-
     int countTotalPoetryByKeyword(Map<String, Object> params);
 
     List<Integer> findTop100IdByKeyword(String keyword);
@@ -50,4 +46,6 @@ public interface PoetryDao {
     List<Integer> findTop100IdByTag(String replace);
 
     int updateTagsById(Map<String, Object> params);
+
+    List<Poetry> find1000ById(int i);
 }

@@ -110,6 +110,11 @@ public class PoetryServiceImpl implements PoetryService {
         return poetryDao.updateTagsById(params);
     }
 
+    @Override
+    public List<Poetry> find1000ById(int i) {
+        return poetryDao.find1000ById(i);
+    }
+
     public Map<String,Object> copyMap(Map<String, Object> map){
         Map<String, Object>  resultMap = new HashMap<>();
         for (Map.Entry<String, Object> entry : map.entrySet()) {

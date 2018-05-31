@@ -6,14 +6,17 @@ import org.springframework.stereotype.Service;
 import org.xinyo.dao.SearchResultDao;
 import org.xinyo.domain.Poetry;
 import org.xinyo.domain.SearchResult;
+import org.xinyo.domain.TagRelation;
 import org.xinyo.service.PoetryService;
 import org.xinyo.service.SearchResultService;
+import org.xinyo.service.TagRelationService;
 import org.xinyo.util.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by chengxinyong on 2018/3/30.
@@ -25,6 +28,9 @@ public class SearchResultServiceImpl implements SearchResultService {
 
     @Autowired
     private PoetryService poetryService;
+
+    @Autowired
+    private TagRelationService tagRelationService;
 
     @Override
     public SearchResult findByKeyword(String keyword) {
@@ -94,6 +100,19 @@ public class SearchResultServiceImpl implements SearchResultService {
             }
 
         }
+
+        long t1 = System.currentTimeMillis();
+
+        // 3. 查询关联标签
+        if (keyword != null) {
+            if (!(keyword.startsWith("author:") || keyword.startsWith("tag:"))) {
+                // 非作者或者人工标注的标签，才进行查询
+                Map<String, Integer> relationMap = tagRelationService.selectByKeyword(keyword);
+                resultMap.put("relationTag", relationMap);
+            }
+        }
+        long t2 = System.currentTimeMillis();
+        System.err.println("time cost: " + (t2 - t1));
 
         resultMap.put("data", poetryList);
         resultMap.put("total", total);

@@ -118,6 +118,7 @@ $(function () {
         let keyword = resultMap.keyword;
         let page = resultMap.page;
         let total = resultMap.total;
+        let relationTag = resultMap.relationTag;
 
         currentKeyword = keyword;
         currentPage = page;
@@ -144,6 +145,17 @@ $(function () {
         });
 
         $("#sidebar").empty();
+        if(relationTag) {
+          let relationtag_dom = "<div class=\"relation-tag\">";
+          for (let prop in relationTag) {
+            relationtag_dom = relationtag_dom +
+                "<div class=\"relation-tag-item\"><div class=\"item-box\"><a class=\"percent-show\" style=\"width:" +
+                relationTag[prop] + "%;background: rgb(34, 187, 204," + relationTag[prop]/100 +
+                ")\" href=\"/poetry/search?keyword=" + prop +"&amp;page=1\">" + prop + "</a></div></div>"
+          }
+          relationtag_dom = relationtag_dom + "</div>";
+          $("#sidebar").append(relationtag_dom);
+        }
 
         $("#nav-bar").html("<div class='pre-page pre-item'>上一页</div><div class='next-page next-item'>下一页</div>" +
             "<div class='clearfix'></div> ")
@@ -284,14 +296,6 @@ $(function () {
         }
     });
 
-      // 登录
-    $(document).on("click touchend", "#login-submit-btn", function () {
-      $.ajax({
-        url: "/api/user/login"
-      })
-    })
-
-
 // 繁简切换
     $(document).on("click", "#tr-sp", function () {
         switchLanguage(language ^ 1);
@@ -364,6 +368,7 @@ $(function () {
 
     $(document).on("focus", ".login-input input", function () {
         $(this).siblings(".input-err").remove();
+        $(".global-msg").remove();
     })
     // 点击注册
     $(document).on("click touchend", "#register-submit-btn", function () {
@@ -381,12 +386,48 @@ $(function () {
           if(code == -1){ // 注册失败
             if(tag != "global"){
               $("#register-form .input-" + tag).append("<div class=input-err>" + msg + "</div>");
+            } else {
+              $("#register-form").after("<div class='input-err global-msg'>" + msg + "</div>")
             }
+          } else if (code == 0){
+             $("#register-form").after("<div class='global-msg'>" + msg + "</div>");
+              setTimeout(function () {
+                $("#login-switch").addClass("on-active");
+                $("#register-switch").removeClass("on-active");
+                $("#login-form").addClass("on-show");
+                $("#register-form").removeClass("on-show");
+              },1200)
           }
         }
         })
-
-
+    })
+    // 点击登录
+    $(document).on("click touchend", "#login-submit-btn", function () {
+        let param = $( "form#login-form" ).serialize();
+        $.ajax({
+        url: "/api/user/login",
+        method: "POST",
+        dataType: "json",
+        data: param,
+        success: function (data) {
+          $(".input-err").remove();
+          let code = data.code;
+          let tag = data.tag;
+          let msg = data.msg;
+          if(code == -1){ // 注册失败
+            if(tag != "global"){
+              $("#register-form .input-" + tag).append("<div class=input-err>" + msg + "</div>");
+            } else {
+              $("#login-form").after("<div class='input-err global-msg'>" + msg + "</div>")
+            }
+          } else if (code == 0){
+            $("#login-form").after("<div class='global-msg'>" + msg + "</div>")
+            setTimeout(function () {
+              document.location.href = "/";
+            },1200)
+          }
+        }
+        })
     })
 
 

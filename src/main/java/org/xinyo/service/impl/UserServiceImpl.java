@@ -30,4 +30,9 @@ public class UserServiceImpl implements UserService {
     public int addUser(User user) {
         return userDao.insert(user);
     }
+
+    @Override
+    public User validateUser(User userParam) {
+        return userDao.selectByParam(userParam);
+    }
 }

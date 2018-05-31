@@ -34,7 +34,20 @@
                 </div>
             </#list>
             </div>
-            <div id="sidebar"></div>
+            <div id="sidebar">
+            <#if (relationTag)??>
+                <div class="relation-tag">
+                    <#list relationTag?keys as prop>
+                        <div class="relation-tag-item">
+                            <div class="item-box">
+                                <a class="percent-show" style="width: ${relationTag[prop]}%;background: rgb(34, 187, 204, ${relationTag[prop]/100})" href="/poetry/search?keyword=${prop}&amp;page=1">${prop}</a>
+                            </div>
+                        </div>
+                    </#list>
+                </div>
+            </#if>
+
+            </div>
             <div id="nav-bar">
                 <input id="current-page" hidden="" value="${page?c}">
                 <input id="total-page" hidden="" value="${totalPage?c}">

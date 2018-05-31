@@ -28,6 +28,11 @@
         </if>
         FROM poetry WHERE id = #{id}
     </select>
+    <select id="find1000ById" parameterType="int" resultMap="BaseResultMap">
+        SELECT
+            keywords, tags
+        FROM poetry WHERE id >= #{id} limit 2000
+    </select>
 
     <select id="findPoetryList" resultMap="BaseResultMap">
         SELECT * FROM poetry LIMIT 10

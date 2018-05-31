@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.xinyo.dao.UserDao" >
+<mapper namespace="org.xinyo.dao.UserDao">
     <resultMap id="BaseResultMap" type="org.xinyo.domain.User">
-        <id column="id" property="id" />
-        <result column="username" property="username" />
-        <result column="password" property="password" />
-        <result column="group" property="group" />
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="group" property="group"/>
     </resultMap>
 
     <select id="selectByUsername" parameterType="string" resultType="org.xinyo.domain.User">
@@ -14,6 +14,21 @@
 
     <select id="selectByEmail" parameterType="string" resultType="org.xinyo.domain.User">
         SELECT * FROM `user` WHERE email = #{email} LIMIT 1;
+    </select>
+
+    <select id="selectByParam" parameterType="string" resultType="org.xinyo.domain.User">
+        SELECT * FROM `user` WHERE
+        1 = 1
+        <if test="username != null">
+            AND username = #{username}
+        </if>
+        <if test="email != null">
+            AND email = #{email}
+        </if>
+        <if test="password != null">
+            AND password = #{password}
+        </if>
+        LIMIT 1;
     </select>
 
     <insert id="insert" parameterType="org.xinyo.domain.User">

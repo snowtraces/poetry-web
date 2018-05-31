@@ -1,19 +1,22 @@
 package org.xinyo.controller;
 
-import com.google.gson.reflect.TypeToken;
 import com.hankcs.hanlp.HanLP;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.xinyo.domain.Author;
 import org.xinyo.domain.Poetry;
 import org.xinyo.domain.PoetryBean;
-import org.xinyo.domain.SearchResult;
+import org.xinyo.domain.TagRelation;
 import org.xinyo.service.AuthorService;
 import org.xinyo.service.PoetryService;
 import org.xinyo.service.SearchResultService;
+import org.xinyo.service.TagRelationService;
+import org.xinyo.util.FileUtil;
 import org.xinyo.util.JsonUtils;
 import org.xinyo.util.UnicodeUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +38,9 @@ public class PoetryApiController {
 
     @Autowired
     private SearchResultService searchResultService;
+
+    @Autowired
+    private TagRelationService tagRelationService;
 
     @RequestMapping(value = "/api/poetry/{id}", method = RequestMethod.GET)
     public Map<String, Object> getPoetryById(@PathVariable Integer id, @RequestParam Integer language) {
@@ -59,6 +65,7 @@ public class PoetryApiController {
 //        createKeywords(id);
 //        new Thread(() -> replaceWenHao()).start();
 //        new Thread(() -> createTags(id)).start();
+//        new Thread(() -> createTagMapping(id)).start();
 
         resultMap.put("poetry", poetryBean);
         return resultMap;
@@ -85,8 +92,68 @@ public class PoetryApiController {
         resultMap.put("keyword", language == 0 ? HanLP.convertToTraditionalChinese(keyword) : keyword);
         resultMap.put("page", page);
         resultMap.put("total", map.get("total"));
+        if (map.get("relationTag") != null) {
+            resultMap.put("relationTag",map.get("relationTag"));
+        }
 
         return resultMap;
+    }
+
+
+    /**
+     * 生成tag中的关联关系
+     * @param id
+     */
+    private void createTagMapping(int id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("language", 1);
+        StringBuilder sb = new StringBuilder();
+        int globalId = 1;
+        File file = new File("D:/tagMapping.txt");
+        int step = 2000;
+        for (int i = 1; i <= 335181; i += step) {
+            params.put("id", i);
+            List<Poetry> poetryList = poetryService.find1000ById(i);
+            for (Poetry poetry : poetryList) {
+                String tags = poetry.getKeywords();
+                // 获取tags列表
+                List tagList;
+                if (StringUtils.isNoneEmpty(tags)) {
+                    tagList = JsonUtils.jsonToList(tags);
+                } else {
+                    continue;
+                }
+
+                for (int j = 0; j < tagList.size(); j++) {
+                    String tagA = (String) tagList.get(j);
+                    for (int k = j+1; k < tagList.size(); k++) {
+                        String tagB = (String) tagList.get(k);
+
+                        // 直接写入，后续结果再进行合并
+                        sb.append(globalId++).append(",");
+                        if (tagA.compareTo(tagB) > 0) {
+                            sb.append("\"").append(tagB).append("\"").append(",");
+                            sb.append("\"").append(tagA).append("\"").append(",");
+                            sb.append(1).append(",").append("\n");
+                        } else {
+                            sb.append("\"").append(tagA).append("\"").append(",");
+                            sb.append("\"").append(tagB).append("\"").append(",");
+                            sb.append(1).append("\n");
+                        }
+
+                        if (globalId % 5000 == 0) {
+                            FileUtil.writer(file, sb.toString(), true);
+                            sb = new StringBuilder();
+                        }
+                    }
+                }
+            }
+            System.out.println("do id: " + i);
+        }
+        FileUtil.writer("tagMapping.txt", sb.toString(), true);
+        sb = new StringBuilder();
+        System.err.println("DONE!!!!!!!!");
+
     }
 
 
