@@ -1,16 +1,16 @@
 /*
-Navicat MySQL Data Transfer
+Navicat MariaDB Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50717
-Source Host           : localhost:3306
+Source Server         : bwh
+Source Server Version : 100034
+Source Host           : 127.0.0.1:3306
 Source Database       : poetry
 
-Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Type    : MariaDB
+Target Server Version : 100034
 File Encoding         : 65001
 
-Date: 2018-04-26 17:32:12
+Date: 2018-05-31 10:08:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -77,7 +77,21 @@ CREATE TABLE `search_result` (
   `top100Id` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_keyword` (`keyword`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1814 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48336 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for tag_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `tag_relation`;
+CREATE TABLE `tag_relation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tagA` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tagB` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_tagA` (`tagA`,`connection`) USING BTREE,
+  KEY `idx_tagB` (`tagB`,`connection`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2196545 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for user
