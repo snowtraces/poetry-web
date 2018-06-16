@@ -3,7 +3,9 @@ package org.xinyo.service.impl;
 import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.xinyo.dao.AuthorDao;
 import org.xinyo.dao.SearchResultDao;
+import org.xinyo.domain.Author;
 import org.xinyo.domain.Poetry;
 import org.xinyo.domain.SearchResult;
 import org.xinyo.domain.TagRelation;
@@ -32,6 +34,9 @@ public class SearchResultServiceImpl implements SearchResultService {
     @Autowired
     private TagRelationService tagRelationService;
 
+    @Autowired
+    private AuthorDao authorDao;
+
     @Override
     public SearchResult findByKeyword(String keyword) {
         return searchResultDao.findByKeyword(keyword);
@@ -56,7 +61,7 @@ public class SearchResultServiceImpl implements SearchResultService {
         Map<String, Object> resultMap = new HashMap<>();
 
         List<Poetry> poetryList = new ArrayList<>();
-        int total = 0;
+        int total;
         String keyword = (String) params.get("keyword");
         int page = (int) params.get("page");
         int language = (int) params.get("language");
@@ -101,8 +106,6 @@ public class SearchResultServiceImpl implements SearchResultService {
 
         }
 
-        long t1 = System.currentTimeMillis();
-
         // 3. 查询关联标签
         if (keyword != null) {
             if (!(keyword.startsWith("author:") || keyword.startsWith("tag:"))) {
@@ -111,8 +114,15 @@ public class SearchResultServiceImpl implements SearchResultService {
                 resultMap.put("relationTag", relationMap);
             }
         }
-        long t2 = System.currentTimeMillis();
-        System.err.println("time cost: " + (t2 - t1));
+
+        // 4. 查询相关作者
+        if(keyword != null && keyword.startsWith("author:")){
+            Map<String, Object> authorParam = new HashMap<>();
+            authorParam.put("language", language);
+            authorParam.put("keyword", keyword.replace("author:",""));
+            Author author = authorDao.findByAuthorAndLanguage(authorParam);
+            resultMap.put("author", author);
+        }
 
         resultMap.put("data", poetryList);
         resultMap.put("total", total);

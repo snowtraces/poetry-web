@@ -144,6 +144,9 @@ public class PoetryController {
         if (map.get("relationTag") != null) {
             model.addAttribute("relationTag",map.get("relationTag"));
         }
+        if (map.get("author") != null) {
+            model.addAttribute("author",map.get("author"));
+        }
         return "poetryList";
     }
 
