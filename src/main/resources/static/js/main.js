@@ -146,9 +146,11 @@ $(function () {
         if(relationTag) {
           let relationtag_dom = "<div class=\"relation-tag\">";
           for (let prop in relationTag) {
+            let rank = relationTag[prop];
+            rank = rank < 17 ? 17 : rank;
             relationtag_dom = relationtag_dom +
                 "<div class=\"relation-tag-item\"><div class=\"item-box\"><a class=\"percent-show\" style=\"width:" +
-                relationTag[prop] + "%;background: rgb(34, 187, 204," + relationTag[prop]/100 +
+                rank + "%;background: rgb(34, 187, 204," + rank/100 +
                 ")\" href=\"/poetry/search?keyword=" + prop +"&amp;page=1\">" + prop + "</a></div></div>"
           }
           relationtag_dom = relationtag_dom + "</div>";
