@@ -413,13 +413,6 @@ div.title-bar {
     margin-left: 150px;
 }
 
-span.author-desc-more {
-    display: inline-block;
-    padding: .2em;
-    color: #2bc;
-    font-weight: 600;
-}
-
 span.author-desc-more:hover {
     cursor: pointer;
 }

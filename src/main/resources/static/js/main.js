@@ -86,10 +86,7 @@ $(function () {
             authorDetail = "<span class='author-name'><a href='/poetry/search?keyword=author:" + author.name + "&page=1'>" + author.name + "</a></span>" +
                 "<span class='author-dynasty'>" +
                 ((author.dynasty == "tang") ? "唐" : (author.dynasty == "song") ? "宋" : "") + "</span>" +
-                "<span class='author-desc'>" + getAuthorAbstract(author.desc, 128) + "</span>" +
-                "<input id='author-switch' name='author-switch' value='0' hidden />" +
-                "<textarea class='author-desc-abstract' hidden>" + getAuthorAbstract(author.desc, 128) + "</textarea>" +
-                "<textarea class='author-desc-full' hidden>" + author.desc + "</textarea> ";
+                "<span class='author-desc'>" + getAuthorAbstract(author.desc, 128) + "</span>";
         }
 
         let poetryMeta = "<div class='poetry-meta'>";
@@ -119,6 +116,7 @@ $(function () {
         let page = resultMap.page;
         let total = resultMap.total;
         let relationTag = resultMap.relationTag;
+        let author = resultMap.author;
 
         currentKeyword = keyword;
         currentPage = page;
@@ -156,6 +154,16 @@ $(function () {
           relationtag_dom = relationtag_dom + "</div>";
           $("#sidebar").append(relationtag_dom);
         }
+        if(author) {
+          let dynasty = author.dynasty == "tang"?"唐":author.dynasty == "song"?"宋":"";
+          let author_dom = "<div class=\"author-detail siderbar-author\">" +
+            "<span class=\"author-name\"><a href=\"/poetry/search?keyword=author:" + author.name +
+            "&amp;page=1\">" + author.name + "</a></span>" +
+            "<span class=\"author-dynasty\">" + dynasty +
+            "</span><span class=\"author-desc\">" + author.desc + "</span></div>";
+            $("#sidebar").append(author_dom);
+        }
+
 
         $("#nav-bar").html("<div class='pre-page pre-item'>上一页</div><div class='next-page next-item'>下一页</div>" +
             "<div class='clearfix'></div> ")
@@ -337,18 +345,6 @@ $(function () {
             thisCopied.empty();
             thisCopied.html("<i class='material-icons'>content_copy</i>");
         }, 1000)
-
-    });
-
-    // 展示全部作者详情
-    $(document).on("click", ".author-desc", function () {
-        let switchVal = parseInt($("#author-switch").val());
-        if (switchVal == 0) {
-            $(".author-desc").html($(".author-desc-full").val());
-        } else {
-            $(".author-desc").html($(".author-desc-abstract").val());
-        }
-        $("#author-switch").val(switchVal ^ 1);
 
     });
 

@@ -13,4 +13,6 @@ public interface AuthorDao {
     Author findByIdAndLanguage(Map<String, Object> params);
 
     void updateDescSpById(Map<String, Object> params);
+
+    Author findByAuthorAndLanguage(Map<String,Object> authorParam);
 }

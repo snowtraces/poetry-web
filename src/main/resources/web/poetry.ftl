@@ -57,11 +57,6 @@
                         class="author-desc"><#if author.desc?length gt 128>${author.desc?substring(0,128)}<span
                         class="more author-desc-more">...</span><#else>${author.desc}</#if>
             </span>
-                    <input id="author-switch" name="author-switch" value="0" hidden="">
-                    <textarea class="author-desc-abstract"
-                              hidden=""><#if author.desc?length gt 128>${author.desc?substring(0,128)}<span
-                            class="more author-desc-more">...</span><#else>${author.desc}</#if></textarea>
-                    <textarea class="author-desc-full" hidden="">${author.desc}</textarea>
                 </div>
                 </#if>
             </div>

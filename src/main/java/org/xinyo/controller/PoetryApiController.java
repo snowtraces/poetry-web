@@ -95,6 +95,9 @@ public class PoetryApiController {
         if (map.get("relationTag") != null) {
             resultMap.put("relationTag",map.get("relationTag"));
         }
+        if (map.get("author") != null) {
+            resultMap.put("author", map.get("author"));
+        }
 
         return resultMap;
     }

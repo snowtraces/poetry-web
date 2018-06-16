@@ -46,6 +46,14 @@
                     </#list>
                 </div>
             </#if>
+            <#if (author)??>
+                <div class="author-detail siderbar-author">
+                    <span class="author-name"><a
+                            href="/poetry/search?keyword=author:${author.name}&amp;page=1">${author.name}</a></span><span
+                        class="author-dynasty"><#if author.dynasty == "tang">唐<#elseif author.dynasty == "song">
+                    宋</#if></span><span class="author-desc">${author.desc}</span>
+                </div>
+            </#if>
 
             </div>
             <div id="nav-bar">

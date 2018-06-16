@@ -19,6 +19,17 @@
         FROM author WHERE id = #{id}
     </select>
 
+    <select id="findByAuthorAndLanguage" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <if test='language == "0"'>
+            id, `name`, `desc`, dynasty
+        </if>
+        <if test='language == "1"'>
+            id, name_sp as `name`, desc_sp as `desc`, dynasty
+        </if>
+        FROM author WHERE name_sp = #{keyword}
+    </select>
+
     <update id="updateDescSpById" parameterType="map" >
         update author set desc_sp = #{title} where id = #{id}
     </update>
