@@ -421,7 +421,7 @@ $(function () {
           } else if (code == 0){
             $("#login-form").after("<div class='global-msg'>" + msg + "</div>")
             setTimeout(function () {
-              document.location.href = "/";
+              document.location.href = "/admin";
             },1200)
           }
         }
