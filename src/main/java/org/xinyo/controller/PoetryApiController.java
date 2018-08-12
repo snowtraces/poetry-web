@@ -1,22 +1,18 @@
 package org.xinyo.controller;
 
+import com.google.gson.reflect.TypeToken;
 import com.hankcs.hanlp.HanLP;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.xinyo.domain.Author;
-import org.xinyo.domain.Poetry;
-import org.xinyo.domain.PoetryBean;
-import org.xinyo.domain.TagRelation;
-import org.xinyo.service.AuthorService;
-import org.xinyo.service.PoetryService;
-import org.xinyo.service.SearchResultService;
-import org.xinyo.service.TagRelationService;
+import org.xinyo.domain.*;
+import org.xinyo.service.*;
 import org.xinyo.util.FileUtil;
 import org.xinyo.util.JsonUtils;
 import org.xinyo.util.UnicodeUtils;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +38,9 @@ public class PoetryApiController {
     @Autowired
     private TagRelationService tagRelationService;
 
+    @Autowired
+    private ShangXiService shangXiService;
+
     @RequestMapping(value = "/api/poetry/{id}", method = RequestMethod.GET)
     public Map<String, Object> getPoetryById(@PathVariable Integer id, @RequestParam Integer language) {
         Map<String, Object> resultMap = new HashMap<>();
@@ -66,6 +65,7 @@ public class PoetryApiController {
 //        new Thread(() -> replaceWenHao()).start();
 //        new Thread(() -> createTags(id)).start();
 //        new Thread(() -> createTagMapping(id)).start();
+//        new Thread(() -> insertShangXi()).start();
 
         resultMap.put("poetry", poetryBean);
         return resultMap;
@@ -157,6 +157,36 @@ public class PoetryApiController {
         sb = new StringBuilder();
         System.err.println("DONE!!!!!!!!");
 
+    }
+
+    /**
+     * 唐诗赏析
+     */
+    private void insertShangXi() {
+        String s = FileUtil.read("shangxi.json");
+        List<ShangXi> list = JsonUtils.jsonToList(s, new TypeToken<ArrayList<ShangXi>>() {}.getType());
+
+        int i = 0;
+        for (ShangXi sx : list) {
+            // 查询对应的诗词
+            Map<String, String> param = new HashMap<>();
+            param.put("author", sx.getPoemAuthor());
+            param.put("title", sx.getTitle());
+            param.put("begin", sx.getPoemBegin());
+            Poetry p = poetryService.findByAuthorAndPoetryBegin(param);
+            if (p == null) {
+                System.err.println(sx.getTitle() + "|" + sx.getPoemAuthor() + "|" + sx.getPoemBegin());
+                i++;
+            } else {
+                sx.setPoetryId(p.getId());
+            }
+
+            shangXiService.insert(sx);
+
+
+
+        }
+        System.err.println(i);
     }
 
 

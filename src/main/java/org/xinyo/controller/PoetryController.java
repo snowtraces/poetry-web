@@ -1,6 +1,5 @@
 package org.xinyo.controller;
 
-import com.google.gson.reflect.TypeToken;
 import com.hankcs.hanlp.HanLP;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +7,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.xinyo.domain.*;
+import org.xinyo.domain.Author;
+import org.xinyo.domain.BaseWeb;
+import org.xinyo.domain.Poetry;
+import org.xinyo.domain.PoetryBean;
 import org.xinyo.service.AuthorService;
 import org.xinyo.service.PoetryService;
 import org.xinyo.service.SearchResultService;
-import org.xinyo.util.JsonUtils;
 import org.xinyo.util.UnicodeUtils;
 import org.xinyo.util.WebUtils;
 

@@ -48,4 +48,6 @@ public interface PoetryDao {
     int updateTagsById(Map<String, Object> params);
 
     List<Poetry> find1000ById(int i);
+
+    Poetry findByAuthorAndPoetryBegin(Map<String,String> param);
 }
