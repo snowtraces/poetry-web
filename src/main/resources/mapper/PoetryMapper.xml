@@ -123,4 +123,14 @@
     <update id="updateParagrahsSpById" parameterType="map" >
         update poetry set author_sp = #{title} where id = #{id}
     </update>
+
+    <select id="findByAuthorAndPoetryBegin" parameterType="map" resultMap="BaseResultMap">
+        select * from poetry
+        where
+        ((author_sp like concat(#{author}, '%') or title_sp like concat(#{title}, '%'))
+        and paragraphs_sp like concat(#{begin}, '%'))
+        or (author_sp like concat(#{author}, '%') and title_sp like concat(#{title}, '%'))
+        limit 1
+    </select>
+
 </mapper>

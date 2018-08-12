@@ -34,4 +34,6 @@ public interface PoetryService {
     int updateTagsById(Map<String, Object> params);
 
     List<Poetry> find1000ById(int i);
+
+    Poetry findByAuthorAndPoetryBegin(Map<String,String> param);
 }

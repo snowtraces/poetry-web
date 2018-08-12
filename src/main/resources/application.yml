@@ -2,10 +2,10 @@ spring:
   datasource:
     url: jdbc:mysql://localhost/poetry?useUnicode=true&characterEncoding=UTF8&character_set_server=UTF8MB4&useSSL=false&serverTimezone=UTC
     username: root
-    password: root
+    password: 123
     max-active: 40
     max-idle: 16
-    min-idle: 8
+    min-idle: 16
     initial-size: 10
   freemarker:
       template-loader-path: classpath:/web/
@@ -27,5 +27,5 @@ mybatis:
     config-location: classpath:/mybatis-config.xml
 
 baseweb:
-    description:
-     length: 64
+  description:
+    length: 128

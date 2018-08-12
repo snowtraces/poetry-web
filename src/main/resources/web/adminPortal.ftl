@@ -13,7 +13,18 @@
 
 <body>
 <div id="wrap">
-控制台
+    <div id="admin-left">
+        <div id="admin-post" class="admin-left-1">
+            <div class="admin-left-title">文章</div>
+            <ul>
+                <li>编辑文章</li>
+                <li>添加文章</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="admin-right">
+    </div>
 </div>
 
 </body>

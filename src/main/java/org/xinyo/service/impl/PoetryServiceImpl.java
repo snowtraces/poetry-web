@@ -115,6 +115,11 @@ public class PoetryServiceImpl implements PoetryService {
         return poetryDao.find1000ById(i);
     }
 
+    @Override
+    public Poetry findByAuthorAndPoetryBegin(Map<String, String> param) {
+        return poetryDao.findByAuthorAndPoetryBegin(param);
+    }
+
     public Map<String,Object> copyMap(Map<String, Object> map){
         Map<String, Object>  resultMap = new HashMap<>();
         for (Map.Entry<String, Object> entry : map.entrySet()) {
