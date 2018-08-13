@@ -1,174 +1,150 @@
 $(function () {
 
     let maxId = 333181;
-    let randomId = Math.floor(Math.random() * maxId);
     let language = 1; // 默认简体
 
-    let currentPage =parseInt($("#current-page").val());
-    let totalPage = parseInt($("#total-page").val());
-    let currentKeyword = $("#keyword").val();
+    let currentPage = getVal("#current-page");
+    let totalPage = getVal("#total-page");
+    let currentKeyword = getVal("#keyword");
 
-//写cookies
-    function setCookie(name, value) {
-        let Days = 30;
-        let exp = new Date();
-        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-        document.cookie = name + "=" + encodeURI(value) + ";expires=" + exp.toGMTString() + ";path=/";
+    /**
+     * 初始化header
+     * @param o Poetry对象
+     */
+    function initSingleHeader(o) {
+        $("meta[name=keywords]").attr("content", o.keywords)
+        $("meta[name=description]").attr("content", o.description)
+        $("title").html(o.title + " - " + o.author)
     }
 
-//读取cookies
-    function getCookie(name) {
-        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-        if (arr = document.cookie.match(reg))
-            return decodeURI(arr[2]);
-        else
-            return null;
-    }
-
-    // 数字千分位
-    function toThousands(num) {
-        return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
-    }
-
-    function getContentAbstract(contentList, keyword) {
-        let maxLength = 144
-        let re = new RegExp(keyword, "g");
-        let textContent = contentList.join('');
-        if (textContent.length <= maxLength) {
-            return textContent.replace(re, "<em>" + keyword + "</em>");
-        } else {
-            let index = textContent.indexOf(keyword);
-            if (index == -1) { //没有匹配项
-                return textContent.substr(0, maxLength) + "...";
-            } else if (index <= maxLength) { // 初次匹配在maxLength之内
-                return textContent.substr(0, maxLength).replace(re, "<em>" + keyword + "</em>") + "...";
-            } else { // // 初次匹配在maxLength之外
-                if (textContent.length > (index + 120)) {
-                    return "..." + textContent.substr(index - 24, maxLength).replace(re, "<em>" + keyword + "</em>") + "...";
-                } else {
-                    return "..." + textContent.substr(index - 24).replace(re, "<em>" + keyword + "</em>");
-                }
-            }
-        }
-    }
-
-    function getAuthorAbstract(autherDesc, toLength) {
-        if (autherDesc.length <= toLength) {
-            return autherDesc;
-        } else {
-            return autherDesc.substr(0, toLength) + "<span class='more author-desc-more'>...</span>"
-        }
-    }
-
-
-    function buildPoetryPage(data) {
-        let poetry = data.poetry;
-        let author = data.author;
-        let keywords = poetry.keywords;
-        let tags = poetry.tags;
-
-        $("meta[name=keywords]").attr("content", keywords);
-        $("meta[name=description]").attr("content", poetry.description);
-        $("title").html(poetry.title + " - " + poetry.author);
-
-        let poetryId = "<input id='poetry-id' hidden value='" + poetry.id + "'/>";
-        let poetryHeader = "<div id='poetry-header'><div id='poetry-title'><h2>" + poetry.title +
-            "</h2></div> <div id='poetry-author'>" + poetry.author + "</div></div>";
+    function intiSinglePoetry(o) {
+        let poetryId = "<input id='poetry-id' hidden value='" + o.id + "'/>";
+        let poetryHeader =
+            "<div id='poetry-header'>" +
+            "<div id='poetry-title'><h2>" + o.title + "</h2></div>" +
+            "<div id='poetry-author'>" + o.author + "</div>" +
+            "</div>";
         let poetryContent = "<div id='poetry-content'>";
-        // let pStyle = poetry.contentList.length > 24 ? "inline-block" : "block";
-        $.each(poetry.contentList, function (index, value) {
+        $.each(o.contentList, function (index, value) {
             poetryContent += "<p class='content-p'>" + value + "</p>";
         })
         poetryContent += "</div>";
+        $("#poetry").empty();
+        $("#poetry").append("<div class='poetry-item poetry-single'>" + poetryId + poetryHeader + poetryContent + "</div>");
+    }
 
-        let authorDetail = "";
-        if (author) {
-            authorDetail = "<span class='author-name'><a href='/poetry/search?keyword=author:" + author.name + "&page=1'>" + author.name + "</a></span>" +
-                "<span class='author-dynasty'>" +
-                ((author.dynasty == "tang") ? "唐" : (author.dynasty == "song") ? "宋" : "") + "</span>" +
-                "<span class='author-desc'>" + getAuthorAbstract(author.desc, 128) + "</span>";
+    function initSingleAuthor(o) {
+        if (o) {
+            let authorDetail =
+                "<span class='author-name'><a href='/poetry/search?keyword=author:" + o.name + "&page=1'>" + o.name + "</a></span>" +
+                "<span class='author-dynasty'>" + ((o.dynasty == "tang") ? "唐" : (o.dynasty == "song") ? "宋" : "") + "</span>" +
+                "<span class='author-desc'>" + abstract(o.desc, 128) + "</span>";
+            $("#poetry").append("<div class='author-detail'>" + authorDetail + "</div>");
         }
+    }
 
+    function initSingleSidebar(o) {
         let poetryMeta = "<div class='poetry-meta'>";
-        $.each(tags, function (index, value) {
+        $.each(o.tags, function (index, value) {
             poetryMeta += "<span class='poetry-tags'><a href='/poetry/search?keyword=tag:" + value + "&page=1'>" + value + "</a></span>";
         })
-        $.each(keywords, function (index, value) {
+        $.each(o.keywords, function (index, value) {
             poetryMeta += "<span class='poetry-keywords'><a href='/poetry/search?keyword=" + value + "&page=1'>" + value + "</a></span>";
         })
         poetryMeta += "</div>";
 
-
-        $("#poetry").empty();
-        $("#poetry").append("<div class='poetry-item poetry-single'>" + poetryId + poetryHeader + poetryContent + "</div>");
-        if (author) $("#poetry").append("<div class='author-detail'>" + authorDetail + "</div>");
-
         $("#sidebar").empty();
         $("#sidebar").append(poetryMeta);
+    }
 
+    function initSingleNavbar() {
         $("#nav-bar").html("<div class='pre-poetry pre-item'>上一篇</div><div class='next-poetry next-item'>下一篇</div><div class='clearfix'></div> ")
+    }
+
+    function buildPoetryPage(data) {
+        const p = new Poetry(data.poetry)
+        const a = new Author(data.author)
+
+        initSingleHeader(p)
+        intiSinglePoetry(p)
+        initSingleAuthor(a)
+        initSingleSidebar(p)
+        initSingleNavbar()
 
         initToolbar();
     }
 
-    function searchPoetryPage(resultMap) {
-        let keyword = resultMap.keyword;
-        let page = resultMap.page;
-        let total = resultMap.total;
-        let relationTag = resultMap.relationTag;
-        let author = resultMap.author;
+    function initPage(o) {
+        let size = 10;
+        currentKeyword = o.keyword;
+        currentPage = o.page;
+        totalPage = ~~((o.total % size) == 0 ? (o.total / size) : (o.total / size + 1));
+    }
 
-        currentKeyword = keyword;
-        currentPage = page;
-        totalPage = (total % 10) == 0 ? ~~(total / 10) : ~~(total / 10 + 1);
-
-        $("meta[name=keywords]").attr("content", keyword);
-        $("meta[name=description]").attr("content", keyword + " - 搜索结果");
-        $("title").html(keyword + " - 搜索结果");
-        $("#keyword").val(keyword);
+    function initPageHeader(o) {
+        $("meta[name=keywords]").attr("content", o.keyword);
+        $("meta[name=description]").attr("content", o.keyword + " - 搜索结果");
+        $("title").html(o.keyword + " - 搜索结果");
+        $("#keyword").val(o.keyword);
         $(".title-bar").remove();
-        $("#content-wrap").prepend("<div class='title-bar'>获得约 " + toThousands(total) + " 条结果（第" + page + "页）</div>")
+        $("#content-wrap").prepend("<div class='title-bar'>获得约 " + toThousands(o.total) + " 条结果（第" + o.page + "页）</div>")
+    }
 
+    function initPageContent(o) {
         $("#poetry").empty();
-        $.each(resultMap.poetryBeanList, function (index, poetry) {
-            let content = "";
-            keyword = keyword.replace("author:","");
-            let re = new RegExp(keyword, "g");
-            let item = "<div class='poetry-item search-item'>" +
-                "<span class='search-item-title'><a href='/poetry/" + poetry.id + "' title='" + poetry.title + "'>" + poetry.title.replace(re, "<em>" + keyword + "</em>") + "</a></span>" +
-                "<span class='search-item-author'>[" + poetry.author.replace(re, "<em>" + keyword + "</em>") + "]</span>" +
-                "<div class='search-item-content'>" + getContentAbstract(poetry.contentList, keyword) + "</div>" +
+        $.each(o.poetryBeanList, function (index, poetry) {
+            let kw = o.keyword.replace("author:", "");
+            let re = new RegExp(kw, "g");
+            let item =
+                "<div class='poetry-item search-item'>" +
+                "<span class='search-item-title'><a href='/poetry/" + poetry.id + "' title='" + poetry.title + "'>" + poetry.title.replace(re, "<em>" + kw + "</em>") + "</a></span>" +
+                "<span class='search-item-author'>[" + poetry.author.replace(re, "<em>" + kw + "</em>") + "]</span>" +
+                "<div class='search-item-content'>" + abstractWithKeyword(poetry.contentList.join(''), kw) + "</div>" +
                 "</div>";
             $("#poetry").append(item);
         });
+    }
 
+    function initPageSidebar(o) {
         $("#sidebar").empty();
-        if(relationTag) {
-          let relationtag_dom = "<div class=\"relation-tag\">";
-          for (let prop in relationTag) {
-            let rank = relationTag[prop];
-            rank = rank < 17 ? 17 : rank;
-            relationtag_dom = relationtag_dom +
-                "<div class=\"relation-tag-item\"><div class=\"item-box\"><a class=\"percent-show\" style=\"width:" +
-                rank + "%;background: rgb(34, 187, 204," + rank/100 +
-                ")\" href=\"/poetry/search?keyword=" + prop +"&amp;page=1\">" + prop + "</a></div></div>"
-          }
-          relationtag_dom = relationtag_dom + "</div>";
-          $("#sidebar").append(relationtag_dom);
+        if (o.relationTag) {
+            let tag = "<div class='relation-tag'>";
+            for (let prop in o.relationTag) {
+                let rank = o.relationTag[prop];
+                rank = rank < 17 ? 17 : rank;
+                tag = tag +
+                    "<div class='relation-tag-item'>" +
+                    "<div class='item-box'><a class='percent-show' style='width:" +
+                    rank + "%;background: rgb(34, 187, 204," + rank / 100 +
+                    ")' href='/poetry/search?keyword=" + prop + "&amp;page=1'>" + prop + "</a></div>" +
+                    "</div>"
+            }
+            tag = tag + "</div>";
+            $("#sidebar").append(tag);
         }
-        if(author) {
-          let dynasty = author.dynasty == "tang"?"唐":author.dynasty == "song"?"宋":"";
-          let author_dom = "<div class=\"author-detail siderbar-author\">" +
-            "<span class=\"author-name\"><a href=\"/poetry/search?keyword=author:" + author.name +
-            "&amp;page=1\">" + author.name + "</a></span>" +
-            "<span class=\"author-dynasty\">" + dynasty +
-            "</span><span class=\"author-desc\">" + author.desc + "</span></div>";
-            $("#sidebar").append(author_dom);
+        if (o.author) {
+            let dynasty = o.author.dynasty == "tang" ? "唐" : o.author.dynasty == "song" ? "宋" : "";
+            let author = "<div class='author-detail sidebar-author'>" +
+                "<span class='author-name'><a href='/poetry/search?keyword=author:" + o.author.name +
+                "&amp;page=1'>" + o.author.name + "</a></span>" +
+                "<span class='author-dynasty'>" + dynasty +
+                "</span><span class='author-desc'>" + o.author.desc + "</span></div>";
+            $("#sidebar").append(author);
         }
+    }
 
+    function initPageNavbar() {
+        $("#nav-bar").html("<div class='pre-page pre-item'>上一页</div><div class='next-page next-item'>下一页</div><div class='clearfix'></div> ")
+    }
 
-        $("#nav-bar").html("<div class='pre-page pre-item'>上一页</div><div class='next-page next-item'>下一页</div>" +
-            "<div class='clearfix'></div> ")
+    function searchPoetryPage(resultMap) {
+        const page = new PoetryPage(resultMap)
+
+        initPage(page)
+        initPageHeader(page)
+        initPageContent(page)
+        initPageSidebar(page)
+        initPageNavbar()
     }
 
     function initToolbar() {
@@ -181,7 +157,7 @@ $(function () {
             url: "/api/poetry/" + id,
             method: "GET",
             dataType: "json",
-            data: "language=" + language,
+            data: {language: language},
             success: function (data) {
                 buildPoetryPage(data);
                 if (!unPushState) {
@@ -196,7 +172,7 @@ $(function () {
             url: "/api/poetry/search",
             method: "GET",
             dataType: "json",
-            data: "language=" + language + "&keyword=" + keyword + "&page=" + page,
+            data: {language: language, keyword: keyword, page: page},
             success: function (data) {
                 searchPoetryPage(data);
                 if (!unPushState) {
@@ -221,9 +197,6 @@ $(function () {
 
     function loadByUrl() {
         let location = document.location + '';
-        // if(location.startsWith("http://")){
-        //     document.location.href="https" + location.substring(4);
-        // }
         console.log(location)
         let re = /\/poetry\/(\d+)$/i;
         let found = location.match(re);
@@ -370,64 +343,63 @@ $(function () {
     })
     // 点击注册
     $(document).on("click touchend", "#register-submit-btn", function () {
-        let param = $( "form#register-form" ).serialize();
+        let param = $("form#register-form").serialize();
         $.ajax({
-        url: "/api/user/register",
-        method: "POST",
-        dataType: "json",
-        data: param,
-        success: function (data) {
-          $(".input-err").remove();
-          let code = data.code;
-          let tag = data.tag;
-          let msg = data.msg;
-          if(code == -1){ // 注册失败
-            if(tag != "global"){
-              $("#register-form .input-" + tag).append("<div class=input-err>" + msg + "</div>");
-            } else {
-              $("#register-form").after("<div class='input-err global-msg'>" + msg + "</div>")
+            url: "/api/user/register",
+            method: "POST",
+            dataType: "json",
+            data: param,
+            success: function (data) {
+                $(".input-err").remove();
+                let code = data.code;
+                let tag = data.tag;
+                let msg = data.msg;
+                if (code == -1) { // 注册失败
+                    if (tag != "global") {
+                        $("#register-form .input-" + tag).append("<div class=input-err>" + msg + "</div>");
+                    } else {
+                        $("#register-form").after("<div class='input-err global-msg'>" + msg + "</div>")
+                    }
+                } else if (code == 0) {
+                    $("#register-form").after("<div class='global-msg'>" + msg + "</div>");
+                    setTimeout(function () {
+                        $("#login-switch").addClass("on-active");
+                        $("#register-switch").removeClass("on-active");
+                        $("#login-form").addClass("on-show");
+                        $("#register-form").removeClass("on-show");
+                    }, 1200)
+                }
             }
-          } else if (code == 0){
-             $("#register-form").after("<div class='global-msg'>" + msg + "</div>");
-              setTimeout(function () {
-                $("#login-switch").addClass("on-active");
-                $("#register-switch").removeClass("on-active");
-                $("#login-form").addClass("on-show");
-                $("#register-form").removeClass("on-show");
-              },1200)
-          }
-        }
         })
     })
     // 点击登录
     $(document).on("click touchend", "#login-submit-btn", function () {
-        let param = $( "form#login-form" ).serialize();
+        let param = $("form#login-form").serialize();
         $.ajax({
-        url: "/api/user/login",
-        method: "POST",
-        dataType: "json",
-        data: param,
-        success: function (data) {
-          $(".input-err").remove();
-          let code = data.code;
-          let tag = data.tag;
-          let msg = data.msg;
-          if(code == -1){ // 注册失败
-            if(tag != "global"){
-              $("#register-form .input-" + tag).append("<div class=input-err>" + msg + "</div>");
-            } else {
-              $("#login-form").after("<div class='input-err global-msg'>" + msg + "</div>")
+            url: "/api/user/login",
+            method: "POST",
+            dataType: "json",
+            data: param,
+            success: function (data) {
+                $(".input-err").remove();
+                let code = data.code;
+                let tag = data.tag;
+                let msg = data.msg;
+                if (code == -1) { // 注册失败
+                    if (tag != "global") {
+                        $("#register-form .input-" + tag).append("<div class=input-err>" + msg + "</div>");
+                    } else {
+                        $("#login-form").after("<div class='input-err global-msg'>" + msg + "</div>")
+                    }
+                } else if (code == 0) {
+                    $("#login-form").after("<div class='global-msg'>" + msg + "</div>")
+                    setTimeout(function () {
+                        document.location.href = "/admin";
+                    }, 1200)
+                }
             }
-          } else if (code == 0){
-            $("#login-form").after("<div class='global-msg'>" + msg + "</div>")
-            setTimeout(function () {
-              document.location.href = "/admin";
-            },1200)
-          }
-        }
         })
     })
-
 
 
     window.addEventListener('popstate', function (event) {
@@ -443,9 +415,6 @@ $(function () {
             _language = parseInt(_language)
         }
         switchLanguage(_language);
-
-        // 初始加载
-        // loadByUrl();
     }
 
     initAll();
