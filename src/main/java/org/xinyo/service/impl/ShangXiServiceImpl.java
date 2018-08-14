@@ -16,4 +16,9 @@ public class ShangXiServiceImpl implements ShangXiService {
     public int insert(ShangXi shangXi) {
         return shangXiDao.insert(shangXi);
     }
+
+    @Override
+    public ShangXi findByPoetryId(Integer id) {
+        return shangXiDao.findByPoetryId(id);
+    }
 }

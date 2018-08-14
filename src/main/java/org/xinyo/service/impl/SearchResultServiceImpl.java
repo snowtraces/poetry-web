@@ -63,6 +63,9 @@ public class SearchResultServiceImpl implements SearchResultService {
         List<Poetry> poetryList = new ArrayList<>();
         int total;
         String keyword = (String) params.get("keyword");
+        keyword = keywordNormalize(keyword);
+        params.put("keyword", keyword);
+
         int page = (int) params.get("page");
         int language = (int) params.get("language");
 
@@ -79,7 +82,8 @@ public class SearchResultServiceImpl implements SearchResultService {
             if (total > 0) {
                 poetryList = poetryService.findByKeywordAndLanguage(params);
                 int finalTotal = total;
-                new Thread(() -> addNewSearchResult(keyword, finalTotal)).start();
+                String finalKeyword = keyword;
+                new Thread(() -> addNewSearchResult(finalKeyword, finalTotal)).start();
             }
 
         } else {
@@ -128,5 +132,10 @@ public class SearchResultServiceImpl implements SearchResultService {
         resultMap.put("total", total);
 
         return resultMap;
+    }
+
+    private String keywordNormalize(String keyword){
+        keyword = keyword.replaceAll("[\\(\\)\\*]", " ");
+        return keyword;
     }
 }

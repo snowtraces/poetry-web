@@ -43,9 +43,9 @@
                     </#list>
                     </div>
                     <div class="tool-bar">
-              <span class="copy-poetry">
-                <i class="material-icons">content_copy</i>
-              </span>
+                        <span class="copy-poetry">
+                        <i class="material-icons">content_copy</i>
+                        </span>
                     </div>
                 </div>
                 <#if (author)??>
@@ -54,9 +54,19 @@
                             href="/poetry/search?keyword=author:${author.name}&amp;page=1">${author.name}</a></span><span
                         class="author-dynasty"><#if author.dynasty == "tang">唐<#elseif author.dynasty == "song">
                     宋</#if></span><span
-                        class="author-desc"><#if author.desc?length gt 128>${author.desc?substring(0,128)}<span
-                        class="more author-desc-more">...</span><#else>${author.desc}</#if>
-            </span>
+                        class="author-desc"><#if author.desc?length gt 128>${author.desc?substring(0,128)}...<#else>${author.desc}</#if>
+                    </span>
+                </div>
+                </#if>
+                <#if (shangXi)??>
+                <div class="shangxi">
+                    <div class="shangxi-content">
+                        <#list shangXi.contentList as content>
+                        <p>${content}</p>
+                        </#list>
+                    </div>
+                    <div class="shangxi-author">作者: ${shangXi.author}</div>
+                    <div class="shangxi-source">来源: ${shangXi.source}</div>
                 </div>
                 </#if>
             </div>

@@ -7,13 +7,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.xinyo.domain.Author;
-import org.xinyo.domain.BaseWeb;
-import org.xinyo.domain.Poetry;
-import org.xinyo.domain.PoetryBean;
+import org.xinyo.domain.*;
 import org.xinyo.service.AuthorService;
 import org.xinyo.service.PoetryService;
 import org.xinyo.service.SearchResultService;
+import org.xinyo.service.ShangXiService;
 import org.xinyo.util.UnicodeUtils;
 import org.xinyo.util.WebUtils;
 
@@ -38,6 +36,9 @@ public class PoetryController {
     @Autowired
     private SearchResultService searchResultService;
 
+    @Autowired
+    private ShangXiService shangXiService;
+
     @Value("${baseweb.description.length}")
     private int descLength;
 
@@ -56,11 +57,16 @@ public class PoetryController {
             return "404";
         }
 
-        PoetryBean poetryBean = poetry2PoetryBean(poetry);
+        PoetryBean poetryBean = new PoetryBean(poetry);
         if (poetry.getAuthorId() != null) {
             params.put("id", poetry.getAuthorId());
             Author author = authorService.findByIdAndLanguage(params);
             model.addAttribute("author", author);
+        }
+
+        ShangXi sx = shangXiService.findByPoetryId(id);
+        if (sx != null) {
+            model.addAttribute("shangXi", new ShangXiBean(sx));
         }
 
         List<List<String>> keywords = new ArrayList<>();

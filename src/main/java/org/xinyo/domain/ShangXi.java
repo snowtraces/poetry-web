@@ -8,17 +8,18 @@ public class ShangXi {
     private String content;
     private String author;
     private Integer poetryId;
+    private String source;
 
     public ShangXi(){
 
     }
 
-    public ShangXi(String title, String poemAuthor, String poemBegin, String content, String author) {
-        this.title = title;
-        this.poemAuthor = poemAuthor;
-        this.poemBegin = poemBegin;
-        this.content = content;
-        this.author = author;
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public Integer getPoetryId() {

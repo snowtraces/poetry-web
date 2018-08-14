@@ -3,9 +3,9 @@ $(function () {
     let maxId = 333181;
     let language = 1; // 默认简体
 
-    let currentPage = getVal("#current-page");
-    let totalPage = getVal("#total-page");
-    let currentKeyword = getVal("#keyword");
+    let currentPage = parseInt(getVal("#current-page"))
+    let totalPage = parseInt(getVal("#total-page"))
+    let currentKeyword = getVal("#keyword")
 
     /**
      * 初始化header
@@ -60,17 +60,38 @@ $(function () {
     function initSingleNavbar() {
         $("#nav-bar").html("<div class='pre-poetry pre-item'>上一篇</div><div class='next-poetry next-item'>下一篇</div><div class='clearfix'></div> ")
     }
+    function initSingleShangXi(o){
+        let shangXi = "<div class=shangxi><div class=shangxi-content>"
+        let content = o.content
+        contentArray = content.split('\n')
+        $.each(contentArray, function(index, c){
+            shangXi += "<p>" + c + "</p>"
+        })
+
+        shangXi +=
+            "</div><div class=shangxi-author>作者: " + o.author + "</div><div class=shangxi-source>来源: " + o.source + "</div></div>"
+
+        $("#poetry").append(shangXi)
+        console.log(shangXi)
+    }
 
     function buildPoetryPage(data) {
-        const p = new Poetry(data.poetry)
-        const a = new Author(data.author)
+        if(data.poetry){
+            const p = new Poetry(data.poetry)
+            initSingleHeader(p)
+            intiSinglePoetry(p)
+            initSingleSidebar(p)
+        }
+        if(data.author){
+            const a = new Author(data.author)
+            initSingleAuthor(a)
+        }
+        if(data.shangXi){
+            const sx = new ShangXi(data.shangXi)
+            initSingleShangXi(sx)
+        }
 
-        initSingleHeader(p)
-        intiSinglePoetry(p)
-        initSingleAuthor(a)
-        initSingleSidebar(p)
         initSingleNavbar()
-
         initToolbar();
     }
 
@@ -208,7 +229,7 @@ $(function () {
         re = /\/poetry\/search\?keyword=([^&]*)&page=(\d*)$/i;
         found = location.match(re);
         if (found) {
-            getPoetryByKeyword(found[1], found[2], true);
+            getPoetryByKeyword(decodeURI(found[1]), found[2], true);
             return;
         }
 

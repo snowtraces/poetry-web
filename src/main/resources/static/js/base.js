@@ -60,7 +60,11 @@ function abstract(content, maxLen) {
 }
 
 function getVal(selector) {
-    return document.querySelector(selector).getAttribute("value")
+    let node = document.querySelector(selector)
+    if(node){
+        return node.getAttribute("value")
+    }
+    return null
 }
 
 class Poetry{
@@ -84,6 +88,15 @@ class Author{
         this.name = o.name
         this.desc = o.desc
         this.dynasty = o.dynasty
+    }
+}
+class ShangXi{
+    constructor(o){
+        this.id = o.id
+        this.author = o.author
+        this.content = o.content
+        this.poetryId = o.poetryId
+        this.source = o.source
     }
 }
 

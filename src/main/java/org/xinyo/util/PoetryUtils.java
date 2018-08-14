@@ -13,30 +13,13 @@ import java.util.List;
  */
 public class PoetryUtils {
 
-    public static PoetryBean poetry2PoetryBean(Poetry poetry) {
-        if (poetry == null) {
-            return null;
-        }
-        PoetryBean poetryBean = new PoetryBean(poetry);
-
-        // 文章内容
-        List<String> contentList = new ArrayList<>();
-        if (poetry.getParagraphs() != null) {
-            String[] split = poetry.getParagraphs().split("\n");
-            contentList = Arrays.asList(split);
-        }
-        poetryBean.setContentList(contentList);
-        return poetryBean;
-    }
-
-
     public static List<PoetryBean> poetry2PoetryBean(List<Poetry> poetryList) {
         if (poetryList == null) {
             return null;
         }
         List<PoetryBean> poetryBeanList = new ArrayList<>();
         for (Poetry poetry : poetryList) {
-            poetryBeanList.add(poetry2PoetryBean(poetry));
+            poetryBeanList.add(new PoetryBean(poetry));
         }
         return poetryBeanList;
     }

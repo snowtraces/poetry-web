@@ -4,14 +4,19 @@
     <resultMap id="BaseResultMap" type="org.xinyo.domain.ShangXi">
         <id column="id" property="id" />
         <result column="author" property="author" />
-        <result column="title" property="title" />
+        <result column="content" property="content" />
         <result column="poetry_id" property="poetryId" />
+        <result column="source" property="source" />
 
     </resultMap>
     <insert id="insert" parameterType="org.xinyo.domain.ShangXi">
         insert into shang_xi (poetry_id, author, content) values
         (#{poetryId}, #{author}, #{content})
     </insert>
+    <select id="findByPoetryId" parameterType="int" resultMap="BaseResultMap">
+        select * from shang_xi
+        where poetry_id = #{poetryId}
+    </select>
 
 
 </mapper>
