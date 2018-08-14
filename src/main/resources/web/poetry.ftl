@@ -39,7 +39,7 @@
                     </div>
                     <div id="poetry-content">
                     <#list poetry.contentList as content>
-                        <p class="content-p" style="display: block">${content}</p>
+                        <p class="content-p">${content}</p>
                     </#list>
                     </div>
                     <div class="tool-bar">

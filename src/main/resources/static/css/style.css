@@ -211,7 +211,7 @@ div.poetry-item {
 }
 
 div.index-item, div.poetry-single {
-    font-size: 1.4375em;
+    font-size: 1.375em;
     font-family: KaiTi;
     width: auto;
     margin: 0 auto;
@@ -549,8 +549,8 @@ div.shangxi-source{
 
 }
 
-@media screen and (max-width: 700px) {
-    div#content, div#header {
+@media screen and (max-width: 720px) {
+    div#content, div#header, div#title {
         margin: auto;
         width: 100%;
         position: relative;
