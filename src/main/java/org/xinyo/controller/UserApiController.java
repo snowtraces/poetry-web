@@ -49,6 +49,7 @@ public class UserApiController {
 
         User userParam = new User();
         userParam.setUsername(StringUtils.isEmpty(username)?null:username);
+        userParam.setEmail(StringUtils.isEmpty(email)?null:email);
         userParam.setPassword(StringUtils.isEmpty(password)?null:password);
         User user = userService.validateUser(userParam);
 

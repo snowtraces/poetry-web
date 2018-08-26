@@ -1,3 +1,5 @@
+log = console.log.bind(console)
+
 /**
  * 写cookies
  */
@@ -82,6 +84,16 @@ class Poetry{
     }
 }
 
+class FullPoetry extends Poetry{
+    constructor(o){
+        super(o)
+        this.authorSp = o.authorSp
+        this.titleSp = o.titleSp
+        this.paragraphsSp = o.paragraphsSp
+        this.paragraphs = o.paragraphs
+    }
+}
+
 class Author{
     constructor(o){
         this.id = o.id
@@ -108,5 +120,13 @@ class PoetryPage{
         this.poetryBeanList = o.poetryBeanList
         this.relationTag = o.relationTag
         this.author = o.author
+    }
+}
+class AdminPoetryPage{
+    constructor(o){
+        this.keyword = o.keyword
+        this.page = o.page
+        this.total = o.total
+        this.poetryList = o.poetryList
     }
 }

@@ -57,8 +57,8 @@
 
             </div>
             <div id="nav-bar">
-                <input id="current-page" hidden="" value="${page?c}">
-                <input id="total-page" hidden="" value="${totalPage?c}">
+                <input id="current-page" hidden value="${page?c}">
+                <input id="total-page" hidden value="${totalPage?c}">
                 <div class="pre-page pre-item">上一页</div>
                 <div class="next-page next-item">下一页</div>
                 <div class="clearfix"></div>
