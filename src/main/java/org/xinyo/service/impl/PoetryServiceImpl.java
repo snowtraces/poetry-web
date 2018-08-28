@@ -92,6 +92,15 @@ public class PoetryServiceImpl implements PoetryService {
     }
 
     @Override
+    public Map<String, Object> editPoetry(FullPoetry fullPoetry) {
+        Map<String, Object> resultMap = new HashMap<>();
+        int i = poetryDao.editPoetry(fullPoetry);
+        int code = i >0 ? 0 : 1;
+        resultMap.put("code", code);
+        return resultMap;
+    }
+
+    @Override
     public List<Poetry> findByKeywordAndLanguage(Map<String, Object> params) {
         String keyword = (String) params.get("keyword");
         if (keyword != null) {

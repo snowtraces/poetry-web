@@ -159,6 +159,30 @@
     <update id="updateParagrahsSpById" parameterType="map" >
         update poetry set author_sp = #{title} where id = #{id}
     </update>
+    <update id="editPoetry">
+        update poetry
+        <trim prefix="set" suffixOverrides=",">
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="titleSp != null and titleSp != ''">
+                title_sp = #{titleSp},
+            </if>
+            <if test="author != null and author != ''">
+                author = #{author},
+            </if>
+            <if test="authorSp != null and authorSp != ''">
+                author_sp = #{authorSp},
+            </if>
+            <if test="paragraphs != null and paragraphs != ''">
+                paragraphs = #{paragraphs},
+            </if>
+            <if test="paragraphsSp != null and paragraphsSp != ''">
+                paragraphs_sp = #{paragraphsSp},
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
 
     <select id="findByAuthorAndPoetryBegin" parameterType="map" resultMap="BaseResultMap">
         select * from poetry

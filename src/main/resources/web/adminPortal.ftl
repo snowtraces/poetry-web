@@ -35,17 +35,13 @@
             <div id="poetry-list">
             </div>
             <div id="poetry-single">
+                <form></form>
             </div>
-            <div id="poetry-nav">
-                <input id="current-page" hidden >
-
-
-            </div>
-
         </div>
         <div id="add-poetry-content"></div>
-
-
+        <div id="poetry-nav" class="toolBar">
+            <input id="current-page" hidden >
+        </div>
     </div>
 </div>
 

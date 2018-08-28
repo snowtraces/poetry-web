@@ -59,4 +59,6 @@ public interface PoetryDao {
     int adminCountByKeyword(Map<String,Object> params);
 
     FullPoetry findFullPoetryById(Integer id);
+
+    int editPoetry(FullPoetry editPoetry);
 }

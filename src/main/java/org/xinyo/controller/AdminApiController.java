@@ -1,10 +1,7 @@
 package org.xinyo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.xinyo.domain.*;
 import org.xinyo.service.PoetryService;
 import org.xinyo.service.SearchResultService;
@@ -37,8 +34,8 @@ public class AdminApiController {
         resultMap.put("total", map.get("total"));
         return resultMap;
     }
-    @RequestMapping(value = "api/admin/edit", method = RequestMethod.GET)
-    public Map editPoetry(Integer id) {
+    @RequestMapping(value = "api/admin/edit/{id}", method = RequestMethod.GET)
+    public Map editPoetry( @PathVariable Integer id) {
         Map<String, Object> resultMap = new HashMap<>();
 
         FullPoetry poetry = poetryService.findFullPoetryById(id);
@@ -46,6 +43,13 @@ public class AdminApiController {
         resultMap.put("poetry", poetry);
         return resultMap;
     }
+
+    @RequestMapping(value = "api/admin/doEdit", method = RequestMethod.POST)
+    public Map doEditPoetry(FullPoetry fullPoetry) {
+        Map<String, Object> resultMap = poetryService.editPoetry(fullPoetry);
+        return resultMap;
+    }
+
 
 
 

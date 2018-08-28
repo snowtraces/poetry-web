@@ -46,4 +46,6 @@ public interface PoetryService {
     int adminCountByKeyword(Map<String,Object> params);
 
     FullPoetry findFullPoetryById(Integer id);
+
+    Map<String,Object> editPoetry(FullPoetry fullPoetry);
 }

@@ -3,6 +3,8 @@ $(function(){
     $(document).on("click","#edit-poetry", edit)
     $(document).on("click","#searchsubmit", listPoetry)
     $(document).on("click",".admin-list-item", loadPoetry)
+    $(document).on("click",".btn-confirm", editSubmit)
+
     $(document).on("keyup", "#keyword", function (e) {
         let keyCode = 'which' in e ? e.which : e.keyCode;
         if (keyCode == "13") { //回车
@@ -22,6 +24,9 @@ $(function(){
     }
 
     function listPoetry(){
+        $('#poetry-single form').empty()
+        $('.toolBar').empty()
+
         let keyword = $("#keyword").val() || ''
         let currentPage = parseInt(getVal("#current-page") || 0)
         $.ajax({
@@ -56,10 +61,9 @@ $(function(){
     function loadPoetry() {
         let id = $(this).children('a').attr("poetry-id")
          $.ajax({
-            url: "/api/admin/edit",
+            url: "/api/admin/edit/" + id,
             method: "GET",
             dataType: "json",
-            data: {id: id},
             success: function (data) {
                 buildEditPage(data)
             }
@@ -72,7 +76,7 @@ $(function(){
         let title =
             `<div class='edit-title'>` +
             `<input name='title' value='${p.title}' />` +
-            `<input name'titleSp' value='${p.titleSp}' />` +
+            `<input name='titleSp' value='${p.titleSp}' />` +
             `</div>`
         let author =
             `<div class='edit-author'>` +
@@ -89,25 +93,39 @@ $(function(){
             `<textarea name='paragraphsSp' style='height:${height}em'>${p.paragraphsSp}</textarea>` +
             `</div>`
 
+        let toolBar =
+            '<div class=toolBar>' +
+            '<div class="btn btn-confirm">保存修改</div>'
+            '</div>'
+
         $poetry = $('#poetry-single')
+        $poetryForm = $('#poetry-single form')
+        $toolBar = $('.toolBar')
         $('#poetry-list').hide()
-        $poetry.empty().show()
+        $poetryForm.empty()
+        $toolBar.empty()
+        $poetry.show()
 
-        $poetry.append(id)
-        $poetry.append(title)
-        $poetry.append(author)
-        $poetry.append(paragraphs)
+        $poetryForm.append(id)
+        $poetryForm.append(title)
+        $poetryForm.append(author)
+        $poetryForm.append(paragraphs)
 
-
-
-
-
-
-
-
+        $toolBar.append(toolBar)
     }
 
+    function editSubmit (){
+        var $form = $('#poetry-single form')
+        $.ajax({
+            url: "/api/admin/doEdit",
+            method: "POST",
+            dataType: "json",
+            data: $form.serialize(),
+            success: function (data) {
 
-
+            }
+        })
+        log($form.serialize())
+    }
 
 })

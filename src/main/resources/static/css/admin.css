@@ -79,6 +79,7 @@ div#admin-right {
     width: calc(100% - 160px);
     position: absolute;
     left: 160px;
+    padding-bottom: 60px;
 }
 
 #admin-left li{
@@ -134,5 +135,27 @@ div#poetry-list, #poetry-single{
     min-width:300px;
     height:auto;
     min-height:10em;
+    overflow: auto;
+}
+.toolBar{
+    width: 100%;
+    height: 60px;
+    position:absolute;
+    bottom:0;
+    left:0;
+    padding:16px;
+    background: #ddd;
+}
+
+.btn.btn-confirm {
+    background: #2bc;
+    color: #fff;
+    padding: 1px 8px;
+    float: left;
+    border-radius: 5px;
+    cursor: pointer;
+}
+div#edit-poetry-content {
+    max-height: 100%;
     overflow: auto;
 }
