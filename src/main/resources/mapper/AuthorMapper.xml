@@ -27,7 +27,7 @@
         <if test='language == "1"'>
             id, name_sp as `name`, desc_sp as `desc`, dynasty
         </if>
-        FROM author WHERE name_sp = #{keyword}
+        FROM author WHERE name_sp = #{keyword} limit 1
     </select>
 
     <update id="updateDescSpById" parameterType="map" >

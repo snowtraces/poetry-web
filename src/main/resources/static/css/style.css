@@ -131,8 +131,9 @@ h2 {
 div#content {
     margin-left: 150px;
     margin-top: 1.5em;
+    margin-right: 1em;
     position: relative;
-    width: 900px;
+    max-width: 1000px;
 }
 
 div#sidebar {
@@ -210,7 +211,7 @@ div.poetry-item {
 }
 
 div.index-item, div.poetry-single {
-    font-size: 1.3em;
+    font-size: 1.375em;
     font-family: KaiTi;
     width: auto;
     margin: 0 auto;
@@ -229,6 +230,7 @@ div.author-detail {
     background: #f9f9f9;
     line-height: 1.3;
     position: relative;
+    text-align: justify;
 }
 
 span.author-name {
@@ -289,19 +291,23 @@ div#header-wrap {
 }
 
 div#header {
+    max-width: 1000px;
+    margin-left:150px;
+    margin-right:1em;
 }
 
 div#title {
-    float: left;
     font-size: 1.5em;
     width: 150px;
     padding: 1em .85em;
+    position: absolute;
+    left: 0;
 }
 
 div#search {
-    float: left;
     padding: 2em 0;
-    width: 600px;
+    margin-right: 300px;
+    max-width: 100%;
     position: relative;
 }
 
@@ -505,7 +511,28 @@ div.input-submit:hover {
     cursor: pointer;
 }
 
-@media screen and (max-width: 800px) {
+div.shangxi{
+    padding: 1em 1.5em;
+}
+div.shangxi-content{
+    font-size: 0.875em;
+    text-align: justify;
+}
+
+div.shangxi-content p{
+    padding-bottom: 1em;
+    text-indent:2em;
+}
+
+div.shangxi-author{
+    text-align: right;
+}
+div.shangxi-source{
+    font-size: 0.8em;
+    text-align: right;
+}
+
+@media screen and (max-width: 900px) {
     div#content {
         margin-left: 2em;
     }
@@ -515,20 +542,18 @@ div.input-submit:hover {
     }
 
     div#header {
-        margin-left: 0;
-        width: 932px;
     }
 
     div#search {
-        width: 482px;
     }
 
 }
 
-@media screen and (max-width: 600px) {
-    div#content, div#header {
+@media screen and (max-width: 720px) {
+    div#content, div#header, div#title {
         margin: auto;
         width: 100%;
+        position: relative;
     }
 
     div#nav-bar {

@@ -1,7 +1,10 @@
 package org.xinyo.domain;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xinyo.util.JsonUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,6 +34,12 @@ public class PoetryBean {
         this.style = poetry.getStyle();
         this.keywords = JsonUtils.jsonToList(poetry.getKeywords());
         this.tags = JsonUtils.jsonToList(poetry.getTags());
+
+        String paragraphs = poetry.getParagraphs();
+        if (StringUtils.isNotEmpty(paragraphs)) {
+            String[] split = paragraphs.split("\n");
+            this.contentList = Arrays.asList(split);
+        }
     }
 
     public Integer getId() {

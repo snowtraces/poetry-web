@@ -15,4 +15,7 @@ public interface SearchResultService {
     void addNewSearchResult(String keyword, int total);
 
     Map<String, Object>  searchByKeyword(Map<String, Object> params);
+
+    Map<String, Object>  adminSearchByKeyword(Map<String, Object> params);
+
 }

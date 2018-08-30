@@ -10,4 +10,6 @@ import java.util.Map;
 @Repository
 public interface ShangXiDao {
     int insert(ShangXi shangXi);
+
+    ShangXi findByPoetryId(Integer id);
 }

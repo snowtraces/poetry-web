@@ -8,5 +8,6 @@
     <title>${web.title}</title>
     <link rel="stylesheet" href="/css/style.css" type='text/css' media='all'/>
     <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/base.js"></script>
     <script src="/js/main.js"></script>
 </head>

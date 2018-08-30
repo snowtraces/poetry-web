@@ -3,6 +3,7 @@ package org.xinyo.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xinyo.dao.PoetryDao;
+import org.xinyo.domain.FullPoetry;
 import org.xinyo.domain.Poetry;
 import org.xinyo.service.PoetryService;
 
@@ -51,6 +52,11 @@ public class PoetryServiceImpl implements PoetryService {
     }
 
     @Override
+    public int adminCountByKeyword(Map<String, Object> params) {
+        return poetryDao.adminCountByKeyword(params);
+    }
+
+    @Override
     public List<Integer> findTop100IdByKeyword(String keyword) {
         if(keyword != null){
             if(keyword.startsWith("author:")){
@@ -71,10 +77,27 @@ public class PoetryServiceImpl implements PoetryService {
     public List<Poetry> findSpByIds(List<String> idList) {
         return poetryDao.findSpByIds(idList);
     }
+    @Override
+    public List<Poetry> adminListByIds(List<String> idList) {
+        return poetryDao.adminListByIds(idList);
+    }
 
     @Override
     public Poetry findByIdAndLanguage(Map<String, Object> params) {
         return poetryDao.findByIdAndLanguage(params);
+    }
+    @Override
+    public FullPoetry findFullPoetryById(Integer id) {
+        return poetryDao.findFullPoetryById(id);
+    }
+
+    @Override
+    public Map<String, Object> editPoetry(FullPoetry fullPoetry) {
+        Map<String, Object> resultMap = new HashMap<>();
+        int i = poetryDao.editPoetry(fullPoetry);
+        int code = i >0 ? 0 : 1;
+        resultMap.put("code", code);
+        return resultMap;
     }
 
     @Override
@@ -93,6 +116,11 @@ public class PoetryServiceImpl implements PoetryService {
 
         }
         return poetryDao.findByKeywordAndLanguage(params);
+    }
+
+    @Override
+    public List<Poetry> adminListByKeyword(Map<String, Object> params) {
+        return poetryDao.adminListByKeyword(params);
     }
 
     @Override

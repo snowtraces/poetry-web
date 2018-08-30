@@ -8,7 +8,6 @@ import org.xinyo.dao.SearchResultDao;
 import org.xinyo.domain.Author;
 import org.xinyo.domain.Poetry;
 import org.xinyo.domain.SearchResult;
-import org.xinyo.domain.TagRelation;
 import org.xinyo.service.PoetryService;
 import org.xinyo.service.SearchResultService;
 import org.xinyo.service.TagRelationService;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by chengxinyong on 2018/3/30.
@@ -63,6 +61,9 @@ public class SearchResultServiceImpl implements SearchResultService {
         List<Poetry> poetryList = new ArrayList<>();
         int total;
         String keyword = (String) params.get("keyword");
+        keyword = keywordNormalize(keyword);
+        params.put("keyword", keyword);
+
         int page = (int) params.get("page");
         int language = (int) params.get("language");
 
@@ -79,7 +80,8 @@ public class SearchResultServiceImpl implements SearchResultService {
             if (total > 0) {
                 poetryList = poetryService.findByKeywordAndLanguage(params);
                 int finalTotal = total;
-                new Thread(() -> addNewSearchResult(keyword, finalTotal)).start();
+                String finalKeyword = keyword;
+                new Thread(() -> addNewSearchResult(finalKeyword, finalTotal)).start();
             }
 
         } else {
@@ -128,5 +130,56 @@ public class SearchResultServiceImpl implements SearchResultService {
         resultMap.put("total", total);
 
         return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> adminSearchByKeyword(Map<String, Object> params) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        List<Poetry> poetryList = new ArrayList<>();
+        int total;
+        String keyword = (String) params.get("keyword");
+        int page = (int) params.get("page");
+        params.put("page", (page - 1) * 10);
+
+        // 1.读结果表
+        SearchResult searchResult = findByKeyword(keyword);
+
+        // 2.根据结果查询
+        if (searchResult == null) {
+            // 2.1 重新查询poetry表
+            total = poetryService.adminCountByKeyword(params);
+            if (total > 0) {
+                poetryList = poetryService.adminListByKeyword(params);
+            }
+
+        } else {
+            // 2.2 根据searchResult表进行查询
+            total = searchResult.getTotal();
+            if (page <= (int) Math.ceil(total / 10d)) {
+                if (page <= 10) {
+                    // 只需取索引查询
+                    String top100Id = searchResult.getTop100Id();
+                    List<String> list = JsonUtils.jsonToList(top100Id, new TypeToken<ArrayList<String>>() {
+                    }.getType());
+                    List<String> idList = list.subList((page - 1) * 10, Math.min(page * 10, total));
+                    poetryList = poetryService.adminListByIds(idList);
+                } else {
+                    // 重新查询
+                    poetryList = poetryService.adminListByKeyword(params);
+                }
+            }
+
+        }
+
+        resultMap.put("data", poetryList);
+        resultMap.put("total", total);
+
+        return resultMap;
+    }
+
+    private String keywordNormalize(String keyword){
+        keyword = keyword.replaceAll("[\\(\\)\\*]", " ");
+        return keyword;
     }
 }

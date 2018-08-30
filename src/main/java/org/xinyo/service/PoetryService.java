@@ -1,6 +1,8 @@
 package org.xinyo.service;
 
+import org.xinyo.domain.FullPoetry;
 import org.xinyo.domain.Poetry;
+import org.xinyo.domain.SearchResult;
 
 import java.util.List;
 import java.util.Map;
@@ -36,4 +38,14 @@ public interface PoetryService {
     List<Poetry> find1000ById(int i);
 
     Poetry findByAuthorAndPoetryBegin(Map<String,String> param);
+
+    List<Poetry> adminListByKeyword(Map<String, Object> params);
+
+    List<Poetry> adminListByIds(List<String> idList);
+
+    int adminCountByKeyword(Map<String,Object> params);
+
+    FullPoetry findFullPoetryById(Integer id);
+
+    Map<String,Object> editPoetry(FullPoetry fullPoetry);
 }

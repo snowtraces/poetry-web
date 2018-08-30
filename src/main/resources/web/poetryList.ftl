@@ -47,7 +47,7 @@
                 </div>
             </#if>
             <#if (author)??>
-                <div class="author-detail siderbar-author">
+                <div class="author-detail sidebar-author">
                     <span class="author-name"><a
                             href="/poetry/search?keyword=author:${author.name}&amp;page=1">${author.name}</a></span><span
                         class="author-dynasty"><#if author.dynasty == "tang">唐<#elseif author.dynasty == "song">
@@ -57,8 +57,8 @@
 
             </div>
             <div id="nav-bar">
-                <input id="current-page" hidden="" value="${page?c}">
-                <input id="total-page" hidden="" value="${totalPage?c}">
+                <input id="current-page" hidden value="${page?c}">
+                <input id="total-page" hidden value="${totalPage?c}">
                 <div class="pre-page pre-item">上一页</div>
                 <div class="next-page next-item">下一页</div>
                 <div class="clearfix"></div>

@@ -1,6 +1,7 @@
 package org.xinyo.dao;
 
 import org.springframework.stereotype.Repository;
+import org.xinyo.domain.FullPoetry;
 import org.xinyo.domain.Poetry;
 
 import java.util.List;
@@ -50,4 +51,14 @@ public interface PoetryDao {
     List<Poetry> find1000ById(int i);
 
     Poetry findByAuthorAndPoetryBegin(Map<String,String> param);
+
+    List<Poetry> adminListByKeyword(Map<String,Object> params);
+
+    List<Poetry> adminListByIds(List<String> idList);
+
+    int adminCountByKeyword(Map<String,Object> params);
+
+    FullPoetry findFullPoetryById(Integer id);
+
+    int editPoetry(FullPoetry editPoetry);
 }

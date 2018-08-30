@@ -16,8 +16,6 @@ import org.xinyo.util.WebUtils;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.xinyo.util.PoetryUtils.poetry2PoetryBean;
-
 /**
  * Created by chengxinyong on 2018/3/27.
  */
@@ -56,7 +54,7 @@ public class IndexController {
             return "404";
         }
 
-        PoetryBean poetryBean = poetry2PoetryBean(poetry);
+        PoetryBean poetryBean = new PoetryBean(poetry);
         if (poetry.getAuthorId() != null) {
             params.put("id", poetry.getAuthorId());
             Author author = authorService.findByIdAndLanguage(params);

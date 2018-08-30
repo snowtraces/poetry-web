@@ -5,14 +5,16 @@ import com.hankcs.hanlp.HanLP;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.xinyo.domain.*;
+import org.xinyo.domain.Author;
+import org.xinyo.domain.Poetry;
+import org.xinyo.domain.PoetryBean;
+import org.xinyo.domain.ShangXi;
 import org.xinyo.service.*;
 import org.xinyo.util.FileUtil;
 import org.xinyo.util.JsonUtils;
 import org.xinyo.util.UnicodeUtils;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,11 +56,17 @@ public class PoetryApiController {
             poetry = new Poetry(id);
         }
 
-        PoetryBean poetryBean = poetry2PoetryBean(poetry);
+        PoetryBean poetryBean = new PoetryBean(poetry);
         if (poetry.getAuthorId() != null) {
             params.put("id", poetry.getAuthorId());
             Author author = authorService.findByIdAndLanguage(params);
             resultMap.put("author", author);
+        }
+
+
+        ShangXi sx = shangXiService.findByPoetryId(id);
+        if (sx != null) {
+            resultMap.put("shangXi", sx);
         }
 
 //        createKeywords(id);
