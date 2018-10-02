@@ -94,8 +94,17 @@ public class PoetryServiceImpl implements PoetryService {
     @Override
     public Map<String, Object> editPoetry(FullPoetry fullPoetry) {
         Map<String, Object> resultMap = new HashMap<>();
+
+        //替换 \r\n -> \n
+        String p = fullPoetry.getParagraphs();
+        String pSp = fullPoetry.getParagraphsSp();
+        p = p.replaceAll("\\r\\n","\n");
+        pSp = pSp.replaceAll("\\r\\n", "\n");
+        fullPoetry.setParagraphs(p);
+        fullPoetry.setParagraphsSp(pSp);
+
         int i = poetryDao.editPoetry(fullPoetry);
-        int code = i >0 ? 0 : 1;
+        int code = i > 0 ? 0 : 1;
         resultMap.put("code", code);
         return resultMap;
     }
