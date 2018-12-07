@@ -4,7 +4,8 @@
 ## 技术构成
 + 基于java，框架spring-boot + springMVC + Mybatis
 + 数据库为Mysql
-+ web模板采用freeMarker，非页面通过ajax加载
++ ~~web模板采用freeMarker，以及ajax加载~~
++ 页面由vue重构：https://github.com/snowtraces/poetry-vue ，原页面依旧保留
 
 ## 查询实现
 ### 1. mysql全文索引
@@ -22,7 +23,8 @@ ft_min_word_len=2
 
 ## 数据源
 + 唐宋诗词来源于：https://github.com/chinese-poetry/chinese-poetry
-+ 本项目对应数据库下载(base64)：```aHR0cDovL3NoaWNpZ2VmdS5uZXQvc2l0ZW1hcC9wb2V0cnktc3FsLnppcA==```
++ 本项目对应数据库下载(base64，更新时间2018/12/7)：```aHR0cDovL3NoaWNpZ2VmdS5uZXQvc2l0ZW1hcC9wb2V0cnktc3FsLnppcA==```
 
 ## 展示
-https://shicigefu.net/
++ 新页面：https://shicigefu.net/ 
++ 旧页面：https://shicigefu.net/poetry/1391
