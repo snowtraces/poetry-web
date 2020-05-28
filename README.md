@@ -23,7 +23,7 @@ ft_min_word_len=2
 
 ## 数据源
 + 唐宋诗词来源于：https://github.com/chinese-poetry/chinese-poetry
-+ 本项目对应数据库下载(base64，更新时间2018/12/7)：```aHR0cDovL3NoaWNpZ2VmdS5uZXQvc2l0ZW1hcC9wb2V0cnktc3FsLnppcA==```
++ 本项目对应数据库下载(base64，更新时间2018/12/7)：```aHR0cCUzQS8vbXkuc25vd3RyYWNlcy5jb20vc2l0ZW1hcC9wb2V0cnktc3FsLnppcA==```
 
 ## 展示
 + ~~新页面：https://shicigefu.net/#/poetry/1391~~
